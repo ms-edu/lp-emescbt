@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emes CBT System — Keunggulan Aplikasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #022c22;
+    --green-mid: #064e3b;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --green-pale: #ecfdf5;
+    --gold: #f59e0b;
+    --gold-light: #fef3c7;
+    --white: #ffffff;
+    --off: #f8fafc;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(5,150,105,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(5,150,105,0.08) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    to { background-position: 48px 48px; }
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(5,150,105,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(5,150,105,0.15);
+    border: 1px solid rgba(5,150,105,0.35);
+    color: #6ee7b7;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #6ee7b7;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(40px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 8px;
+    position: relative;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 span {
+    color: var(--green);
+    position: relative;
+  }
+  .hero h1 span::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+    animation: lineGrow 0.8s 0.6s ease both;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  @keyframes lineGrow { to { transform: scaleX(1); } }
+
+  .hero-sub {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 20px;
+    letter-spacing: 0.03em;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 44px;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+  .hero-stat-num span { color: var(--green); }
+  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; letter-spacing: 0.05em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.25);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    animation: fadeUp 1s 1s ease both;
+  }
+  .scroll-dot {
+    width: 20px; height: 34px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+  .scroll-dot::after {
+    content: '';
+    width: 3px; height: 6px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 2px;
+    animation: scrollBounce 1.5s infinite;
+  }
+  @keyframes scrollBounce {
+    0%,100%{transform:translateY(0);opacity:1} 80%{transform:translateY(8px);opacity:0}
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section {
+    padding: 96px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    background: var(--green-pale);
+    border: 1px solid var(--green-light);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ── MAIN FEATURES ── */
+  .features-main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .feat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .feat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(5,150,105,0.12);
+    border-color: var(--green-light);
+  }
+  .feat-card.featured {
+    background: var(--green-dark);
+    border-color: var(--green-mid);
+    grid-column: span 1;
+  }
+  .feat-card.featured .feat-title { color: #fff; }
+  .feat-card.featured .feat-desc { color: rgba(255,255,255,0.55); }
+  .feat-card.featured .feat-icon-wrap { background: rgba(5,150,105,0.25); }
+  .feat-card.featured .feat-icon-wrap i { color: #6ee7b7; }
+
+  .feat-card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), #6ee7b7);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .feat-card:hover .feat-card-accent { transform: scaleX(1); }
+  .feat-card.featured .feat-card-accent { transform: scaleX(1); background: linear-gradient(90deg, var(--green), #6ee7b7); }
+
+  .feat-icon-wrap {
+    width: 44px; height: 44px;
+    background: var(--green-pale);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+    color: var(--green);
+  }
+
+  .feat-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .feat-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── BIG FEATURE STRIP ── */
+  .strip {
+    background: var(--green-dark);
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .strip-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .strip-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .strip .section-label { background: rgba(5,150,105,0.2); border-color: rgba(5,150,105,0.3); color: #6ee7b7; }
+  .strip .section-title { color: #fff; }
+  .strip .section-desc { color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+
+  .strip-list { display: flex; flex-direction: column; gap: 14px; }
+  .strip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .strip-check {
+    width: 22px; height: 22px; min-width: 22px;
+    background: rgba(5,150,105,0.25);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: #6ee7b7;
+    margin-top: 1px;
+  }
+  .strip-item-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .strip-item-text strong { color: #fff; }
+
+  .strip-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .strip-stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 20px;
+    transition: background 0.2s;
+  }
+  .strip-stat-card:hover { background: rgba(5,150,105,0.12); border-color: rgba(5,150,105,0.3); }
+  .strip-stat-card:first-child { grid-column: span 2; }
+  .strip-stat-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .strip-stat-num em { color: var(--green); font-style: normal; }
+  .strip-stat-label { font-size: 12.5px; color: rgba(255,255,255,0.45); }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .price-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+  .price-card.best {
+    background: var(--green-dark);
+    border-color: var(--green);
+    transform: scale(1.04);
+  }
+  .price-card.best:hover { transform: scale(1.04) translateY(-4px); }
+  .price-badge {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .price-type { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .price-card.best .price-type { color: rgba(255,255,255,0.45); }
+  .price-amount {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .price-card.best .price-amount { color: #fff; }
+  .price-note { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+  .price-card.best .price-note { color: rgba(255,255,255,0.4); }
+  .price-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+  .price-card.best .price-divider { background: rgba(255,255,255,0.1); }
+  .price-perks { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+  .price-perk { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--muted); }
+  .price-card.best .price-perk { color: rgba(255,255,255,0.6); }
+  .price-perk-dot { width: 16px; height: 16px; min-width: 16px; border-radius: 50%; background: var(--green-light); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 8px; margin-top: 1px; }
+  .price-card.best .price-perk-dot { background: rgba(5,150,105,0.25); color: #6ee7b7; }
+  .price-cta {
+    display: block;
+    margin-top: 28px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .price-cta.outline { background: none; border: 1.5px solid var(--border); color: var(--text); }
+  .price-cta.outline:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+  .price-cta.solid { background: var(--green); color: #fff; }
+  .price-cta.solid:hover { background: #047857; }
+
+  /* ── COMPARE TABLE ── */
+  .compare-wrap { overflow-x: auto; margin-top: 48px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead th {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 14px 16px;
+    text-align: center;
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  thead th:first-child { text-align: left; color: #fff; border-radius: 12px 0 0 0; }
+  thead th:last-child { border-radius: 0 12px 0 0; }
+  thead th.hl { color: #6ee7b7; }
+  tbody tr:nth-child(even) td { background: var(--off); }
+  tbody td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    text-align: center;
+  }
+  tbody td:first-child { text-align: left; color: var(--text); font-weight: 500; }
+  .check-y { color: var(--green); font-size: 16px; }
+  .check-n { color: #cbd5e1; font-size: 14px; }
+  .check-p { color: var(--gold); font-size: 13px; font-weight: 600; }
+
+  /* ── BOTTOM CTA ── */
+  .bottom-cta {
+    background: linear-gradient(135deg, var(--green-dark), #065f46);
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bottom-cta::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(5,150,105,0.2) 0%, transparent 70%);
+  }
+  .bottom-cta h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .bottom-cta p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .cta-btn.primary { background: var(--green); color: #fff; }
+  .cta-btn.primary:hover { background: #047857; transform: translateY(-2px); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.08); color: #fff; border: 1.5px solid rgba(255,255,255,0.2); }
+  .cta-btn.ghost:hover { background: rgba(255,255,255,0.14); }
+
+  /* ── FOOTER NOTE ── */
+  .footer-note {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .features-main { grid-template-columns: 1fr; }
+    .strip-inner { grid-template-columns: 1fr; gap: 40px; }
+    .strip-right { display: none; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .price-card.best { transform: none; }
+    .price-card.best:hover { transform: translateY(-4px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge">Solusi Ujian Digital Sekolah</div>
+  <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT Logo" style="width:72px;height:72px;object-fit:contain;margin-bottom:20px;filter:brightness(0) invert(1);opacity:.9;animation:fadeUp 0.5s ease both">
+  <h1>Emes <span>CBT</span><br>System</h1>
+  <p class="hero-sub">Ujian Online. Tanpa Internet. Tanpa Ribet.</p>
+  <p>Platform Computer Based Test offline untuk sekolah — cukup satu komputer guru, seluruh kelas bisa ujian dari HP atau laptop masing-masing.</p>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">40<span>+</span></div>
+      <div class="hero-stat-label">Siswa Bersamaan</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100<span>%</span></div>
+      <div class="hero-stat-label">Offline / Lokal</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">0</div>
+      <div class="hero-stat-label">Biaya Langganan Cloud</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">1</div>
+      <div class="hero-stat-label">File Backup (eschool.db)</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-dot"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- MAIN FEATURES -->
+<div style="background:var(--off);padding:96px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">Fitur Unggulan</div>
+    <h2 class="section-title">Semua yang dibutuhkan<br>untuk ujian sekolah</h2>
+    <p class="section-desc">Dirancang khusus untuk kondisi sekolah Indonesia — tidak bergantung internet, ringan, dan mudah dioperasikan guru tanpa keahlian IT.</p>
+
+    <div class="features-main">
+
+      <div class="feat-card featured">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">📡</div>
+        <div class="feat-title">100% Offline & Lokal</div>
+        <div class="feat-desc">Server berjalan di komputer guru sendiri. Tidak perlu internet saat ujian — data tidak keluar dari sekolah.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">📱</div>
+        <div class="feat-title">Siswa Pakai HP / Laptop</div>
+        <div class="feat-desc">Siswa cukup buka browser dan ketik alamat IP yang ditulis di papan tulis. Tidak perlu install aplikasi apa pun.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">⚡</div>
+        <div class="feat-title">Langsung Jalan</div>
+        <div class="feat-desc">Dobel klik <code style="background:var(--green-pale);color:var(--green);padding:1px 5px;border-radius:4px;font-size:12px">Jalankan-CBT.bat</code> — server langsung aktif dalam hitungan detik. Tidak perlu konfigurasi.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">🧮</div>
+        <div class="feat-title">Soal dengan Rumus & Gambar</div>
+        <div class="feat-desc">Editor soal mendukung rumus matematika (KaTeX), gambar (paste/drag-drop/upload), pilihan ganda, dan soal uraian.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">🖥️</div>
+        <div class="feat-title">Monitor Ujian Real-Time</div>
+        <div class="feat-desc">Pantau siapa yang sudah mengerjakan, berapa soal yang dijawab, dan paksa selesai ujian langsung dari dashboard guru.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">📊</div>
+        <div class="feat-title">Nilai Otomatis & Analisa</div>
+        <div class="feat-desc">Penilaian pilihan ganda otomatis, rekap nilai per kelas, analisa tingkat kesulitan per butir soal, dan cetak laporan.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">🖨️</div>
+        <div class="feat-title">Cetak Dokumen Resmi</div>
+        <div class="feat-desc">Rekap nilai, daftar hadir, dan berita acara ujian bisa dicetak langsung dengan kop surat sekolah otomatis.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">💾</div>
+        <div class="feat-title">Backup Sangat Mudah</div>
+        <div class="feat-desc">Seluruh data — soal, nilai, siswa, logo, KOP surat — tersimpan dalam satu file <code style="background:var(--green-pale);color:var(--green);padding:1px 5px;border-radius:4px;font-size:12px">eschool.db</code>. Backup cukup copy satu file.</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-accent"></div>
+        <div class="feat-icon-wrap">🔐</div>
+        <div class="feat-title">Sistem Lisensi per Sekolah</div>
+        <div class="feat-desc">Lisensi terkunci ke NPSN sekolah — tidak bisa dipindahtangankan. Nama sekolah tampil otomatis di seluruh dokumen.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- STRIP: Keamanan & Kemudahan -->
+<section class="strip">
+  <div class="strip-noise"></div>
+  <div class="strip-inner">
+    <div>
+      <div class="section-label">Kenapa Emes CBT?</div>
+      <h2 class="section-title">Dirancang untuk<br>realita sekolah kita</h2>
+      <p class="section-desc">Bukan aplikasi CBT generik. Dibangun dengan memahami keterbatasan infrastruktur dan kebiasaan pengguna di sekolah Indonesia.</p>
+      <div class="strip-list">
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Tidak perlu internet</strong> saat ujian — cocok untuk sekolah dengan koneksi tidak stabil</div>
+        </div>
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Tidak ada biaya berlangganan server</strong> — bayar sekali, pakai selamanya</div>
+        </div>
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Auto-save jawaban</strong> setiap 30 detik — aman meski listrik tiba-tiba padam</div>
+        </div>
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Multi-role</strong>: Administrator, Guru, Proktor — dengan hak akses berbeda</div>
+        </div>
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Token ujian</strong> opsional untuk mencegah siswa akses soal sebelum waktunya</div>
+        </div>
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Blokir login ganda</strong> — satu akun hanya bisa digunakan dari satu perangkat</div>
+        </div>
+        <div class="strip-item">
+          <div class="strip-check">✓</div>
+          <div class="strip-item-text"><strong>Mini game & leaderboard</strong> untuk meningkatkan motivasi belajar siswa</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="strip-right">
+      <div class="strip-stat-card">
+        <div class="strip-stat-num">30 <em>detik</em></div>
+        <div class="strip-stat-label">Dari dobel-klik sampai server aktif siap digunakan siswa</div>
+      </div>
+      <div class="strip-stat-card">
+        <div class="strip-stat-num">40<em>+</em></div>
+        <div class="strip-stat-label">Siswa bersamaan tanpa lag</div>
+      </div>
+      <div class="strip-stat-card">
+        <div class="strip-stat-num">1<em> file</em></div>
+        <div class="strip-stat-label">Semua data dalam satu file backup</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<div style="background:var(--off);padding:96px 24px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">Harga Lisensi</div>
+    <h2 class="section-title">Investasi sekali,<br>manfaat jangka panjang</h2>
+    <p class="section-desc">Tanpa biaya berlangganan, tanpa biaya server, tanpa biaya tersembunyi.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-type">1 Semester</div>
+        <div class="price-amount">350rb</div>
+        <div class="price-note">Berlaku ±6 bulan</div>
+        <div class="price-divider"></div>
+        <div class="price-perks">
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Akses semua fitur</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Lisensi terkunci ke NPSN</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Update selama masa aktif</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Support via WhatsApp</div>
+        </div>
+        <a href="https://wa.me/6289619760801?text=Halo%2C%20saya%20ingin%20lisensi%201%20Semester%20Rp%20350.000%20untuk%20Emes%20CBT%20System.%0ANPSN%3A%20%0ANama%20Sekolah%3A%20%0AKab%2FKota%3A%20" target="_blank" class="price-cta outline">Pesan Sekarang</a>
+      </div>
+
+      <div class="price-card best">
+        <div class="price-badge">⭐ Paling Populer</div>
+        <div class="price-type">1 Tahun</div>
+        <div class="price-amount">650rb</div>
+        <div class="price-note">Hemat vs 2× semester</div>
+        <div class="price-divider"></div>
+        <div class="price-perks">
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Akses semua fitur</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Lisensi terkunci ke NPSN</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Update selama masa aktif</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Support via WhatsApp</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Cocok untuk 2 semester ujian</div>
+        </div>
+        <a href="https://wa.me/6289619760801?text=Halo%2C%20saya%20ingin%20lisensi%201%20Tahun%20Rp%20650.000%20untuk%20Emes%20CBT%20System.%0ANPSN%3A%20%0ANama%20Sekolah%3A%20%0AKab%2FKota%3A%20" target="_blank" class="price-cta solid">Pesan Sekarang</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-type">Selamanya</div>
+        <div class="price-amount">1,5jt</div>
+        <div class="price-note">Bayar sekali, pakai selamanya</div>
+        <div class="price-divider"></div>
+        <div class="price-perks">
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Akses semua fitur</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Lisensi terkunci ke NPSN</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Update seumur hidup</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Support via WhatsApp</div>
+          <div class="price-perk"><div class="price-perk-dot">✓</div>Tidak perlu perpanjang lagi</div>
+        </div>
+        <a href="https://wa.me/6289619760801?text=Halo%2C%20saya%20ingin%20lisensi%20Selamanya%20Rp%201.500.000%20untuk%20Emes%20CBT%20System.%0ANPSN%3A%20%0ANama%20Sekolah%3A%20%0AKab%2FKota%3A%20" target="_blank" class="price-cta outline">Pesan Sekarang</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div style="background:white;padding:0 24px 96px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">Perbandingan</div>
+    <h2 class="section-title" style="margin-bottom:40px">Emes CBT vs solusi lain</h2>
+    <div class="compare-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fitur / Kondisi</th>
+            <th class="hl">Emes CBT</th>
+            <th>CBT Online Berbayar</th>
+            <th>Google Form</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Tidak butuh internet saat ujian</td><td><span class="check-y">✓</span></td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td></tr>
+          <tr><td>Biaya berlangganan server</td><td><span class="check-y">Tidak ada</span></td><td><span class="check-n">Ada</span></td><td><span class="check-y">Tidak ada</span></td></tr>
+          <tr><td>Nilai otomatis & rekap</td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td><td><span class="check-p">Terbatas</span></td></tr>
+          <tr><td>Monitor ujian real-time</td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td><td><span class="check-n">✗</span></td></tr>
+          <tr><td>Cetak dokumen + kop sekolah</td><td><span class="check-y">✓</span></td><td><span class="check-p">Tergantung paket</span></td><td><span class="check-n">✗</span></td></tr>
+          <tr><td>Rumus matematika (KaTeX)</td><td><span class="check-y">✓</span></td><td><span class="check-p">Tergantung platform</span></td><td><span class="check-n">✗</span></td></tr>
+          <tr><td>Data tersimpan di sekolah sendiri</td><td><span class="check-y">✓</span></td><td><span class="check-n">✗ (di server vendor)</span></td><td><span class="check-n">✗ (di Google)</span></td></tr>
+          <tr><td>Token ujian & blokir login ganda</td><td><span class="check-y">✓</span></td><td><span class="check-p">Tergantung paket</span></td><td><span class="check-n">✗</span></td></tr>
+          <tr><td>Bisa pakai tanpa IT support</td><td><span class="check-y">✓</span></td><td><span class="check-p">Perlu setup</span></td><td><span class="check-y">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Siap mencoba<br>Emes CBT System?</h2>
+  <p>Trial gratis 7 sesi. Tidak perlu kartu kredit. Tidak perlu internet.</p>
+  <div class="cta-buttons">
+    <a href="https://drive.google.com/uc?export=download&id=1WbHUHB8CiQWG3YZFqb1cXvk-RYDD6OcK" target="_blank" class="cta-btn primary" onclick="hitDownload()">
+      ⬇️ Download Aplikasi Gratis
+    </a>
+  </div>
+  <div style="margin-top:20px;position:relative">
+    <span style="font-size:13px;color:rgba(255,255,255,0.4)">Sudah diunduh </span>
+    <span id="dlCount" style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#6ee7b7">...</span>
+    <span style="font-size:13px;color:rgba(255,255,255,0.4)"> kali</span>
+  </div>
+
+<script>
+const COUNT_KEY = 'emes-cbt-download';
+const COUNT_URL = 'https://countapi.mileshilliard.com/api/v1';
+
+async function loadCount() {
+  try {
+    const r = await fetch(`${COUNT_URL}/get/${COUNT_KEY}`);
+    const d = await r.json();
+    const val = parseInt(d.value) || 0;
+    document.getElementById('dlCount').textContent = val.toLocaleString('id-ID');
+  } catch(e) {
+    document.getElementById('dlCount').textContent = '—';
+  }
+}
+
+async function hitDownload() {
+  try {
+    const r = await fetch(`${COUNT_URL}/hit/${COUNT_KEY}`);
+    const d = await r.json();
+    const val = parseInt(d.value) || 0;
+    document.getElementById('dlCount').textContent = val.toLocaleString('id-ID');
+  } catch(e) {}
+}
+
+loadCount();
+</script>
+</section>
+
+<div class="footer-note">
+  © 2026 Emes EduTech &nbsp;·&nbsp; Emes CBT System — Solusi Ujian Offline untuk Sekolah Indonesia
+</div>
+
+</body>
+</html>
