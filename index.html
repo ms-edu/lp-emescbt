@@ -41,16 +41,24 @@ a{text-decoration:none;color:inherit}
 .d1{transition-delay:.1s}.d2{transition-delay:.18s}.d3{transition-delay:.26s}.d4{transition-delay:.34s}.d5{transition-delay:.42s}.d6{transition-delay:.5s}
 
 /* ══════════════════════════════════════
+   SPA — PAGE SYSTEM
+══════════════════════════════════════ */
+.page{display:none}
+.page.active{display:block}
+
+/* ══════════════════════════════════════
    NAVBAR
 ══════════════════════════════════════ */
 nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:64px;transition:background .3s,box-shadow .3s}
 nav.scrolled{background:rgba(2,26,18,.94);backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
-.nav-brand{display:flex;align-items:center;gap:10px}
+nav.solid{background:rgba(2,26,18,.97);backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-brand{display:flex;align-items:center;gap:10px;cursor:pointer}
 .nav-brand img{width:34px;height:34px;object-fit:contain;border-radius:8px;filter:brightness(0) invert(1)}
 .nav-brand-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em}
 .nav-links{display:flex;align-items:center;gap:6px}
-.nav-links a{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);padding:6px 14px;border-radius:8px;transition:color .2s,background .2s}
+.nav-links a{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);padding:6px 14px;border-radius:8px;transition:color .2s,background .2s;cursor:pointer}
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav-links a.active-link{color:#fff;background:rgba(255,255,255,.1)}
 .nav-cta{background:var(--g3)!important;color:#fff!important;font-weight:700!important;padding:7px 18px!important;border-radius:10px!important}
 .nav-cta:hover{background:var(--g4)!important}
 @media(max-width:768px){.nav-links{display:none}}
@@ -81,7 +89,7 @@ nav.scrolled{background:rgba(2,26,18,.94);backdrop-filter:blur(16px);box-shadow:
 .hero-stat-num{font-size:22px;font-weight:800;color:#fff;font-family:'DM Mono',monospace;line-height:1}
 .hero-stat-label{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 
-/* Hero visual — mock app */
+/* Hero visual */
 .hero-visual{position:relative}
 .mock-app{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 32px 80px rgba(0,0,0,.4);position:relative}
 .mock-bar{background:rgba(255,255,255,.08);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -148,50 +156,6 @@ section{padding:80px 40px}
 .feat-badge.exclusive{background:#fef3c7;color:#92400e}
 
 /* ══════════════════════════════════════
-   PANDUAN — ADMIN
-══════════════════════════════════════ */
-#panduan-admin{background:var(--bg)}
-.steps-layout{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
-@media(max-width:860px){.steps-layout{grid-template-columns:1fr}}
-.steps-nav{position:sticky;top:80px}
-.step-nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;margin-bottom:4px}
-.step-nav-item.active{background:#fff;border-color:var(--g3);box-shadow:var(--shadow)}
-.step-nav-item:hover:not(.active){background:rgba(5,150,105,.06)}
-.step-nav-num{width:28px;height:28px;border-radius:8px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
-.step-nav-item.active .step-nav-num{background:var(--g3);color:#fff}
-.step-nav-label{font-size:13px;font-weight:600;color:var(--mute)}
-.step-nav-item.active .step-nav-label{color:var(--ink);font-weight:700}
-.steps-content{display:flex;flex-direction:column;gap:28px}
-.step-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;scroll-margin-top:90px}
-.step-card-header{background:linear-gradient(135deg,var(--g1),var(--g2));padding:20px 24px;display:flex;align-items:center;gap:14px}
-.step-num-big{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
-.step-title{font-size:16px;font-weight:800;color:#fff}
-.step-subtitle{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
-.step-body{padding:24px}
-.step-items{display:flex;flex-direction:column;gap:14px}
-.step-item{display:flex;gap:14px;align-items:flex-start}
-.step-item-num{width:24px;height:24px;border-radius:7px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:'DM Mono',monospace}
-.step-item-content{}
-.step-item-title{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
-.step-item-desc{font-size:12.5px;color:var(--mute);line-height:1.6}
-.step-tip{background:var(--g8);border:1px solid var(--g7);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink3);margin-top:16px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
-.step-tip i{color:var(--g3);flex-shrink:0;margin-top:1px}
-.step-warn{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#78350f;margin-top:12px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
-.step-warn i{color:var(--amber);flex-shrink:0;margin-top:1px}
-
-/* ══════════════════════════════════════
-   PANDUAN — SISWA
-══════════════════════════════════════ */
-#panduan-siswa{background:#fff}
-.siswa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:860px){.siswa-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:540px){.siswa-grid{grid-template-columns:1fr}}
-.siswa-card{background:var(--bg);border:1.5px solid var(--border);border-radius:18px;padding:22px;position:relative}
-.siswa-card-num{width:32px;height:32px;border-radius:9px;background:var(--g3);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-family:'DM Mono',monospace}
-.siswa-card-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:6px}
-.siswa-card-desc{font-size:12.5px;color:var(--mute);line-height:1.65}
-
-/* ══════════════════════════════════════
    FAQ
 ══════════════════════════════════════ */
 #faq{background:var(--bg)}
@@ -250,24 +214,95 @@ table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weigh
 .score-bar-fill.winner-bar{background:linear-gradient(90deg,var(--g4),var(--g5))}
 
 /* ══════════════════════════════════════
-   PRICING
+   PRICING — NEW STANDARD vs PRO
 ══════════════════════════════════════ */
 #harga{background:var(--bg)}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
-@media(max-width:700px){.pricing-grid{grid-template-columns:1fr}}
+.pricing-toggle{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:40px;background:#fff;border:1.5px solid var(--border);border-radius:100px;padding:4px;max-width:320px;margin-left:auto;margin-right:auto}
+.pricing-toggle button{flex:1;padding:9px 20px;border-radius:100px;border:none;font-size:13.5px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:var(--mute)}
+.pricing-toggle button.active{background:var(--g3);color:#fff;box-shadow:0 4px 12px rgba(5,150,105,.3)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto}
+@media(max-width:760px){.pricing-grid{grid-template-columns:1fr;max-width:420px}}
 .price-card{background:#fff;border:2px solid var(--border);border-radius:20px;padding:28px;position:relative;transition:transform .2s,box-shadow .2s}
 .price-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
 .price-card.popular{border-color:var(--amber);box-shadow:0 8px 32px rgba(245,158,11,.15)}
 .price-card.lifetime{border-color:var(--violet);box-shadow:0 8px 32px rgba(139,92,246,.12)}
 .popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--amber);color:#fff;font-size:10px;font-weight:800;padding:4px 14px;border-radius:100px;white-space:nowrap;letter-spacing:.05em}
 .price-plan{font-size:13px;font-weight:700;color:var(--mute);margin-bottom:6px}
-.price-amount{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.3}
-.price-note{font-size:12px;color:var(--mute);margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.price-amount{font-size:22px;font-weight:900;color:var(--ink);margin-bottom:2px;line-height:1.2;font-family:'DM Mono',monospace}
+.price-amount small{font-size:13px;font-weight:500;color:var(--mute);font-family:'DM Sans',sans-serif}
+.price-note{font-size:12px;color:var(--mute);margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);margin-top:4px}
 .price-features{list-style:none;display:flex;flex-direction:column;gap:8px}
 .price-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink2);line-height:1.45}
 .price-features li i{color:var(--g3);font-size:12px;margin-top:2px;flex-shrink:0}
-.price-info{background:var(--g8);border:1px solid var(--g7);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink3);margin-top:28px;max-width:900px;margin-left:auto;margin-right:auto;display:flex;gap:10px;align-items:flex-start;line-height:1.6}
+.price-features li.locked i{color:var(--mute2)}
+.price-features li.locked{color:var(--mute2)}
+.price-info{background:var(--g8);border:1px solid var(--g7);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink3);margin-top:28px;max-width:960px;margin-left:auto;margin-right:auto;display:flex;gap:10px;align-items:flex-start;line-height:1.6}
 .price-info i{color:var(--g3);flex-shrink:0;margin-top:1px}
+/* tier badge on pricing header */
+.tier-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:6px;margin-bottom:10px}
+.tier-badge.std{background:var(--g7);color:var(--g2)}
+.tier-badge.pro{background:#1e3a8a;color:#bfdbfe}
+
+/* ══════════════════════════════════════
+   DB COMPARISON SECTION
+══════════════════════════════════════ */
+#db-komparasi{background:#fff}
+.db-hero{background:linear-gradient(135deg,var(--g0),var(--g2));border-radius:20px;padding:32px 36px;margin-bottom:36px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+@media(max-width:700px){.db-hero{grid-template-columns:1fr;padding:24px}}
+.db-hero-text h3{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
+.db-hero-text p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.7}
+.db-meter-wrap{display:flex;flex-direction:column;gap:14px}
+.db-meter-item{}
+.db-meter-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.db-meter-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.7)}
+.db-meter-val{font-size:12px;font-weight:800;font-family:'DM Mono',monospace}
+.db-meter-val.std-val{color:#94a3b8}
+.db-meter-val.pro-val{color:var(--g5)}
+.db-meter-track{height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;display:flex;gap:3px}
+.db-meter-std{height:100%;border-radius:4px;background:rgba(148,163,184,.5);transition:width 1s ease}
+.db-meter-pro{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--g4),var(--g5));transition:width 1s ease}
+.db-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+@media(max-width:700px){.db-grid{grid-template-columns:1fr}}
+.db-card{border-radius:16px;padding:24px;border:2px solid}
+.db-card.std{border-color:var(--border);background:var(--bg)}
+.db-card.pro{border-color:#bfdbfe;background:#eff6ff}
+.db-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.db-engine-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:.04em}
+.db-engine-badge.std{background:var(--g7);color:var(--g2)}
+.db-engine-badge.pro{background:#1e3a8a;color:#bfdbfe}
+.db-card h4{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.db-card .db-subtitle{font-size:12px;color:var(--mute)}
+.db-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.db-stat{background:#fff;border-radius:10px;padding:12px 14px;border:1px solid var(--border)}
+.db-stat-num{font-size:18px;font-weight:900;font-family:'DM Mono',monospace;line-height:1;margin-bottom:3px}
+.db-stat-num.green{color:var(--g3)}
+.db-stat-num.blue{color:#3b82f6}
+.db-stat-num.amber{color:var(--amber)}
+.db-stat-num.red{color:var(--red)}
+.db-stat-label{font-size:10px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.db-features{list-style:none;display:flex;flex-direction:column;gap:7px}
+.db-features li{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--ink2);line-height:1.5}
+.db-features li i.ok{color:var(--g3)}
+.db-features li i.no{color:#dc2626}
+.db-features li i.warn{color:var(--amber)}
+.db-scenario{background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px}
+.db-scenario-header{background:var(--g1);padding:16px 20px;display:flex;align-items:center;gap:10px}
+.db-scenario-header h4{font-size:14px;font-weight:800;color:#fff}
+.db-scenario-header p{font-size:12px;color:rgba(255,255,255,.5);margin-top:1px}
+.db-scenario-body{padding:20px}
+.db-scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:580px){.db-scenario-grid{grid-template-columns:1fr}}
+.db-scenario-item{border-radius:12px;padding:16px;border:1.5px solid}
+.db-scenario-item.std{border-color:var(--border);background:var(--bg)}
+.db-scenario-item.pro{border-color:#bfdbfe;background:#eff6ff}
+.db-scenario-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.db-scenario-label.std{color:var(--g2)}
+.db-scenario-label.pro{color:#1e3a8a}
+.db-scenario-text{font-size:12.5px;color:var(--ink2);line-height:1.6}
+.db-scenario-verdict{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;margin-top:10px}
+.db-scenario-verdict.good{background:#dcfce7;color:#166534}
+.db-scenario-verdict.warn{background:#fef3c7;color:#92400e}
+.db-scenario-verdict.bad{background:#fee2e2;color:#991b1b}
 
 /* ══════════════════════════════════════
    CTA
@@ -286,26 +321,82 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 .footer-brand{display:flex;align-items:center;gap:9px}
 .footer-brand img{width:28px;height:28px;border-radius:7px;object-fit:contain;filter:brightness(0) invert(1)}
 .footer-brand span{font-size:13px;font-weight:700;color:rgba(255,255,255,.7)}
+
+/* ══════════════════════════════════════
+   PANDUAN PAGE
+══════════════════════════════════════ */
+#page-panduan{background:var(--bg);min-height:100vh;padding-top:64px}
+.panduan-header{background:linear-gradient(160deg,var(--g0),var(--g1) 60%,var(--g2));padding:60px 40px 50px;position:relative;overflow:hidden}
+.panduan-header::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(16,185,129,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.panduan-header-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1}
+.panduan-header h1{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:900;color:#fff;margin-bottom:10px}
+.panduan-header p{font-size:15px;color:rgba(255,255,255,.55);max-width:560px;line-height:1.7}
+.panduan-tabs{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}
+.panduan-tab{display:flex;align-items:center;gap:7px;padding:9px 20px;border-radius:100px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.panduan-tab:hover{background:rgba(255,255,255,.12);color:#fff}
+.panduan-tab.active{background:var(--g3);border-color:var(--g3);color:#fff}
+.panduan-body{max-width:1120px;margin:0 auto;padding:48px 40px}
+@media(max-width:600px){.panduan-body{padding:32px 20px}}
+/* panduan admin steps */
+.steps-layout{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
+@media(max-width:860px){.steps-layout{grid-template-columns:1fr}}
+.steps-nav{position:sticky;top:80px}
+.step-nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;margin-bottom:4px}
+.step-nav-item.active{background:#fff;border-color:var(--g3);box-shadow:var(--shadow)}
+.step-nav-item:hover:not(.active){background:rgba(5,150,105,.06)}
+.step-nav-num{width:28px;height:28px;border-radius:8px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-nav-item.active .step-nav-num{background:var(--g3);color:#fff}
+.step-nav-label{font-size:13px;font-weight:600;color:var(--mute)}
+.step-nav-item.active .step-nav-label{color:var(--ink);font-weight:700}
+.steps-content{display:flex;flex-direction:column;gap:28px}
+.step-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;scroll-margin-top:90px}
+.step-card-header{background:linear-gradient(135deg,var(--g1),var(--g2));padding:20px 24px;display:flex;align-items:center;gap:14px}
+.step-num-big{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-title{font-size:16px;font-weight:800;color:#fff}
+.step-subtitle{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
+.step-body{padding:24px}
+.step-items{display:flex;flex-direction:column;gap:14px}
+.step-item{display:flex;gap:14px;align-items:flex-start}
+.step-item-num{width:24px;height:24px;border-radius:7px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:'DM Mono',monospace}
+.step-item-content{}
+.step-item-title{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.step-item-desc{font-size:12.5px;color:var(--mute);line-height:1.6}
+.step-tip{background:var(--g8);border:1px solid var(--g7);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink3);margin-top:16px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.step-tip i{color:var(--g3);flex-shrink:0;margin-top:1px}
+.step-warn{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#78350f;margin-top:12px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.step-warn i{color:var(--amber);flex-shrink:0;margin-top:1px}
+/* panduan siswa */
+.siswa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:860px){.siswa-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.siswa-grid{grid-template-columns:1fr}}
+.siswa-card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:22px;position:relative}
+.siswa-card-num{width:32px;height:32px;border-radius:9px;background:var(--g3);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-family:'DM Mono',monospace}
+.siswa-card-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:6px}
+.siswa-card-desc{font-size:12.5px;color:var(--mute);line-height:1.65}
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav id="mainNav">
-  <div class="nav-brand">
+  <div class="nav-brand" onclick="showPage('home')">
     <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
     <span class="nav-brand-name">Emes CBT</span>
   </div>
-  <div class="nav-links">
-    <a href="#fitur">Fitur</a>
-    <a href="#panduan-admin">Panduan Admin</a>
-    <a href="#panduan-siswa">Panduan Siswa</a>
-    <a href="#faq">FAQ</a>
-    <a href="#komparasi">Komparasi</a>
-    <a href="#harga">Harga</a>
-    <a href="#cta" class="nav-cta">Dapatkan Akses</a>
+  <div class="nav-links" id="navLinks">
+    <a onclick="showPage('home');scrollToSection('#fitur')">Fitur</a>
+    <a onclick="showPage('panduan')" id="nav-panduan">Panduan</a>
+    <a onclick="showPage('home');scrollToSection('#faq')">FAQ</a>
+    <a onclick="showPage('home');scrollToSection('#komparasi')">Komparasi</a>
+    <a onclick="showPage('home');scrollToSection('#harga')">Harga</a>
+    <a onclick="openWAModal()" class="nav-cta"><i class="fa-brands fa-whatsapp" style="margin-right:5px"></i>Dapatkan Aplikasi</a>
   </div>
 </nav>
+
+<!-- ══════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════ -->
+<div id="page-home" class="page active">
 
 <!-- ════════ HERO ════════ -->
 <section class="hero" id="hero">
@@ -318,8 +409,8 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
       <h1>Platform Ujian Digital<em>untuk Sekolah Anda</em></h1>
       <p class="hero-desc">Emes CBT berjalan di server sekolah sendiri — tanpa internet, tanpa biaya cloud. Lengkap dengan KaTeX, import Word, monitor real-time, dan analisis butir soal.</p>
       <div class="hero-actions">
-        <a href="#panduan-admin" class="btn-hero btn-primary"><i class="fa-solid fa-rocket"></i> Mulai Panduan</a>
-        <a href="#komparasi" class="btn-hero btn-secondary"><i class="fa-solid fa-scale-balanced"></i> Bandingkan Platform</a>
+        <a onclick="showPage('panduan')" class="btn-hero btn-primary"><i class="fa-solid fa-rocket"></i> Mulai Panduan</a>
+        <a onclick="scrollToSection('#komparasi')" class="btn-hero btn-secondary"><i class="fa-solid fa-scale-balanced"></i> Bandingkan Platform</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">Offline Ready</span></div>
@@ -331,10 +422,10 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <div class="hero-visual reveal-r d2">
       <div class="mock-app">
         <div class="mock-bar">
-          <div class="mock-dot" style="background:#ff5f56"></div>
+          <div class="mock-dot" style="background:#ff5f57"></div>
           <div class="mock-dot" style="background:#ffbd2e"></div>
-          <div class="mock-dot" style="background:#27c93f"></div>
-          <div class="mock-url">emes-cbt.local / admin</div>
+          <div class="mock-dot" style="background:#28c840"></div>
+          <div class="mock-url">192.168.1.10:3000 — Emes CBT</div>
         </div>
         <div class="mock-body">
           <div class="mock-sidebar">
@@ -342,31 +433,19 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
               <img src="https://i.imgur.com/bT70O4C.png" alt="logo">
               <span>Emes CBT</span>
             </div>
-            <div class="mock-nav-item active"><i class="fa-solid fa-gauge-high"></i> Dashboard</div>
-            <div class="mock-nav-item"><i class="fa-solid fa-book-open"></i> Bank Soal</div>
-            <div class="mock-nav-item"><i class="fa-solid fa-calendar-check"></i> Jadwal</div>
+            <div class="mock-nav-item active"><i class="fa-solid fa-gauge"></i> Dashboard</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-book"></i> Bank Soal</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-calendar"></i> Jadwal</div>
             <div class="mock-nav-item"><i class="fa-solid fa-display"></i> Monitor</div>
-            <div class="mock-nav-item"><i class="fa-solid fa-chart-line"></i> Hasil</div>
-            <div class="mock-nav-item"><i class="fa-solid fa-users"></i> Siswa</div>
-            <div class="mock-nav-item"><i class="fa-solid fa-comments"></i> Chat</div>
-            <div class="mock-nav-item"><i class="fa-solid fa-sliders"></i> Pengaturan</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-chart-bar"></i> Analisis</div>
           </div>
           <div class="mock-main">
             <div class="mock-stat-row">
-              <div class="mock-stat-card"><div class="mock-stat-num">247</div><div class="mock-stat-label">Total Siswa</div></div>
-              <div class="mock-stat-card"><div class="mock-stat-num">18</div><div class="mock-stat-label">Paket Soal</div></div>
-              <div class="mock-stat-card"><div class="mock-stat-num">83.4</div><div class="mock-stat-label">Rata Nilai</div></div>
-              <div class="mock-stat-card"><div class="mock-stat-num">4</div><div class="mock-stat-label">Ujian Aktif</div></div>
+              <div class="mock-stat-card"><div class="mock-stat-num">247</div><div class="mock-stat-label">Siswa Aktif</div></div>
+              <div class="mock-stat-card"><div class="mock-stat-num">18</div><div class="mock-stat-label">Ujian Hari Ini</div></div>
             </div>
             <div class="mock-card" style="margin-bottom:10px">
-              <div class="mock-card-title"><i class="fa-solid fa-display" style="color:var(--g5)"></i> Monitor Live</div>
-              <div class="mock-live-row"><span class="mock-live-name">Ahmad F.</span><span class="mock-live-badge">Mengerjakan</span></div>
-              <div class="mock-live-row"><span class="mock-live-name">Siti N.</span><span class="mock-live-badge">Mengerjakan</span></div>
-              <div class="mock-live-row"><span class="mock-live-name">Budi S.</span><span class="mock-live-badge done">Selesai</span></div>
-              <div class="mock-live-row"><span class="mock-live-name">Rina M.</span><span class="mock-live-badge">Mengerjakan</span></div>
-            </div>
-            <div class="mock-card">
-              <div class="mock-card-title"><i class="fa-solid fa-chart-bar" style="color:var(--g5)"></i> Nilai per Mapel</div>
+              <div class="mock-card-title"><i class="fa-solid fa-chart-bar" style="color:var(--g5)"></i> Nilai Rata-rata</div>
               <div class="mock-bar-chart">
                 <div class="mock-bar-item" style="height:65%"></div>
                 <div class="mock-bar-item" style="height:80%"></div>
@@ -375,6 +454,12 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
                 <div class="mock-bar-item" style="height:72%"></div>
                 <div class="mock-bar-item" style="height:68%"></div>
               </div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-title"><i class="fa-solid fa-circle-dot" style="color:#ef4444"></i> Live Monitor</div>
+              <div class="mock-live-row"><span class="mock-live-name">Andi Saputra</span><span class="mock-live-badge">Mengerjakan</span></div>
+              <div class="mock-live-row"><span class="mock-live-name">Siti Rahma</span><span class="mock-live-badge">Mengerjakan</span></div>
+              <div class="mock-live-row"><span class="mock-live-name">Budi Santoso</span><span class="mock-live-badge done">Selesai</span></div>
             </div>
           </div>
         </div>
@@ -392,283 +477,77 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
       <p class="sec-sub reveal d2">Dari pembuatan soal hingga analisis mendalam — semuanya dalam satu platform yang berjalan di jaringan sekolah Anda.</p>
     </div>
     <div class="feature-grid">
-
       <div class="feat-card reveal d1">
         <div class="feat-icon">🔢</div>
         <div class="feat-title">Rumus KaTeX / LaTeX</div>
         <div class="feat-desc">Render formula matematika, fisika, dan kimia secara native. Guru cukup ketik sintaks LaTeX — tampil indah otomatis di soal maupun pilihan jawaban.</div>
         <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
-
       <div class="feat-card reveal d2">
         <div class="feat-icon">📄</div>
         <div class="feat-title">Import Soal dari Word (.docx)</div>
         <div class="feat-desc">Upload file Word langsung — soal terurai otomatis. Hemat puluhan jam kerja guru yang sudah punya bank soal dalam format Microsoft Word.</div>
         <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
-
       <div class="feat-card reveal d3">
         <div class="feat-icon">📶</div>
         <div class="feat-title">100% Offline Ready</div>
         <div class="feat-desc">Berjalan penuh di jaringan lokal (LAN) sekolah. Internet putus? Ujian tetap berjalan normal — tidak bergantung pada koneksi luar sama sekali.</div>
         <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
-
       <div class="feat-card reveal d1">
         <div class="feat-icon">📡</div>
         <div class="feat-title">Monitor Ujian Real-time</div>
         <div class="feat-desc">Pantau status setiap siswa saat ujian berlangsung — siapa yang sedang mengerjakan, berapa soal dijawab, dan siapa yang sudah selesai. Semuanya live.</div>
         <span class="feat-badge">Fitur Unggulan</span>
       </div>
-
       <div class="feat-card reveal d2">
         <div class="feat-icon">💬</div>
         <div class="feat-title">Chat Guru–Siswa Live</div>
         <div class="feat-desc">Siswa bisa bertanya langsung ke guru saat ujian tanpa keluar dari platform. Guru membalas dari dashboard admin. Tidak ada platform CBT lokal lain yang punya ini.</div>
         <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
-
       <div class="feat-card reveal d3">
         <div class="feat-icon">🔬</div>
         <div class="feat-title">Analisis Butir Soal</div>
         <div class="feat-desc">Setiap soal dianalisis otomatis: tingkat kesukaran, daya beda, dan reliabilitas. Guru tahu soal mana yang perlu direvisi atau dibuang.</div>
         <span class="feat-badge">Psikometri Otomatis</span>
       </div>
-
       <div class="feat-card reveal d1">
         <div class="feat-icon">🔒</div>
         <div class="feat-title">Anti-Tab & Keamanan Ujian</div>
         <div class="feat-desc">Deteksi otomatis jika siswa pindah tab atau keluar dari jendela ujian. Didukung dengan mode exam browser, satu login per sesi, dan randomisasi soal.</div>
         <span class="feat-badge">Integritas Ujian</span>
       </div>
-
       <div class="feat-card reveal d2">
         <div class="feat-icon">📊</div>
         <div class="feat-title">Export Nilai ke Excel</div>
         <div class="feat-desc">Rekap nilai lengkap per kelas, rombel, dan mata pelajaran siap diunduh dalam format .xlsx. Lengkap dengan statistik tuntas/belum tuntas dan rata-rata kelas.</div>
         <span class="feat-badge">Format Siap Raport</span>
       </div>
-
       <div class="feat-card reveal d3">
         <div class="feat-icon">🏷️</div>
         <div class="feat-title">Branding Logo Sekolah</div>
         <div class="feat-desc">Logo dan nama sekolah tampil di seluruh platform — sidebar, halaman login, header ujian, hingga kartu soal cetak. Semua terkunci ke NPSN sekolah Anda.</div>
         <span class="feat-badge">Identitas Sekolah</span>
       </div>
-
       <div class="feat-card reveal d1">
         <div class="feat-icon">✍️</div>
         <div class="feat-title">Koreksi Manual Essay</div>
         <div class="feat-desc">Dashboard khusus untuk guru mengoreksi jawaban uraian. Baca jawaban siswa, beri skor, tambahkan komentar — nilai final terhitung otomatis.</div>
         <span class="feat-badge">Penilaian Holistik</span>
       </div>
-
       <div class="feat-card reveal d2">
         <div class="feat-icon">📋</div>
         <div class="feat-title">Cetak Berita Acara & Kartu Soal</div>
         <div class="feat-desc">Cetak dokumen resmi ujian langsung dari platform dengan kop sekolah, daftar hadir, dan kartu soal. Format PDF siap tanda tangan panitia.</div>
         <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
-
       <div class="feat-card reveal d3">
         <div class="feat-icon">📱</div>
         <div class="feat-title">QR Code Akses Siswa</div>
         <div class="feat-desc">Siswa scan QR Code untuk login ke ujian. Tidak perlu menghafal password panjang — cukup arahkan kamera dan ujian dimulai dalam hitungan detik.</div>
         <span class="feat-badge">Login Instan</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════ PANDUAN ADMIN ════════ -->
-<section id="panduan-admin">
-  <div class="wrap">
-    <div class="sec-header">
-      <span class="sec-label reveal"><i class="fa-solid fa-user-shield"></i> Panel Admin</span>
-      <h2 class="sec-h reveal d1">Panduan Lengkap untuk<br>Admin & Guru</h2>
-      <p class="sec-sub reveal d2">Ikuti langkah-langkah berikut untuk menyiapkan dan menjalankan ujian dari awal hingga rekap nilai.</p>
-    </div>
-    <div class="steps-layout">
-      <div class="steps-nav reveal-l">
-        <div class="step-nav-item active" onclick="scrollToStep(1)">
-          <div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div>
-        </div>
-        <div class="step-nav-item" onclick="scrollToStep(2)">
-          <div class="step-nav-num">2</div><div class="step-nav-label">Data Siswa</div>
-        </div>
-        <div class="step-nav-item" onclick="scrollToStep(3)">
-          <div class="step-nav-num">3</div><div class="step-nav-label">Bank Soal</div>
-        </div>
-        <div class="step-nav-item" onclick="scrollToStep(4)">
-          <div class="step-nav-num">4</div><div class="step-nav-label">Jadwal Ujian</div>
-        </div>
-        <div class="step-nav-item" onclick="scrollToStep(5)">
-          <div class="step-nav-num">5</div><div class="step-nav-label">Monitor & Kontrol</div>
-        </div>
-        <div class="step-nav-item" onclick="scrollToStep(6)">
-          <div class="step-nav-num">6</div><div class="step-nav-label">Hasil & Analisis</div>
-        </div>
-        <div class="step-nav-item" onclick="scrollToStep(7)">
-          <div class="step-nav-num">7</div><div class="step-nav-label">Koreksi Essay</div>
-        </div>
-      </div>
-      <div class="steps-content">
-
-        <div class="step-card" id="step-1">
-          <div class="step-card-header">
-            <div class="step-num-big">1</div>
-            <div><div class="step-title">Pengaturan Awal Sekolah</div><div class="step-subtitle">Menu: Pengaturan → Pengaturan Sistem</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Masuk ke Menu Pengaturan</div><div class="step-item-desc">Login sebagai Admin, klik menu <strong>Pengaturan</strong> di sidebar kiri bagian bawah.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Isi Identitas Sekolah</div><div class="step-item-desc">Masukkan nama sekolah, alamat, nama kepala sekolah, dan NPSN. Data ini akan tampil di seluruh tampilan dan dokumen cetak.</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Upload Logo Sekolah</div><div class="step-item-desc">Klik tombol upload logo. Logo akan otomatis muncul di sidebar, halaman login, dan kartu soal cetak. Format: PNG/JPG, resolusi minimal 128×128px.</div></div></div>
-              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Atur KKM Default & Nama Ujian</div><div class="step-item-desc">Tentukan KKM default (misalnya 75) dan template nama ujian. Nilai ini bisa diubah per paket soal saat membuat ujian.</div></div></div>
-            </div>
-            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Setelah menyimpan, logo dan nama sekolah langsung berubah di seluruh tampilan tanpa perlu reload.</span></div>
-          </div>
-        </div>
-
-        <div class="step-card" id="step-2">
-          <div class="step-card-header">
-            <div class="step-num-big">2</div>
-            <div><div class="step-title">Manajemen Data Siswa</div><div class="step-subtitle">Menu: Data Pengguna → Data Siswa</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Tambah Siswa Manual</div><div class="step-item-desc">Klik tombol <strong>+ Tambah Siswa</strong>, isi nama, NISN, kelas, rombel, dan password awal. Satu siswa selesai dalam 30 detik.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Import Massal dari Excel</div><div class="step-item-desc">Klik <strong>Import Excel</strong>, download template, isi data semua siswa sesuai format, lalu upload. Ratusan siswa bisa diimport sekaligus dalam satu klik.</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Kelola Kelas & Rombel</div><div class="step-item-desc">Siswa dikelompokkan berdasarkan kelas (X, XI, XII) dan rombel (A, B, C, dst). Filter rombel digunakan saat membuat jadwal ujian per kelas.</div></div></div>
-              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Reset Password Siswa</div><div class="step-item-desc">Jika siswa lupa password, admin bisa reset langsung dari tabel Data Siswa — klik ikon edit dan ganti password tanpa menghapus data ujian siswa.</div></div></div>
-            </div>
-            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Template Excel import tersedia langsung di tombol Import — pastikan kolom NISN, nama, kelas, rombel, dan password diisi dengan benar.</span></div>
-          </div>
-        </div>
-
-        <div class="step-card" id="step-3">
-          <div class="step-card-header">
-            <div class="step-num-big">3</div>
-            <div><div class="step-title">Membuat Bank Soal</div><div class="step-subtitle">Menu: Bank Soal → Paket Soal & Butir Soal</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buat Paket Soal Baru</div><div class="step-item-desc">Klik <strong>+ Paket Baru</strong>, isi nama ujian, mata pelajaran, kelas target, jumlah soal, waktu, dan KKM. Paket adalah wadah untuk kumpulan butir soal.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Tambah Butir Soal Manual</div><div class="step-item-desc">Pilih tipe soal (PG, PG Kompleks, Essay, Menjodohkan, Benar/Salah), ketik pertanyaan menggunakan editor kaya — termasuk gambar, rumus KaTeX, dan tabel.</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Import dari Word (.docx)</div><div class="step-item-desc">Punya file Word? Klik <strong>Import Word</strong>, pilih file .docx berisi soal bergaya pilihan ganda standar — sistem otomatis mengurai soal dan opsi jawaban.</div></div></div>
-              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Input Rumus KaTeX</div><div class="step-item-desc">Klik tombol <strong>∑ Rumus</strong> di toolbar editor, pilih template formula atau ketik sintaks LaTeX langsung. Preview muncul real-time sebelum disimpan.</div></div></div>
-              <div class="step-item"><div class="step-item-num">e</div><div class="step-item-content"><div class="step-item-title">Atur Kunci Jawaban & Bobot</div><div class="step-item-desc">Untuk PG, centang opsi yang benar. Untuk essay, tentukan skor maksimal. Bobot nilai dihitung otomatis berdasarkan total soal dan tipe.</div></div></div>
-            </div>
-            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Format Word yang didukung: soal diawali nomor, diikuti 4–5 opsi (A. B. C. D. E.), kunci jawaban di baris terakhir per soal atau di akhir file.</span></div>
-          </div>
-        </div>
-
-        <div class="step-card" id="step-4">
-          <div class="step-card-header">
-            <div class="step-num-big">4</div>
-            <div><div class="step-title">Menjadwalkan Ujian</div><div class="step-subtitle">Menu: Pelaksanaan Ujian → Jadwal Ujian</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buat Jadwal Baru</div><div class="step-item-desc">Klik <strong>+ Jadwal Baru</strong>, pilih paket soal yang sudah dibuat, tentukan tanggal, jam buka, dan jam tutup ujian.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Pilih Target Peserta</div><div class="step-item-desc">Pilih kelas dan rombel yang akan mengikuti ujian ini. Siswa di rombel tersebut otomatis muncul di daftar peserta ujian.</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Atur Token (Opsional)</div><div class="step-item-desc">Aktifkan <strong>Token Ujian</strong> agar siswa harus memasukkan kode yang Anda berikan sebelum bisa mulai. Cocok sebagai kendali tambahan di ruang ujian.</div></div></div>
-              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Aktifkan Randomisasi</div><div class="step-item-desc">Centang <strong>Acak Soal</strong> dan <strong>Acak Jawaban</strong> agar urutan soal dan opsi berbeda setiap siswa — efektif mencegah kecurangan.</div></div></div>
-            </div>
-            <div class="step-warn"><i class="fa-solid fa-triangle-exclamation"></i><span>Pastikan jam buka dan tutup sudah benar sebelum menyimpan. Siswa hanya bisa masuk ke ujian dalam rentang waktu yang ditentukan.</span></div>
-          </div>
-        </div>
-
-        <div class="step-card" id="step-5">
-          <div class="step-card-header">
-            <div class="step-num-big">5</div>
-            <div><div class="step-title">Monitor & Kontrol Ujian Live</div><div class="step-subtitle">Menu: Pelaksanaan Ujian → Monitor Ujian</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Pilih Sesi Ujian yang Dipantau</div><div class="step-item-desc">Dari dropdown, pilih paket soal yang sedang berlangsung. Daftar peserta beserta status langsung muncul dan diperbarui otomatis setiap beberapa detik.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Lihat Status per Siswa</div><div class="step-item-desc">Setiap siswa terlihat: sedang mengerjakan, berapa soal sudah dijawab, berapa menit tersisa, dan apakah sudah selesai submit.</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Paksa Selesai (Force Finish)</div><div class="step-item-desc">Jika diperlukan, admin bisa memaksa siswa tertentu untuk selesai — jawaban yang sudah ada otomatis disimpan dan dinilai.</div></div></div>
-              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Chat dengan Siswa</div><div class="step-item-desc">Siswa yang mengirim pertanyaan via Chat akan muncul notifikasi. Klik menu <strong>Chat Siswa</strong> untuk membalas langsung.</div></div></div>
-            </div>
-            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Halaman Monitor Ujian otomatis refresh — tidak perlu F5. Buka di layar besar atau proyektor untuk memantau seluruh kelas sekaligus.</span></div>
-          </div>
-        </div>
-
-        <div class="step-card" id="step-6">
-          <div class="step-card-header">
-            <div class="step-num-big">6</div>
-            <div><div class="step-title">Lihat Hasil & Analisis</div><div class="step-subtitle">Menu: Hasil & Laporan → Hasil Ujian / Analisa Per-butir</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Rekap Nilai per Kelas</div><div class="step-item-desc">Buka menu <strong>Hasil Ujian</strong>, pilih paket soal. Tabel menampilkan seluruh peserta, nilai, ketuntasan, jumlah benar/salah, dan tanggal ujian.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Export ke Excel</div><div class="step-item-desc">Klik <strong>Export Excel</strong> untuk download rekap dalam format .xlsx. File berisi dua sheet: rekap nilai dan statistik kelas (rata-rata, tuntas, nilai tertinggi/terendah).</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Analisis Butir Soal</div><div class="step-item-desc">Menu <strong>Analisa Per-butir</strong> menampilkan tingkat kesukaran, daya beda, dan reliabilitas setiap soal. Soal bermasalah ditandai otomatis dengan warna dan rekomendasi.</div></div></div>
-              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Leaderboard</div><div class="step-item-desc">Menu <strong>Leaderboard</strong> menampilkan peringkat siswa berdasarkan nilai untuk ujian tertentu. Bisa difilter per kelas dan rombel.</div></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="step-card" id="step-7">
-          <div class="step-card-header">
-            <div class="step-num-big">7</div>
-            <div><div class="step-title">Koreksi Manual Soal Essay</div><div class="step-subtitle">Menu: Hasil & Laporan → Hasil Ujian → Koreksi Essay</div></div>
-          </div>
-          <div class="step-body">
-            <div class="step-items">
-              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buka Daftar Essay yang Belum Dikoreksi</div><div class="step-item-desc">Di tabel Hasil Ujian, siswa dengan soal uraian belum terkoreksi ditandai dengan status <strong>"Belum Dinilai"</strong>. Klik ikon koreksi di kolom aksi.</div></div></div>
-              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Baca Jawaban & Beri Skor</div><div class="step-item-desc">Panel koreksi menampilkan jawaban siswa di sebelah kiri dan kolom penilaian di kanan. Masukkan skor per soal essay sesuai rubrik yang sudah disiapkan.</div></div></div>
-              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Simpan — Nilai Terhitung Otomatis</div><div class="step-item-desc">Setelah klik <strong>Simpan Koreksi</strong>, nilai final siswa dihitung ulang menggabungkan skor PG dan skor essay. Status berubah menjadi "Selesai".</div></div></div>
-            </div>
-            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Nilai final = (Skor PG + Skor Essay) ÷ Total Skor Maksimal × 100. Formula ini berlaku otomatis dan tidak perlu dihitung manual.</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════ PANDUAN SISWA ════════ -->
-<section id="panduan-siswa">
-  <div class="wrap">
-    <div class="sec-header center">
-      <span class="sec-label reveal"><i class="fa-solid fa-graduation-cap"></i> Portal Siswa</span>
-      <h2 class="sec-h reveal d1">Panduan untuk Siswa</h2>
-      <p class="sec-sub reveal d2">Cara menggunakan Emes CBT sebagai peserta ujian — dari login hingga melihat nilai.</p>
-    </div>
-    <div class="siswa-grid">
-      <div class="siswa-card reveal d1">
-        <div class="siswa-card-num">1</div>
-        <div class="siswa-card-title">Login ke Portal Siswa</div>
-        <div class="siswa-card-desc">Buka browser, masukkan alamat server yang diberikan guru (biasanya berupa IP lokal seperti 192.168.x.x). Klik <strong>Login Siswa</strong>, masukkan NISN/username dan password yang diberikan admin.</div>
-      </div>
-      <div class="siswa-card reveal d2">
-        <div class="siswa-card-num">2</div>
-        <div class="siswa-card-title">Lihat Daftar Ujian Tersedia</div>
-        <div class="siswa-card-desc">Setelah masuk, buka menu <strong>Daftar Ujian</strong>. Ujian yang sudah dijadwalkan untuk kelas Anda akan muncul di sini. Status ujian terlihat jelas: aktif, belum dibuka, atau sudah ditutup.</div>
-      </div>
-      <div class="siswa-card reveal d3">
-        <div class="siswa-card-num">3</div>
-        <div class="siswa-card-title">Mulai Ujian</div>
-        <div class="siswa-card-desc">Klik tombol <strong>Mulai Ujian</strong> pada ujian yang aktif. Jika ada token, masukkan kode yang diberikan guru. Baca petunjuk ujian lalu klik Mulai — timer langsung berjalan.</div>
-      </div>
-      <div class="siswa-card reveal d1">
-        <div class="siswa-card-num">4</div>
-        <div class="siswa-card-title">Kerjakan Soal</div>
-        <div class="siswa-card-desc">Klik pilihan jawaban untuk soal PG, atau ketik jawaban untuk soal essay. Navigasi antar soal dengan tombol nomor di panel samping. Jawaban tersimpan otomatis — tidak perlu khawatir jika koneksi terganggu.</div>
-      </div>
-      <div class="siswa-card reveal d2">
-        <div class="siswa-card-num">5</div>
-        <div class="siswa-card-title">Gunakan Fitur Chat (Jika Ada Pertanyaan)</div>
-        <div class="siswa-card-desc">Klik ikon Chat di pojok layar jika ingin bertanya ke guru. Ketik pertanyaan dan kirim — guru akan melihat dan membalas dari panel admin. Jangan keluar dari halaman ujian.</div>
-      </div>
-      <div class="siswa-card reveal d3">
-        <div class="siswa-card-num">6</div>
-        <div class="siswa-card-title">Selesai & Lihat Nilai</div>
-        <div class="siswa-card-desc">Jika semua soal selesai atau waktu habis, klik <strong>Selesai & Kumpulkan</strong>. Nilai untuk soal PG muncul langsung. Untuk essay, tunggu guru selesai mengoreksi — cek di menu <strong>Nilai Saya</strong>.</div>
       </div>
     </div>
   </div>
@@ -683,47 +562,38 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
       <p class="sec-sub reveal d2">Jawaban cepat untuk pertanyaan yang paling sering muncul dari admin dan siswa.</p>
     </div>
     <div class="faq-grid reveal">
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Apakah Emes CBT bisa digunakan tanpa internet? <i class="fa-solid fa-plus"></i></div>
         <div class="faq-a"><div class="faq-a-inner">Ya, sepenuhnya. Emes CBT berjalan di server lokal sekolah (on-premise). Selama komputer server dan komputer siswa terhubung dalam jaringan LAN yang sama, ujian berjalan normal meski internet mati total.</div></div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Berapa banyak siswa yang bisa ujian bersamaan? <i class="fa-solid fa-plus"></i></div>
-        <div class="faq-a"><div class="faq-a-inner">Tidak ada batas siswa yang dipasang di aplikasi. Kapasitas tergantung spesifikasi server sekolah. Rata-rata komputer sekolah biasa mampu menangani 100–300 siswa secara bersamaan dengan baik.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Versi Standard mampu menangani hingga 150–200 siswa bersamaan dengan baik di komputer server biasa. Versi Pro dengan PostgreSQL mampu 500+ siswa bersamaan secara stabil berkat connection pool dan multi-writer database.</div></div>
       </div>
-
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apa perbedaan Standard dan Pro? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Perbedaan utama ada di database engine. Standard menggunakan SQLite yang cocok untuk sekolah kecil-menengah (s/d ~200 siswa bersamaan). Pro menggunakan PostgreSQL dengan connection pool 20 koneksi — cocok untuk sekolah besar atau multi-kelas paralel di atas 300 siswa.</div></div>
+      </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara import soal dari Word? <i class="fa-solid fa-plus"></i></div>
         <div class="faq-a"><div class="faq-a-inner">Buka menu Bank Soal → pilih Paket Soal → klik tombol Import Word. Upload file .docx dengan format: nomor soal, teks soal, opsi A–E di baris terpisah, dan kunci jawaban. Sistem akan mengurai otomatis. Ada panduan format di halaman import.</div></div>
       </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">Apa itu Analisis Butir Soal dan apa manfaatnya? <i class="fa-solid fa-plus"></i></div>
-        <div class="faq-a"><div class="faq-a-inner">Analisis Butir Soal adalah teknik psikometri untuk mengukur kualitas setiap soal. Emes CBT menghitung Tingkat Kesukaran (mudah/sedang/sulit), Daya Beda (soal membedakan siswa pintar dan lemah), dan Reliabilitas (konsistensi soal). Hasilnya membantu guru memperbaiki bank soal.</div></div>
-      </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Apakah data ujian siswa aman? <i class="fa-solid fa-plus"></i></div>
-        <div class="faq-a"><div class="faq-a-inner">Sangat aman. Data tersimpan di server sekolah sendiri — tidak dikirim ke server luar atau cloud manapun. Hanya orang dengan akses jaringan sekolah yang bisa mengakses data tersebut. Ini berbeda dengan platform cloud yang menyimpan data di server vendor.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Sangat aman. Data tersimpan di server sekolah sendiri — tidak dikirim ke server luar atau cloud manapun. Hanya orang dengan akses jaringan sekolah yang bisa mengakses data tersebut.</div></div>
       </div>
-
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana jika siswa tidak sengaja menutup browser saat ujian? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana jika siswa tidak sengaja menutup browser? <i class="fa-solid fa-plus"></i></div>
         <div class="faq-a"><div class="faq-a-inner">Jawaban siswa tersimpan otomatis setiap kali berpindah soal. Jika browser ditutup atau koneksi terputus, siswa bisa login ulang dan melanjutkan dari soal terakhir — selama waktu ujian belum habis.</div></div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Bisakah beberapa guru mengelola soal masing-masing? <i class="fa-solid fa-plus"></i></div>
-        <div class="faq-a"><div class="faq-a-inner">Ya. Admin bisa membuat akun untuk beberapa guru melalui menu Manajemen User. Setiap guru bisa login, membuat paket soal, dan menjadwalkan ujian untuk mata pelajarannya sendiri. Admin tetap punya kontrol penuh atas semua paket soal.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Ya. Admin bisa membuat akun untuk beberapa guru. Setiap guru bisa login, membuat paket soal, dan menjadwalkan ujian untuk mata pelajarannya sendiri. Admin tetap punya kontrol penuh atas semua paket soal.</div></div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">Apakah lisensi bisa dipindah ke sekolah lain? <i class="fa-solid fa-plus"></i></div>
         <div class="faq-a"><div class="faq-a-inner">Tidak. Setiap lisensi Emes CBT dikunci ke NPSN sekolah tertentu. Hal ini untuk memastikan lisensi digunakan hanya oleh sekolah yang berhak, sekaligus menampilkan nama dan logo sekolah yang benar di seluruh platform.</div></div>
       </div>
-
     </div>
   </div>
 </section>
@@ -736,7 +606,6 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
       <h2 class="sec-h reveal d1">Emes CBT vs Platform Lain</h2>
       <p class="sec-sub reveal d2">Bandingkan fitur secara jujur — baik dengan sesama platform CBT Indonesia maupun dengan platform survei umum.</p>
     </div>
-
     <div class="comp-tabs reveal">
       <button class="comp-tab active" onclick="switchTab('cbt')">vs Platform CBT Indonesia</button>
       <button class="comp-tab" onclick="switchTab('umum')">vs Platform Ujian Umum</button>
@@ -745,72 +614,38 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <!-- TAB: CBT Indonesia -->
     <div id="tab-cbt">
       <div class="score-strip reveal">
-        <div class="score-item">
-          <div class="app-name">Emes CBT</div>
-          <div class="score-num winner">29<span style="font-size:13px;opacity:.5">/34</span></div>
-          <div class="score-bar"><div class="score-bar-fill winner-bar" style="width:85%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">Candy CBT</div>
-          <div class="score-num ok">18<span style="font-size:13px;opacity:.5">/34</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:53%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">e-ujian.id</div>
-          <div class="score-num ok">17<span style="font-size:13px;opacity:.5">/34</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:50%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">My Exams</div>
-          <div class="score-num ok">14<span style="font-size:13px;opacity:.5">/34</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:41%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">Moodle</div>
-          <div class="score-num ok">13<span style="font-size:13px;opacity:.5">/34</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:38%"></div></div>
-        </div>
+        <div class="score-item"><div class="app-name">Emes CBT</div><div class="score-num winner">29<span style="font-size:13px;opacity:.5">/34</span></div><div class="score-bar"><div class="score-bar-fill winner-bar" style="width:85%"></div></div></div>
+        <div class="score-item"><div class="app-name">Candy CBT</div><div class="score-num ok">18<span style="font-size:13px;opacity:.5">/34</span></div><div class="score-bar"><div class="score-bar-fill" style="width:53%"></div></div></div>
+        <div class="score-item"><div class="app-name">e-ujian.id</div><div class="score-num ok">17<span style="font-size:13px;opacity:.5">/34</span></div><div class="score-bar"><div class="score-bar-fill" style="width:50%"></div></div></div>
+        <div class="score-item"><div class="app-name">My Exams</div><div class="score-num ok">14<span style="font-size:13px;opacity:.5">/34</span></div><div class="score-bar"><div class="score-bar-fill" style="width:41%"></div></div></div>
+        <div class="score-item"><div class="app-name">Moodle</div><div class="score-num ok">13<span style="font-size:13px;opacity:.5">/34</span></div><div class="score-bar"><div class="score-bar-fill" style="width:38%"></div></div></div>
       </div>
       <div class="comp-table-wrap reveal">
         <table class="ctbl">
-          <thead>
-            <tr>
-              <th>Fitur</th>
-              <th class="emes-col"><img src="https://i.imgur.com/bT70O4C.png" alt="logo">Emes CBT</th>
-              <th>Candy CBT</th>
-              <th>e-ujian.id</th>
-              <th>My Exams</th>
-              <th>Moodle</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Fitur</th><th class="emes-col"><img src="https://i.imgur.com/bT70O4C.png" alt="logo">Emes CBT</th><th>Candy CBT</th><th>e-ujian.id</th><th>My Exams</th><th>Moodle</th></tr></thead>
           <tbody>
             <tr class="cat-row"><td colspan="6">🏛️ Infrastruktur</td></tr>
             <tr><td>Offline / LAN<div class="sub">Tanpa internet</div></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td></tr>
             <tr><td>Mudah install<div class="sub">Non-IT bisa setup</div></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Data di server sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
             <tr><td>Tidak perlu hosting VPS</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">🔢 Fitur Soal</td></tr>
             <tr><td>KaTeX / LaTeX<div class="sub">Rumus matematika native</div></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td></tr>
             <tr><td>Import dari Word (.docx)</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Soal Menjodohkan</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">🔒 Keamanan</td></tr>
             <tr><td>Deteksi pindah tab</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td></tr>
             <tr><td>Satu login per sesi</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">📊 Penilaian</td></tr>
             <tr><td>Analisis butir soal</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td></tr>
             <tr><td>Koreksi essay manual</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
             <tr><td>Export Excel rekap nilai</td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-y">✅</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">🏫 Manajemen</td></tr>
             <tr><td>Monitor real-time</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-p">⚠️</span></td></tr>
             <tr><td>Chat guru–siswa live</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Cetak berita acara</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Branding logo sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Lisensi terkunci NPSN</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">💰 Biaya</td></tr>
             <tr><td>Tanpa biaya hosting tambahan</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Tidak ada biaya per-siswa</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-y">✅</span></td></tr>
@@ -822,71 +657,37 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <!-- TAB: Platform Umum -->
     <div id="tab-umum" style="display:none">
       <div class="score-strip reveal">
-        <div class="score-item">
-          <div class="app-name">Emes CBT</div>
-          <div class="score-num winner">28<span style="font-size:13px;opacity:.5">/32</span></div>
-          <div class="score-bar"><div class="score-bar-fill winner-bar" style="width:87%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">Google Forms</div>
-          <div class="score-num ok">14<span style="font-size:13px;opacity:.5">/32</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:43%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">MS Forms</div>
-          <div class="score-num ok">12<span style="font-size:13px;opacity:.5">/32</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:37%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">Quizizz</div>
-          <div class="score-num ok">11<span style="font-size:13px;opacity:.5">/32</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:34%"></div></div>
-        </div>
-        <div class="score-item">
-          <div class="app-name">Typeform</div>
-          <div class="score-num ok">9<span style="font-size:13px;opacity:.5">/32</span></div>
-          <div class="score-bar"><div class="score-bar-fill" style="width:28%"></div></div>
-        </div>
+        <div class="score-item"><div class="app-name">Emes CBT</div><div class="score-num winner">28<span style="font-size:13px;opacity:.5">/32</span></div><div class="score-bar"><div class="score-bar-fill winner-bar" style="width:87%"></div></div></div>
+        <div class="score-item"><div class="app-name">Google Forms</div><div class="score-num ok">14<span style="font-size:13px;opacity:.5">/32</span></div><div class="score-bar"><div class="score-bar-fill" style="width:43%"></div></div></div>
+        <div class="score-item"><div class="app-name">MS Forms</div><div class="score-num ok">12<span style="font-size:13px;opacity:.5">/32</span></div><div class="score-bar"><div class="score-bar-fill" style="width:37%"></div></div></div>
+        <div class="score-item"><div class="app-name">Quizizz</div><div class="score-num ok">11<span style="font-size:13px;opacity:.5">/32</span></div><div class="score-bar"><div class="score-bar-fill" style="width:34%"></div></div></div>
+        <div class="score-item"><div class="app-name">Typeform</div><div class="score-num ok">9<span style="font-size:13px;opacity:.5">/32</span></div><div class="score-bar"><div class="score-bar-fill" style="width:28%"></div></div></div>
       </div>
       <div class="comp-table-wrap reveal">
         <table class="ctbl">
-          <thead>
-            <tr>
-              <th>Fitur</th>
-              <th class="emes-col"><img src="https://i.imgur.com/bT70O4C.png" alt="logo">Emes CBT</th>
-              <th>Google Forms</th>
-              <th>MS Forms</th>
-              <th>Quizizz</th>
-              <th>Typeform</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Fitur</th><th class="emes-col"><img src="https://i.imgur.com/bT70O4C.png" alt="logo">Emes CBT</th><th>Google Forms</th><th>MS Forms</th><th>Quizizz</th><th>Typeform</th></tr></thead>
           <tbody>
             <tr class="cat-row"><td colspan="6">🎯 Fokus Penggunaan</td></tr>
             <tr><td>Dirancang khusus untuk ujian sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Offline / jaringan lokal</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Data di server sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">🔢 Soal & Konten</td></tr>
             <tr><td>KaTeX / LaTeX rumus</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Import Word (.docx)</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Soal Essay dengan koreksi guru</td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">🔒 Keamanan Ujian</td></tr>
             <tr><td>Anti-tab / deteksi keluar layar</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Randomisasi soal & jawaban</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Token/password sesi ujian</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">📊 Analisis & Rekap</td></tr>
             <tr><td>Analisis butir soal psikometri</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Export Excel rekap per kelas</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td></tr>
             <tr><td>Monitor real-time per siswa</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">🏫 Fitur Khusus Sekolah</td></tr>
             <tr><td>Manajemen siswa & rombel</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Chat guru–siswa</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Cetak kartu soal / berita acara</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Branding logo sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
-
             <tr class="cat-row"><td colspan="6">💰 Biaya</td></tr>
             <tr><td>Tanpa biaya berlangganan cloud</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
             <tr><td>Tidak ada iklan</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
@@ -903,54 +704,301 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
   <div class="wrap">
     <div class="sec-header center">
       <span class="sec-label reveal"><i class="fa-solid fa-tag"></i> Lisensi</span>
-      <h2 class="sec-h reveal d1">Pilih Durasi Lisensi<br>yang Paling Sesuai</h2>
-      <p class="sec-sub reveal d2">Semua paket mendapatkan fitur yang sama. Perbedaan hanya pada durasi aktif. Tidak ada biaya tambahan, tidak ada per-siswa, tidak ada per-guru.</p>
+      <h2 class="sec-h reveal d1">Pilih Versi & Durasi<br>yang Paling Sesuai</h2>
+      <p class="sec-sub reveal d2">Dua versi untuk kebutuhan berbeda. Semua fitur tersedia di kedua versi — perbedaan ada pada kapasitas database dan jumlah siswa bersamaan yang ditangani.</p>
     </div>
-    <div class="pricing-grid reveal">
-      <div class="price-card">
-        <div class="price-plan">1 Semester</div>
-        <div class="price-amount">Aktif ±6 Bulan</div>
-        <div class="price-note">Cocok untuk 1 semester akademik atau coba sebelum komitmen lebih lama</div>
-        <ul class="price-features">
-          <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
-          <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa</li>
-          <li><i class="fa-solid fa-check"></i> Data di server sekolah</li>
-          <li><i class="fa-solid fa-check"></i> Support teknis</li>
-          <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
-        </ul>
+
+    <!-- Toggle Standard / Pro -->
+    <div class="pricing-toggle reveal" id="pricingToggle">
+      <button class="active" onclick="switchPricing('std')">Standard</button>
+      <button onclick="switchPricing('pro')">Pro</button>
+    </div>
+
+    <!-- Standard Pricing -->
+    <div id="pricing-std" class="reveal">
+      <div style="text-align:center;margin-bottom:24px">
+        <span class="tier-badge std"><i class="fa-solid fa-database"></i> Express + SQLite — Cocok untuk sekolah hingga ~200 siswa bersamaan</span>
       </div>
-      <div class="price-card popular">
-        <div class="popular-badge">⭐ TERPOPULER</div>
-        <div class="price-plan">Tahunan</div>
-        <div class="price-amount">Aktif ±12 Bulan</div>
-        <div class="price-note">Hemat untuk 2 semester / 1 tahun ajaran penuh — nilai terbaik per bulan</div>
-        <ul class="price-features">
-          <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
-          <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa</li>
-          <li><i class="fa-solid fa-check"></i> Support prioritas</li>
-          <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
-          <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
-        </ul>
-      </div>
-      <div class="price-card lifetime">
-        <div class="price-plan">Selamanya</div>
-        <div class="price-amount">Lisensi Permanen</div>
-        <div class="price-note">Bayar sekali, pakai selamanya — investasi terbaik untuk sekolah jangka panjang</div>
-        <ul class="price-features">
-          <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
-          <li><i class="fa-solid fa-check"></i> Tidak ada masa kadaluarsa</li>
-          <li><i class="fa-solid fa-check"></i> Update selamanya</li>
-          <li><i class="fa-solid fa-check"></i> Support seumur lisensi</li>
-          <li><i class="fa-solid fa-check"></i> ROI terbaik jangka panjang</li>
-        </ul>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-plan">1 Semester</div>
+          <div class="price-amount">Rp 350.000<small>/lisensi</small></div>
+          <div class="price-note">Aktif ±6 bulan — cocok untuk 1 semester akademik atau coba sebelum komitmen lebih lama</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa terdaftar</li>
+            <li><i class="fa-solid fa-check"></i> Data di server sekolah (SQLite)</li>
+            <li><i class="fa-solid fa-check"></i> Support teknis</li>
+            <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
+            <li><i class="fa-solid fa-check"></i> Kapasitas ~200 siswa bersamaan</li>
+          </ul>
+        </div>
+        <div class="price-card popular">
+          <div class="popular-badge">⭐ TERPOPULER</div>
+          <div class="price-plan">Tahunan</div>
+          <div class="price-amount">Rp 600.000<small>/lisensi</small></div>
+          <div class="price-note">Aktif ±12 bulan — hemat untuk 2 semester / 1 tahun ajaran penuh</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa terdaftar</li>
+            <li><i class="fa-solid fa-check"></i> Data di server sekolah (SQLite)</li>
+            <li><i class="fa-solid fa-check"></i> Support prioritas</li>
+            <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
+            <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
+          </ul>
+        </div>
+        <div class="price-card lifetime">
+          <div class="price-plan">Selamanya</div>
+          <div class="price-amount">Rp 1.200.000<small>/lisensi</small></div>
+          <div class="price-note">Lisensi permanen — bayar sekali, pakai selamanya tanpa masa kadaluarsa</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> Tidak ada masa kadaluarsa</li>
+            <li><i class="fa-solid fa-check"></i> Update selamanya</li>
+            <li><i class="fa-solid fa-check"></i> Support seumur lisensi</li>
+            <li><i class="fa-solid fa-check"></i> ROI terbaik jangka panjang</li>
+          </ul>
+        </div>
       </div>
     </div>
+
+    <!-- Pro Pricing -->
+    <div id="pricing-pro" style="display:none" class="reveal">
+      <div style="text-align:center;margin-bottom:24px">
+        <span class="tier-badge pro"><i class="fa-solid fa-server"></i> Express + PostgreSQL — Cocok untuk sekolah besar, 500+ siswa bersamaan</span>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-plan">1 Semester</div>
+          <div class="price-amount">Rp 500.000<small>/lisensi</small></div>
+          <div class="price-note">Aktif ±6 bulan — database PostgreSQL dengan connection pool 20 koneksi untuk kapasitas tinggi</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> PostgreSQL multi-writer</li>
+            <li><i class="fa-solid fa-check"></i> 500+ siswa bersamaan</li>
+            <li><i class="fa-solid fa-check"></i> Connection pool 20 koneksi</li>
+            <li><i class="fa-solid fa-check"></i> Support teknis prioritas</li>
+            <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
+          </ul>
+        </div>
+        <div class="price-card popular">
+          <div class="popular-badge">⭐ TERPOPULER</div>
+          <div class="price-plan">Tahunan</div>
+          <div class="price-amount">Rp 1.000.000<small>/lisensi</small></div>
+          <div class="price-note">Aktif ±12 bulan — nilai terbaik untuk sekolah besar dengan ujian paralel skala penuh</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> PostgreSQL multi-writer</li>
+            <li><i class="fa-solid fa-check"></i> 500+ siswa bersamaan</li>
+            <li><i class="fa-solid fa-check"></i> Connection pool 20 koneksi</li>
+            <li><i class="fa-solid fa-check"></i> Support prioritas 24/7</li>
+            <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
+          </ul>
+        </div>
+        <div class="price-card lifetime">
+          <div class="price-plan">Selamanya</div>
+          <div class="price-amount">Rp 2.000.000<small>/lisensi</small></div>
+          <div class="price-note">Lisensi permanen Pro — infrastruktur enterprise untuk investasi jangka panjang sekolah</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> PostgreSQL tanpa batas waktu</li>
+            <li><i class="fa-solid fa-check"></i> Tidak ada masa kadaluarsa</li>
+            <li><i class="fa-solid fa-check"></i> Update & support seumur hidup</li>
+            <li><i class="fa-solid fa-check"></i> ROI terbaik untuk sekolah besar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <div class="price-info reveal">
       <i class="fa-solid fa-circle-info"></i>
-      <div><strong>Semua paket mendapatkan fitur yang sama persis</strong> — tidak ada fitur yang dikunci di paket tertentu. Lisensi terkunci ke NPSN sekolah Anda dan tidak bisa dipindahtangankan. Untuk info harga terkini, hubungi kami langsung.</div>
+      <div>Semua lisensi terkunci ke <strong>NPSN sekolah</strong> dan tidak bisa dipindahtangankan. Bingung pilih Standard atau Pro? Lihat <strong><a onclick="scrollToSection('#db-komparasi')" style="color:var(--g3);cursor:pointer">perbandingan kapasitas database</a></strong> di bawah. Untuk info harga terkini, hubungi kami langsung.</div>
     </div>
   </div>
 </section>
+
+<!-- ════════ DB KOMPARASI ════════ -->
+<section id="db-komparasi">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-server"></i> Standard vs Pro</span>
+      <h2 class="sec-h reveal d1">Pilih yang Tepat<br>untuk Sekolah Anda</h2>
+      <p class="sec-sub reveal d2">Kedua versi punya fitur yang sama lengkap. Perbedaannya hanya pada <strong>seberapa banyak siswa bisa ujian bersamaan</strong> dan kemudahan setup awal.</p>
+    </div>
+
+    <!-- Hero capacity cards -->
+    <div class="ver-hero reveal">
+      <div class="ver-hero-card std-card">
+        <div class="ver-hero-badge std-badge">🟢 STANDARD</div>
+        <div class="ver-hero-num">s/d 200</div>
+        <div class="ver-hero-label">siswa bersamaan</div>
+        <div class="ver-hero-sub">Cocok untuk sekolah kecil–menengah<br>1–4 kelas ujian serentak</div>
+      </div>
+      <div class="ver-vs">VS</div>
+      <div class="ver-hero-card pro-card">
+        <div class="ver-hero-badge pro-badge">🔵 PRO</div>
+        <div class="ver-hero-num">500+</div>
+        <div class="ver-hero-label">siswa bersamaan</div>
+        <div class="ver-hero-sub">Cocok untuk sekolah besar<br>Ujian paralel seluruh sekolah</div>
+      </div>
+    </div>
+
+    <!-- Main comparison table -->
+    <div class="ver-table-wrap reveal">
+      <table class="ver-table">
+        <thead>
+          <tr>
+            <th class="ver-th-label">Yang Anda Tanyakan</th>
+            <th class="ver-th-std">🟢 Standard</th>
+            <th class="ver-th-pro">🔵 Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ver-cat"><td colspan="3">🎒 Cocok untuk siapa?</td></tr>
+          <tr>
+            <td class="ver-td-q">Ukuran sekolah ideal</td>
+            <td class="ver-td-std">SD, SMP, SMA kecil–menengah</td>
+            <td class="ver-td-pro">SMA/SMK besar, pesantren besar</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Jumlah siswa bersamaan</td>
+            <td class="ver-td-std"><strong>s/d ~200 siswa</strong> tanpa masalah</td>
+            <td class="ver-td-pro"><strong>500+ siswa</strong> tetap stabil</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Skenario ujian tipikal</td>
+            <td class="ver-td-std">1–4 kelas ujian bersamaan</td>
+            <td class="ver-td-pro">Seluruh sekolah ujian serentak</td>
+          </tr>
+
+          <tr class="ver-cat"><td colspan="3">⚙️ Instalasi & Setup</td></tr>
+          <tr>
+            <td class="ver-td-q">Cara install</td>
+            <td class="ver-td-std">✅ Langsung jalan — tidak perlu install apapun lagi</td>
+            <td class="ver-td-pro">⚠️ Perlu install PostgreSQL dulu di server</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Butuh keahlian IT?</td>
+            <td class="ver-td-std">✅ Tidak — admin sekolah biasa bisa setup</td>
+            <td class="ver-td-pro">⚠️ Sedikit — perlu bantuan teknisi di awal</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Backup data</td>
+            <td class="ver-td-std">✅ Mudah — copy 1 file <code>eschool.db</code></td>
+            <td class="ver-td-pro">✅ Via pg_dump (panduan disediakan)</td>
+          </tr>
+
+          <tr class="ver-cat"><td colspan="3">📚 Fitur Aplikasi</td></tr>
+          <tr>
+            <td class="ver-td-q">Semua fitur ujian lengkap</td>
+            <td class="ver-td-std">✅ Lengkap</td>
+            <td class="ver-td-pro">✅ Lengkap</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">KaTeX / rumus ilmiah</td>
+            <td class="ver-td-std">✅ Ada</td>
+            <td class="ver-td-pro">✅ Ada</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Import soal dari Word</td>
+            <td class="ver-td-std">✅ Ada</td>
+            <td class="ver-td-pro">✅ Ada</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Monitor real-time & chat</td>
+            <td class="ver-td-std">✅ Ada</td>
+            <td class="ver-td-pro">✅ Ada</td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Export Excel nilai</td>
+            <td class="ver-td-std">✅ Ada</td>
+            <td class="ver-td-pro">✅ Ada</td>
+          </tr>
+
+          <tr class="ver-cat"><td colspan="3">💰 Harga</td></tr>
+          <tr>
+            <td class="ver-td-q">1 Semester</td>
+            <td class="ver-td-std"><strong>Rp 350.000</strong></td>
+            <td class="ver-td-pro"><strong>Rp 500.000</strong></td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">1 Tahun</td>
+            <td class="ver-td-std"><strong>Rp 600.000</strong></td>
+            <td class="ver-td-pro"><strong>Rp 1.000.000</strong></td>
+          </tr>
+          <tr>
+            <td class="ver-td-q">Selamanya</td>
+            <td class="ver-td-std"><strong>Rp 1.200.000</strong></td>
+            <td class="ver-td-pro"><strong>Rp 2.000.000</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Rekomendasi + CTA -->
+    <div class="ver-rec-wrap reveal">
+      <div class="ver-rec std-rec">
+        <div class="ver-rec-icon">🟢</div>
+        <div>
+          <div class="ver-rec-title">Pilih Standard jika…</div>
+          <div class="ver-rec-desc">Sekolah Anda memiliki kurang dari 300 siswa aktif, atau tidak pernah mengadakan ujian untuk lebih dari 4–5 kelas sekaligus. Setup mudah, harga lebih terjangkau.</div>
+        </div>
+      </div>
+      <div class="ver-rec pro-rec">
+        <div class="ver-rec-icon">🔵</div>
+        <div>
+          <div class="ver-rec-title">Pilih Pro jika…</div>
+          <div class="ver-rec-desc">Sekolah Anda besar (SMA/SMK 500+ siswa), sering mengadakan ujian untuk seluruh angkatan serentak, atau ingin performa terbaik tanpa khawatir server kewalahan.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:28px" class="reveal">
+      <a onclick="openWAModal()" class="btn-hero btn-primary" style="display:inline-flex"><i class="fa-brands fa-whatsapp"></i> Konsultasi Pilihan Versi via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Version comparison table ────────────────────────────────── */
+.ver-hero{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:40px;flex-wrap:wrap}
+.ver-hero-card{flex:1;min-width:240px;max-width:340px;border-radius:20px;padding:28px 24px;text-align:center}
+.std-card{background:#f0fdf4;border:2px solid #86efac}
+.pro-card{background:#eff6ff;border:2px solid #93c5fd}
+.ver-hero-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;padding:4px 14px;border-radius:100px;margin-bottom:14px}
+.std-badge{background:#dcfce7;color:#166534}
+.pro-badge{background:#dbeafe;color:#1e40af}
+.ver-hero-num{font-size:52px;font-weight:900;line-height:1;font-family:'DM Mono',monospace;margin-bottom:4px}
+.std-card .ver-hero-num{color:#16a34a}
+.pro-card .ver-hero-num{color:#2563eb}
+.ver-hero-label{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.ver-hero-sub{font-size:12.5px;color:var(--mute);line-height:1.6}
+.ver-vs{font-size:20px;font-weight:900;color:var(--mute2);flex-shrink:0}
+
+.ver-table-wrap{border-radius:16px;border:1.5px solid var(--border);overflow:hidden;box-shadow:var(--shadow);margin-bottom:28px}
+table.ver-table{width:100%;border-collapse:collapse;background:#fff}
+table.ver-table thead tr{background:var(--ink)}
+table.ver-table thead th{padding:14px 16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-align:center}
+.ver-th-label{text-align:left!important;color:rgba(255,255,255,.35);font-size:10px!important;width:34%}
+.ver-th-std{color:#86efac;background:#14532d}
+.ver-th-pro{color:#93c5fd;background:#1e3a8a}
+table.ver-table tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
+table.ver-table tbody tr:last-child{border-bottom:none}
+table.ver-table tbody tr:hover:not(.ver-cat){background:#fafffe}
+tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--g2);padding:8px 16px;border-bottom:1px solid var(--g7)}
+.ver-td-q{padding:12px 16px;font-size:13px;font-weight:600;color:var(--ink2);vertical-align:middle}
+.ver-td-std{padding:12px 16px;font-size:13px;text-align:center;vertical-align:middle;background:#f0fdf4;color:#166534;border-left:1px solid #dcfce7}
+.ver-td-pro{padding:12px 16px;font-size:13px;text-align:center;vertical-align:middle;background:#eff6ff;color:#1e40af;border-left:1px solid #dbeafe}
+
+.ver-rec-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px}
+@media(max-width:600px){.ver-rec-wrap{grid-template-columns:1fr}}
+.ver-rec{display:flex;gap:14px;align-items:flex-start;padding:20px;border-radius:16px;border:1.5px solid}
+.std-rec{background:#f0fdf4;border-color:#86efac}
+.pro-rec{background:#eff6ff;border-color:#93c5fd}
+.ver-rec-icon{font-size:28px;flex-shrink:0;line-height:1;margin-top:2px}
+.ver-rec-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.ver-rec-desc{font-size:13px;color:var(--mute);line-height:1.6}
+</style>
 
 <!-- ════════ CTA ════════ -->
 <section id="cta">
@@ -958,8 +1006,8 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <h2 class="reveal">Siap Mulai Ujian Digital<br>di Sekolah Anda?</h2>
     <p class="reveal d1">Bergabung bersama sekolah-sekolah yang sudah menggunakan Emes CBT. Platform CBT on-premise terlengkap untuk sekolah Indonesia.</p>
     <div class="cta-actions reveal d2">
-      <a href="#panduan-admin" class="btn-hero btn-primary"><i class="fa-solid fa-book-open"></i> Baca Panduan Lengkap</a>
-      <a href="#fitur" class="btn-hero btn-secondary"><i class="fa-solid fa-list-check"></i> Lihat Semua Fitur</a>
+      <a onclick="openWAModal()" class="btn-hero btn-primary"><i class="fa-brands fa-whatsapp"></i> Dapatkan Aplikasi</a>
+      <a onclick="showPage('panduan')" class="btn-hero btn-secondary"><i class="fa-solid fa-book-open"></i> Baca Panduan Lengkap</a>
     </div>
   </div>
 </section>
@@ -973,29 +1021,242 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     </div>
     <div>Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
     <div style="display:flex;gap:16px">
-      <a href="#fitur" style="color:rgba(255,255,255,.4)">Fitur</a>
-      <a href="#panduan-admin" style="color:rgba(255,255,255,.4)">Panduan</a>
-      <a href="#komparasi" style="color:rgba(255,255,255,.4)">Komparasi</a>
-      <a href="#harga" style="color:rgba(255,255,255,.4)">Harga</a>
+      <a onclick="scrollToSection('#fitur')" style="color:rgba(255,255,255,.4);cursor:pointer">Fitur</a>
+      <a onclick="showPage('panduan')" style="color:rgba(255,255,255,.4);cursor:pointer">Panduan</a>
+      <a onclick="scrollToSection('#komparasi')" style="color:rgba(255,255,255,.4);cursor:pointer">Komparasi</a>
+      <a onclick="scrollToSection('#harga')" style="color:rgba(255,255,255,.4);cursor:pointer">Harga</a>
     </div>
   </div>
 </footer>
 
+</div><!-- end page-home -->
+
+
+<!-- ══════════════════════════════════════
+     PAGE: PANDUAN
+══════════════════════════════════════ -->
+<div id="page-panduan" class="page">
+
+  <div class="panduan-header">
+    <div class="panduan-header-inner">
+      <div class="hero-badge" style="margin-bottom:16px"><span class="pulse"></span> Dokumentasi Lengkap</div>
+      <h1>Panduan Penggunaan Emes CBT</h1>
+      <p>Panduan lengkap untuk admin, guru, dan siswa — dari instalasi hingga rekap nilai akhir.</p>
+      <div class="panduan-tabs">
+        <button class="panduan-tab active" onclick="switchPanduanTab('admin')"><i class="fa-solid fa-user-shield"></i> Panduan Admin & Guru</button>
+        <button class="panduan-tab" onclick="switchPanduanTab('siswa')"><i class="fa-solid fa-graduation-cap"></i> Panduan Siswa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB ADMIN -->
+  <div class="panduan-body" id="panduan-tab-admin">
+    <div class="steps-layout">
+      <div class="steps-nav">
+        <div class="step-nav-item active" onclick="scrollToStep(1)"><div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(2)"><div class="step-nav-num">2</div><div class="step-nav-label">Data Siswa</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(3)"><div class="step-nav-num">3</div><div class="step-nav-label">Bank Soal</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(4)"><div class="step-nav-num">4</div><div class="step-nav-label">Jadwal Ujian</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(5)"><div class="step-nav-num">5</div><div class="step-nav-label">Monitor & Kontrol</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(6)"><div class="step-nav-num">6</div><div class="step-nav-label">Hasil & Analisis</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(7)"><div class="step-nav-num">7</div><div class="step-nav-label">Koreksi Essay</div></div>
+      </div>
+      <div class="steps-content">
+        <div class="step-card" id="step-1">
+          <div class="step-card-header"><div class="step-num-big">1</div><div><div class="step-title">Pengaturan Awal Sekolah</div><div class="step-subtitle">Menu: Pengaturan → Pengaturan Sistem</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Masuk ke Menu Pengaturan</div><div class="step-item-desc">Login sebagai Admin, klik menu <strong>Pengaturan</strong> di sidebar kiri bagian bawah.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Isi Identitas Sekolah</div><div class="step-item-desc">Masukkan nama sekolah, alamat, nama kepala sekolah, dan NPSN. Data ini akan tampil di seluruh tampilan dan dokumen cetak.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Upload Logo Sekolah</div><div class="step-item-desc">Klik tombol upload logo. Logo akan otomatis muncul di sidebar, halaman login, dan kartu soal cetak. Format: PNG/JPG, resolusi minimal 128×128px.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Atur KKM Default & Nama Ujian</div><div class="step-item-desc">Tentukan KKM default (misalnya 75) dan template nama ujian. Nilai ini bisa diubah per paket soal saat membuat ujian.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Setelah menyimpan, logo dan nama sekolah langsung berubah di seluruh tampilan tanpa perlu reload.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-2">
+          <div class="step-card-header"><div class="step-num-big">2</div><div><div class="step-title">Manajemen Data Siswa</div><div class="step-subtitle">Menu: Data Pengguna → Data Siswa</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Tambah Siswa Manual</div><div class="step-item-desc">Klik tombol <strong>+ Tambah Siswa</strong>, isi nama, NISN, kelas, rombel, dan password awal.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Import Massal dari Excel</div><div class="step-item-desc">Klik <strong>Import Excel</strong>, download template, isi data semua siswa sesuai format, lalu upload. Ratusan siswa bisa diimport sekaligus dalam satu klik.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Kelola Kelas & Rombel</div><div class="step-item-desc">Siswa dikelompokkan berdasarkan kelas (X, XI, XII) dan rombel (A, B, C, dst). Filter rombel digunakan saat membuat jadwal ujian per kelas.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Reset Password Siswa</div><div class="step-item-desc">Jika siswa lupa password, admin bisa reset langsung dari tabel Data Siswa — klik ikon edit dan ganti password tanpa menghapus data ujian siswa.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Template Excel import tersedia langsung di tombol Import — pastikan kolom NISN, nama, kelas, rombel, dan password diisi dengan benar.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-3">
+          <div class="step-card-header"><div class="step-num-big">3</div><div><div class="step-title">Membuat Bank Soal</div><div class="step-subtitle">Menu: Bank Soal → Paket Soal & Butir Soal</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buat Paket Soal Baru</div><div class="step-item-desc">Klik <strong>+ Paket Baru</strong>, isi nama ujian, mata pelajaran, kelas target, jumlah soal, waktu, dan KKM.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Tambah Butir Soal Manual</div><div class="step-item-desc">Pilih tipe soal (PG, PG Kompleks, Essay, Menjodohkan, Benar/Salah), ketik pertanyaan menggunakan editor kaya — termasuk gambar, rumus KaTeX, dan tabel.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Import dari Word (.docx)</div><div class="step-item-desc">Punya file Word? Klik <strong>Import Word</strong>, pilih file .docx berisi soal bergaya pilihan ganda standar — sistem otomatis mengurai soal dan opsi jawaban.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Input Rumus KaTeX</div><div class="step-item-desc">Klik tombol <strong>∑ Rumus</strong> di toolbar editor, pilih template formula atau ketik sintaks LaTeX langsung. Preview muncul real-time sebelum disimpan.</div></div></div>
+              <div class="step-item"><div class="step-item-num">e</div><div class="step-item-content"><div class="step-item-title">Atur Kunci Jawaban & Bobot</div><div class="step-item-desc">Untuk PG, centang opsi yang benar. Untuk essay, tentukan skor maksimal. Bobot nilai dihitung otomatis berdasarkan total soal dan tipe.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Format Word yang didukung: soal diawali nomor, diikuti 4–5 opsi (A. B. C. D. E.), kunci jawaban di baris terakhir per soal atau di akhir file.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-4">
+          <div class="step-card-header"><div class="step-num-big">4</div><div><div class="step-title">Menjadwalkan Ujian</div><div class="step-subtitle">Menu: Pelaksanaan Ujian → Jadwal Ujian</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buat Jadwal Baru</div><div class="step-item-desc">Klik <strong>+ Jadwal Baru</strong>, pilih paket soal yang sudah dibuat, tentukan tanggal, jam buka, dan jam tutup ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Pilih Target Peserta</div><div class="step-item-desc">Pilih kelas dan rombel yang akan mengikuti ujian ini. Siswa di rombel tersebut otomatis muncul di daftar peserta ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Atur Token (Opsional)</div><div class="step-item-desc">Aktifkan <strong>Token Ujian</strong> agar siswa harus memasukkan kode yang Anda berikan sebelum bisa mulai. Cocok sebagai kendali tambahan di ruang ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Aktifkan Randomisasi</div><div class="step-item-desc">Centang <strong>Acak Soal</strong> dan <strong>Acak Jawaban</strong> agar urutan soal dan opsi berbeda setiap siswa — efektif mencegah kecurangan.</div></div></div>
+            </div>
+            <div class="step-warn"><i class="fa-solid fa-triangle-exclamation"></i><span>Pastikan jam buka dan tutup sudah benar sebelum menyimpan. Siswa hanya bisa masuk ke ujian dalam rentang waktu yang ditentukan.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-5">
+          <div class="step-card-header"><div class="step-num-big">5</div><div><div class="step-title">Monitor & Kontrol Ujian Live</div><div class="step-subtitle">Menu: Pelaksanaan Ujian → Monitor Ujian</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Pilih Sesi Ujian yang Dipantau</div><div class="step-item-desc">Dari dropdown, pilih paket soal yang sedang berlangsung. Daftar peserta beserta status langsung muncul dan diperbarui otomatis.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Lihat Status per Siswa</div><div class="step-item-desc">Setiap siswa terlihat: sedang mengerjakan, berapa soal sudah dijawab, berapa menit tersisa, dan apakah sudah selesai submit.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Paksa Selesai (Force Finish)</div><div class="step-item-desc">Jika diperlukan, admin bisa memaksa siswa tertentu untuk selesai — jawaban yang sudah ada otomatis disimpan dan dinilai.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Chat dengan Siswa</div><div class="step-item-desc">Siswa yang mengirim pertanyaan via Chat akan muncul notifikasi. Klik menu <strong>Chat Siswa</strong> untuk membalas langsung.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Halaman Monitor Ujian otomatis refresh — tidak perlu F5. Buka di layar besar atau proyektor untuk memantau seluruh kelas sekaligus.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-6">
+          <div class="step-card-header"><div class="step-num-big">6</div><div><div class="step-title">Lihat Hasil & Analisis</div><div class="step-subtitle">Menu: Hasil & Laporan → Hasil Ujian / Analisa Per-butir</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Rekap Nilai per Kelas</div><div class="step-item-desc">Buka menu <strong>Hasil Ujian</strong>, pilih paket soal. Tabel menampilkan seluruh peserta, nilai, ketuntasan, jumlah benar/salah, dan tanggal ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Export ke Excel</div><div class="step-item-desc">Klik <strong>Export Excel</strong> untuk download rekap dalam format .xlsx. File berisi dua sheet: rekap nilai dan statistik kelas.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Analisis Butir Soal</div><div class="step-item-desc">Menu <strong>Analisa Per-butir</strong> menampilkan tingkat kesukaran, daya beda, dan reliabilitas setiap soal. Soal bermasalah ditandai otomatis.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Leaderboard</div><div class="step-item-desc">Menu <strong>Leaderboard</strong> menampilkan peringkat siswa berdasarkan nilai. Bisa difilter per kelas dan rombel.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-7">
+          <div class="step-card-header"><div class="step-num-big">7</div><div><div class="step-title">Koreksi Manual Soal Essay</div><div class="step-subtitle">Menu: Hasil & Laporan → Hasil Ujian → Koreksi Essay</div></div></div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buka Daftar Essay yang Belum Dikoreksi</div><div class="step-item-desc">Di tabel Hasil Ujian, siswa dengan soal uraian belum terkoreksi ditandai dengan status <strong>"Belum Dinilai"</strong>. Klik ikon koreksi di kolom aksi.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Baca Jawaban & Beri Skor</div><div class="step-item-desc">Panel koreksi menampilkan jawaban siswa di sebelah kiri dan kolom penilaian di kanan. Masukkan skor per soal essay sesuai rubrik.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Simpan — Nilai Terhitung Otomatis</div><div class="step-item-desc">Setelah klik <strong>Simpan Koreksi</strong>, nilai final siswa dihitung ulang menggabungkan skor PG dan skor essay. Status berubah menjadi "Selesai".</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Nilai final = (Skor PG + Skor Essay) ÷ Total Skor Maksimal × 100. Formula ini berlaku otomatis dan tidak perlu dihitung manual.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB SISWA -->
+  <div class="panduan-body" id="panduan-tab-siswa" style="display:none">
+    <div class="siswa-grid">
+      <div class="siswa-card">
+        <div class="siswa-card-num">1</div>
+        <div class="siswa-card-title">Login ke Portal Siswa</div>
+        <div class="siswa-card-desc">Buka browser, masukkan alamat server yang diberikan guru (biasanya berupa IP lokal seperti 192.168.x.x). Klik <strong>Login Siswa</strong>, masukkan NISN/username dan password yang diberikan admin.</div>
+      </div>
+      <div class="siswa-card">
+        <div class="siswa-card-num">2</div>
+        <div class="siswa-card-title">Lihat Daftar Ujian Tersedia</div>
+        <div class="siswa-card-desc">Setelah masuk, buka menu <strong>Daftar Ujian</strong>. Ujian yang sudah dijadwalkan untuk kelas Anda akan muncul di sini. Status ujian terlihat jelas: aktif, belum dibuka, atau sudah ditutup.</div>
+      </div>
+      <div class="siswa-card">
+        <div class="siswa-card-num">3</div>
+        <div class="siswa-card-title">Mulai Ujian</div>
+        <div class="siswa-card-desc">Klik tombol <strong>Mulai Ujian</strong> pada ujian yang aktif. Jika ada token, masukkan kode yang diberikan guru. Baca petunjuk ujian lalu klik Mulai — timer langsung berjalan.</div>
+      </div>
+      <div class="siswa-card">
+        <div class="siswa-card-num">4</div>
+        <div class="siswa-card-title">Kerjakan Soal</div>
+        <div class="siswa-card-desc">Klik pilihan jawaban untuk soal PG, atau ketik jawaban untuk soal essay. Navigasi antar soal dengan tombol nomor di panel samping. Jawaban tersimpan otomatis — tidak perlu khawatir jika koneksi terganggu sejenak.</div>
+      </div>
+      <div class="siswa-card">
+        <div class="siswa-card-num">5</div>
+        <div class="siswa-card-title">Gunakan Fitur Chat</div>
+        <div class="siswa-card-desc">Klik ikon Chat di pojok layar jika ingin bertanya ke guru. Ketik pertanyaan dan kirim — guru akan melihat dan membalas dari panel admin. Jangan keluar dari halaman ujian.</div>
+      </div>
+      <div class="siswa-card">
+        <div class="siswa-card-num">6</div>
+        <div class="siswa-card-title">Selesai & Lihat Nilai</div>
+        <div class="siswa-card-desc">Jika semua soal selesai atau waktu habis, klik <strong>Selesai & Kumpulkan</strong>. Nilai untuk soal PG muncul langsung. Untuk essay, tunggu guru selesai mengoreksi — cek di menu <strong>Nilai Saya</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer di halaman panduan -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
+        <span>Emes CBT System</span>
+      </div>
+      <div>Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
+      <div style="display:flex;gap:16px">
+        <a onclick="showPage('home');scrollToSection('#fitur')" style="color:rgba(255,255,255,.4);cursor:pointer">Fitur</a>
+        <a onclick="showPage('home');scrollToSection('#komparasi')" style="color:rgba(255,255,255,.4);cursor:pointer">Komparasi</a>
+        <a onclick="showPage('home');scrollToSection('#harga')" style="color:rgba(255,255,255,.4);cursor:pointer">Harga</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- end page-panduan -->
+
+
 <script>
-// ── Navbar scroll
+// ── SPA Page Navigation ────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0,0);
+
+  const nav = document.getElementById('mainNav');
+  if (id === 'panduan') {
+    nav.classList.add('solid');
+    document.getElementById('nav-panduan').classList.add('active-link');
+  } else {
+    nav.classList.remove('solid');
+    document.getElementById('nav-panduan').classList.remove('active-link');
+    // re-trigger reveal animations for home page
+    setTimeout(() => {
+      document.querySelectorAll('#page-home .reveal, #page-home .reveal-l, #page-home .reveal-r').forEach(el => {
+        if (!el.classList.contains('visible')) observer.observe(el);
+      });
+    }, 50);
+  }
+}
+
+// ── Scroll to anchor inside active page ───────────────────────
+function scrollToSection(selector) {
+  setTimeout(() => {
+    const el = document.querySelector(selector);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+// ── Navbar scroll ──────────────────────────────────────────────
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+  if (!nav.classList.contains('solid')) {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }
   highlightStepNav();
 });
 
-// ── Scroll reveal
+// ── Scroll reveal ──────────────────────────────────────────────
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => observer.observe(el));
 
-// ── FAQ toggle
+// ── FAQ toggle ─────────────────────────────────────────────────
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
   const wasOpen = item.classList.contains('open');
@@ -1003,7 +1264,7 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
-// ── Comparison tabs
+// ── Comparison tabs ────────────────────────────────────────────
 function switchTab(tab) {
   document.getElementById('tab-cbt').style.display = tab === 'cbt' ? '' : 'none';
   document.getElementById('tab-umum').style.display = tab === 'umum' ? '' : 'none';
@@ -1012,7 +1273,17 @@ function switchTab(tab) {
   });
 }
 
-// ── Step navigation
+// ── Pricing toggle Standard / Pro ─────────────────────────────
+function switchPricing(tier) {
+  const isStd = tier === 'std';
+  document.getElementById('pricing-std').style.display = isStd ? '' : 'none';
+  document.getElementById('pricing-pro').style.display = isStd ? 'none' : '';
+  const btns = document.querySelectorAll('#pricingToggle button');
+  btns[0].classList.toggle('active', isStd);
+  btns[1].classList.toggle('active', !isStd);
+}
+
+// ── Step navigation (panduan page) ────────────────────────────
 function scrollToStep(n) {
   const el = document.getElementById('step-' + n);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1032,6 +1303,198 @@ function highlightStepNav() {
       break;
     }
   }
+}
+
+// ── Panduan sub-tab (Admin / Siswa) ───────────────────────────
+function switchPanduanTab(tab) {
+  document.getElementById('panduan-tab-admin').style.display = tab === 'admin' ? '' : 'none';
+  document.getElementById('panduan-tab-siswa').style.display = tab === 'siswa' ? '' : 'none';
+  document.querySelectorAll('.panduan-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', (tab === 'admin' && i === 0) || (tab === 'siswa' && i === 1));
+  });
+}
+
+// ── WhatsApp Modal ─────────────────────────────────────────────
+function openWAModal() {
+  document.getElementById('waModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeWAModal() {
+  document.getElementById('waModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function sendWA() {
+  const npsn     = document.getElementById('wa-npsn').value.trim();
+  const sekolah  = document.getElementById('wa-sekolah').value.trim();
+  const jenjang  = document.getElementById('wa-jenjang').value;
+  const kota     = document.getElementById('wa-kota').value.trim();
+  const provinsi = document.getElementById('wa-provinsi').value.trim();
+  const versi    = document.getElementById('wa-versi').value;
+
+  const fields = [
+    { el: document.getElementById('wa-npsn'),     val: npsn,     label: 'NPSN' },
+    { el: document.getElementById('wa-sekolah'),  val: sekolah,  label: 'Nama Sekolah' },
+    { el: document.getElementById('wa-jenjang'),  val: jenjang,  label: 'Jenjang' },
+    { el: document.getElementById('wa-kota'),     val: kota,     label: 'Kab/Kota' },
+    { el: document.getElementById('wa-provinsi'), val: provinsi, label: 'Provinsi' },
+    { el: document.getElementById('wa-versi'),    val: versi,    label: 'Versi' },
+  ];
+
+  let valid = true;
+  fields.forEach(f => {
+    f.el.style.borderColor = '';
+    if (!f.val) { f.el.style.borderColor = '#ef4444'; valid = false; }
+  });
+  if (!valid) {
+    document.getElementById('wa-error').style.display = 'flex';
+    return;
+  }
+  document.getElementById('wa-error').style.display = 'none';
+
+  const versiLabel = { 'TRIAL': 'TRIAL (Coba Gratis)', 'STANDAR': 'Standar', 'PRO': 'Pro' }[versi] || versi;
+  const msg = `Halo, saya ingin mendapatkan aplikasi *Emes CBT* 🎓
+
+📋 *Data Sekolah:*
+• NPSN        : ${npsn}
+• Nama Sekolah: ${sekolah}
+• Jenjang     : ${jenjang}
+• Kab/Kota    : ${kota}
+• Provinsi    : ${provinsi}
+
+📦 *Versi yang diminati:* ${versiLabel}
+
+Mohon informasi lebih lanjut. Terima kasih!`;
+
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/6289619760801?text=${encoded}`, '_blank');
+  closeWAModal();
+}
+
+// Close modal on backdrop click
+document.addEventListener('click', function(e) {
+  if (e.target.id === 'waModal') closeWAModal();
+});
+</script>
+
+<!-- ══ WHATSAPP MODAL ══════════════════════════════════════════ -->
+<style>
+/* Modal overlay */
+#waModal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+#waModal.open{opacity:1;pointer-events:all}
+.wa-box{background:#fff;border-radius:24px;width:100%;max-width:480px;box-shadow:0 32px 80px rgba(0,0,0,.25);overflow:hidden;transform:translateY(20px);transition:transform .25s}
+#waModal.open .wa-box{transform:translateY(0)}
+.wa-head{background:linear-gradient(135deg,#075e54,#128c7e);padding:22px 24px 20px;display:flex;align-items:center;justify-content:space-between}
+.wa-head-left{display:flex;align-items:center;gap:12px}
+.wa-head-icon{width:44px;height:44px;background:rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
+.wa-head h3{font-size:16px;font-weight:800;color:#fff;margin-bottom:2px}
+.wa-head p{font-size:11.5px;color:rgba(255,255,255,.65)}
+.wa-close{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.wa-close:hover{background:rgba(255,255,255,.25)}
+.wa-body{padding:24px}
+.wa-field{margin-bottom:14px}
+.wa-field label{display:block;font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:5px;letter-spacing:.02em}
+.wa-field input,.wa-field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:#fff;outline:none;transition:border-color .15s}
+.wa-field input:focus,.wa-field select:focus{border-color:var(--g3)}
+.wa-field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wa-error{display:none;align-items:center;gap:8px;background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:9px 12px;font-size:12px;color:#991b1b;margin-bottom:14px}
+.wa-error i{flex-shrink:0}
+/* versi pills */
+.wa-versi-group{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wa-versi-btn{padding:9px 6px;border:1.5px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;text-align:center;transition:all .15s;font-family:'DM Sans',sans-serif}
+.wa-versi-btn input[type=radio]{display:none}
+.wa-versi-btn .vb-name{font-size:13px;font-weight:700;color:var(--mute);display:block}
+.wa-versi-btn .vb-desc{font-size:10px;color:var(--mute2);display:block;margin-top:2px}
+.wa-versi-btn.selected{border-color:var(--g3);background:var(--g8)}
+.wa-versi-btn.selected .vb-name{color:var(--g2)}
+.wa-submit{width:100%;padding:13px;background:#25d366;border:none;border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .2s,transform .15s;margin-top:4px}
+.wa-submit:hover{background:#1ebe5d;transform:translateY(-1px)}
+.wa-note{text-align:center;font-size:11px;color:var(--mute2);margin-top:10px}
+</style>
+
+<div id="waModal">
+  <div class="wa-box">
+    <div class="wa-head">
+      <div class="wa-head-left">
+        <div class="wa-head-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <div>
+          <h3>Dapatkan Aplikasi Emes CBT</h3>
+          <p>Isi data sekolah — kami balas via WhatsApp</p>
+        </div>
+      </div>
+      <button class="wa-close" onclick="closeWAModal()">✕</button>
+    </div>
+    <div class="wa-body">
+      <div id="wa-error" class="wa-error"><i class="fa-solid fa-circle-exclamation"></i> Harap lengkapi semua data sekolah.</div>
+
+      <div class="wa-field-row">
+        <div class="wa-field">
+          <label>NPSN <span style="color:#ef4444">*</span></label>
+          <input id="wa-npsn" type="text" placeholder="Contoh: 20123456" maxlength="12">
+        </div>
+        <div class="wa-field">
+          <label>Jenjang <span style="color:#ef4444">*</span></label>
+          <select id="wa-jenjang">
+            <option value="">— Pilih —</option>
+            <option>SD / MI</option>
+            <option>SMP / MTs</option>
+            <option>SMA / MA</option>
+            <option>SMK</option>
+            <option>SLB</option>
+            <option>Pesantren</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="wa-field">
+        <label>Nama Sekolah <span style="color:#ef4444">*</span></label>
+        <input id="wa-sekolah" type="text" placeholder="Contoh: SMA Negeri 1 Pontianak">
+      </div>
+
+      <div class="wa-field-row">
+        <div class="wa-field">
+          <label>Kab / Kota <span style="color:#ef4444">*</span></label>
+          <input id="wa-kota" type="text" placeholder="Contoh: Kota Pontianak">
+        </div>
+        <div class="wa-field">
+          <label>Provinsi <span style="color:#ef4444">*</span></label>
+          <input id="wa-provinsi" type="text" placeholder="Contoh: Kalimantan Barat">
+        </div>
+      </div>
+
+      <div class="wa-field">
+        <label>Versi yang Diminati <span style="color:#ef4444">*</span></label>
+        <input type="hidden" id="wa-versi" value="">
+        <div class="wa-versi-group">
+          <label class="wa-versi-btn" onclick="selectVersi(this,'TRIAL')">
+            <span class="vb-name">🎁 Trial</span>
+            <span class="vb-desc">Coba gratis dulu</span>
+          </label>
+          <label class="wa-versi-btn" onclick="selectVersi(this,'STANDAR')">
+            <span class="vb-name">🟢 Standar</span>
+            <span class="vb-desc">SQLite — s/d 200 siswa</span>
+          </label>
+          <label class="wa-versi-btn" onclick="selectVersi(this,'PRO')">
+            <span class="vb-name">🔵 Pro</span>
+            <span class="vb-desc">PostgreSQL — 500+ siswa</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="wa-submit" onclick="sendWA()">
+        <i class="fa-brands fa-whatsapp" style="font-size:20px"></i>
+        Kirim via WhatsApp
+      </button>
+      <div class="wa-note">Pesan otomatis terbuka di WhatsApp — tidak ada data disimpan di server kami.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectVersi(el, val) {
+  document.querySelectorAll('.wa-versi-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('wa-versi').value = val;
+  document.getElementById('wa-versi').style.borderColor = '';
 }
 </script>
 </body>
