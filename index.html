@@ -385,6 +385,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
   </div>
   <div class="nav-links" id="navLinks">
     <a onclick="showPage('home');scrollToSection('#fitur')">Fitur</a>
+    <a onclick="showPage('home');scrollToSection('#cara-pakai')">Cara Pakai</a>
     <a onclick="showPage('panduan')" id="nav-panduan">Panduan</a>
     <a onclick="showPage('home');scrollToSection('#faq')">FAQ</a>
     <a onclick="showPage('home');scrollToSection('#komparasi')">Komparasi</a>
@@ -467,6 +468,148 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     </div>
   </div>
 </section>
+
+<!-- ════════ CARA PAKAI ════════ -->
+<section id="cara-pakai" style="background:#fff;padding:72px 40px">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-bolt"></i> Semudah Ini</span>
+      <h2 class="sec-h reveal d1">Mulai dalam 3 Langkah.<br>Tanpa Install Apapun.</h2>
+      <p class="sec-sub reveal d2">Tidak perlu server khusus, tidak perlu teknisi IT, tidak perlu koneksi internet. Cukup komputer yang ada di sekolah Anda.</p>
+    </div>
+
+    <div class="cp-steps reveal">
+      <!-- Step 1 -->
+      <div class="cp-step">
+        <div class="cp-line"></div>
+        <div class="cp-num">1</div>
+        <div class="cp-content">
+          <div class="cp-icon">📦</div>
+          <div class="cp-step-title">Ekstrak File</div>
+          <div class="cp-step-desc">Download file Emes CBT, ekstrak ke folder mana saja di komputer. Tidak perlu proses instalasi — semua sudah siap di dalam folder tersebut.</div>
+          <div class="cp-terminal">
+            <div class="cp-terminal-bar"><span></span><span></span><span></span></div>
+            <div class="cp-terminal-body">
+              <div class="cp-terminal-line"><span class="ct-dim">📁</span> Emes-CBT/</div>
+              <div class="cp-terminal-line"><span class="ct-dim">  ├─</span> <span class="ct-folder">app/</span></div>
+              <div class="cp-terminal-line"><span class="ct-dim">  ├─</span> <span class="ct-folder">node-portable/</span></div>
+              <div class="cp-terminal-line"><span class="ct-dim">  ├─</span> <span class="ct-folder">pgsql/</span> <span class="ct-comment">← sudah termasuk Pro</span></div>
+              <div class="cp-terminal-line"><span class="ct-dim">  ├─</span> <span class="ct-bat">Jalankan CBT.bat</span></div>
+              <div class="cp-terminal-line"><span class="ct-dim">  └─</span> <span class="ct-bat">Matikan Server.bat</span></div>
+            </div>
+          </div>
+          <div class="cp-badge-row">
+            <span class="cp-badge green"><i class="fa-solid fa-check"></i> Tidak perlu install Node.js</span>
+            <span class="cp-badge green"><i class="fa-solid fa-check"></i> Tidak perlu install PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="cp-step">
+        <div class="cp-line"></div>
+        <div class="cp-num">2</div>
+        <div class="cp-content">
+          <div class="cp-icon">▶️</div>
+          <div class="cp-step-title">Klik "Jalankan CBT.bat"</div>
+          <div class="cp-step-desc">Double-klik file <strong>Jalankan CBT.bat</strong> — server langsung aktif. Muncul jendela hitam kecil yang menandakan server sedang berjalan. Buka browser, ketik alamat IP server, dan platform siap digunakan.</div>
+          <div class="cp-terminal">
+            <div class="cp-terminal-bar"><span></span><span></span><span></span></div>
+            <div class="cp-terminal-body">
+              <div class="cp-terminal-line"><span class="ct-green">╔══════════════════════════════════════════╗</span></div>
+              <div class="cp-terminal-line"><span class="ct-green">║</span>  Emes CBT Pro — Server Aktif             <span class="ct-green">║</span></div>
+              <div class="cp-terminal-line"><span class="ct-green">╚══════════════════════════════════════════╝</span></div>
+              <div class="cp-terminal-line" style="margin-top:6px"><span class="ct-dim">Akses dari komputer ini :</span> <span class="ct-url">http://localhost:3000</span></div>
+              <div class="cp-terminal-line"><span class="ct-dim">Akses dari komputer lain:</span> <span class="ct-url">http://192.168.1.10:3000</span></div>
+              <div class="cp-terminal-line" style="margin-top:6px"><span class="ct-green">✔</span> <span class="ct-dim">Database terhubung. Siap digunakan.</span></div>
+            </div>
+          </div>
+          <div class="cp-badge-row">
+            <span class="cp-badge green"><i class="fa-solid fa-check"></i> Siswa langsung bisa akses dari browser masing-masing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="cp-step">
+        <div class="cp-num last">3</div>
+        <div class="cp-content">
+          <div class="cp-icon">⏹️</div>
+          <div class="cp-step-title">Klik "Matikan Server.bat" setelah selesai</div>
+          <div class="cp-step-desc">Ujian selesai? Double-klik <strong>Matikan Server.bat</strong> — server berhenti, semua data sudah tersimpan aman. Tidak ada proses rumit, tidak ada risiko data hilang.</div>
+          <div class="cp-terminal">
+            <div class="cp-terminal-bar"><span></span><span></span><span></span></div>
+            <div class="cp-terminal-body">
+              <div class="cp-terminal-line"><span class="ct-dim">Menghentikan server...</span></div>
+              <div class="cp-terminal-line"><span class="ct-green">✔</span> <span class="ct-dim">Server berhasil dihentikan.</span></div>
+              <div class="cp-terminal-line"><span class="ct-green">✔</span> <span class="ct-dim">Semua data ujian tersimpan.</span></div>
+              <div class="cp-terminal-line" style="margin-top:6px"><span class="ct-dim">Tekan sembarang tombol untuk menutup...</span></div>
+            </div>
+          </div>
+          <div class="cp-badge-row">
+            <span class="cp-badge green"><i class="fa-solid fa-check"></i> Data aman tersimpan otomatis</span>
+            <span class="cp-badge green"><i class="fa-solid fa-check"></i> Bisa dijalankan lagi kapanpun</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callout bottom -->
+    <div class="cp-callout reveal">
+      <div class="cp-callout-icon">💡</div>
+      <div>
+        <div class="cp-callout-title">Tidak ada platform CBT sejenis yang semudah ini</div>
+        <div class="cp-callout-desc">Platform CBT lain butuh install Node.js, database terpisah, konfigurasi server, atau bahkan VPS berbayar. Emes CBT hadir lengkap dalam satu folder — ekstrak, jalankan, selesai.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Cara Pakai Steps ─────────────────────────────────────── */
+.cp-steps{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto 40px}
+.cp-step{display:flex;gap:0;position:relative}
+.cp-line{position:absolute;left:27px;top:56px;bottom:-10px;width:2px;background:linear-gradient(to bottom,var(--g4),var(--g7));z-index:0}
+.cp-step:last-child .cp-line{display:none}
+.cp-num{width:56px;height:56px;border-radius:16px;background:var(--g3);color:#fff;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;z-index:1;margin-top:0;box-shadow:0 6px 20px rgba(5,150,105,.3);align-self:flex-start}
+.cp-num.last{background:var(--ink)}
+.cp-content{flex:1;padding:0 0 48px 24px}
+.cp-icon{font-size:28px;margin-bottom:8px}
+.cp-step-title{font-size:19px;font-weight:800;color:var(--ink);margin-bottom:8px;line-height:1.3}
+.cp-step-desc{font-size:14px;color:var(--mute);line-height:1.7;margin-bottom:16px;max-width:580px}
+/* terminal mock */
+.cp-terminal{background:#0d1117;border-radius:12px;overflow:hidden;margin-bottom:14px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.cp-terminal-bar{background:#1c1c1e;padding:9px 14px;display:flex;gap:6px}
+.cp-terminal-bar span{width:11px;height:11px;border-radius:50%}
+.cp-terminal-bar span:nth-child(1){background:#ff5f57}
+.cp-terminal-bar span:nth-child(2){background:#ffbd2e}
+.cp-terminal-bar span:nth-child(3){background:#28c840}
+.cp-terminal-body{padding:14px 18px;font-family:'DM Mono',monospace;font-size:12.5px;line-height:1.8}
+.cp-terminal-line{white-space:pre-wrap;word-break:break-all}
+.ct-dim{color:#6b7280}
+.ct-green{color:#34d399}
+.ct-url{color:#60a5fa}
+.ct-folder{color:#fbbf24}
+.ct-bat{color:#86efac;font-weight:700}
+.ct-comment{color:#4b5563;font-size:11px}
+/* badges */
+.cp-badge-row{display:flex;flex-wrap:wrap;gap:8px}
+.cp-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:4px 12px;border-radius:100px}
+.cp-badge.green{background:#dcfce7;color:#166534}
+.cp-badge.blue{background:#dbeafe;color:#1e40af}
+/* callout */
+.cp-callout{background:linear-gradient(135deg,var(--g0),var(--g2));border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;max-width:760px;margin:0 auto}
+.cp-callout-icon{font-size:32px;flex-shrink:0;line-height:1}
+.cp-callout-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:6px}
+.cp-callout-desc{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.7}
+@media(max-width:600px){
+  .cp-num{width:44px;height:44px;font-size:16px;border-radius:12px}
+  .cp-line{left:21px}
+  .cp-content{padding:0 0 36px 16px}
+  .cp-step-title{font-size:16px}
+  .cp-callout{flex-direction:column;gap:12px;padding:22px 20px}
+}
+</style>
 
 <!-- ════════ FITUR UTAMA ════════ -->
 <section id="fitur">
