@@ -3,859 +3,1036 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emes CBT System — Keunggulan Aplikasi</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Emes CBT — Platform Ujian Digital Sekolah Indonesia</title>
+<link rel="icon" href="https://i.imgur.com/bT70O4C.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-  :root {
-    --green-dark: #022c22;
-    --green-mid: #064e3b;
-    --green: #059669;
-    --green-light: #d1fae5;
-    --green-pale: #ecfdf5;
-    --gold: #f59e0b;
-    --gold-light: #fef3c7;
-    --white: #ffffff;
-    --off: #f8fafc;
-    --text: #0f172a;
-    --muted: #64748b;
-    --border: #e2e8f0;
-  }
+/* ══════════════════════════════════════
+   RESET & ROOT
+══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+:root{
+  --g0:#021a12;--g1:#032d1f;--g2:#043d2a;--g3:#059669;--g4:#10b981;--g5:#34d399;--g6:#6ee7b7;--g7:#d1fae5;--g8:#ecfdf5;
+  --amber:#f59e0b;--red:#ef4444;--blue:#3b82f6;--violet:#8b5cf6;
+  --ink:#0c1f17;--ink2:#1e3a2d;--ink3:#2d5040;
+  --mute:#52796f;--mute2:#84a49b;--border:#c8ddd7;--bg:#f4faf7;
+  --white:#fff;
+  --r4:4px;--r8:8px;--r12:12px;--r16:16px;--r24:24px;--r32:32px;
+  --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+  --shadow:0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
+  --shadow-xl:0 24px 64px rgba(0,0,0,.16);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%}
+a{text-decoration:none;color:inherit}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ══════════════════════════════════════
+   SCROLL ANIMATIONS
+══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .6s ease,transform .6s ease}
+.reveal-l.visible{opacity:1;transform:translateX(0)}
+.reveal-r{opacity:0;transform:translateX(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal-r.visible{opacity:1;transform:translateX(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.18s}.d3{transition-delay:.26s}.d4{transition-delay:.34s}.d5{transition-delay:.42s}.d6{transition-delay:.5s}
 
-  html { scroll-behavior: smooth; }
+/* ══════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:64px;transition:background .3s,box-shadow .3s}
+nav.scrolled{background:rgba(2,26,18,.94);backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand img{width:34px;height:34px;object-fit:contain;border-radius:8px}
+.nav-brand-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);padding:6px 14px;border-radius:8px;transition:color .2s,background .2s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav-cta{background:var(--g3)!important;color:#fff!important;font-weight:700!important;padding:7px 18px!important;border-radius:10px!important}
+.nav-cta:hover{background:var(--g4)!important}
+@media(max-width:768px){.nav-links{display:none}}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off);
-    color: var(--text);
-    overflow-x: hidden;
-  }
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero{min-height:100vh;background:linear-gradient(160deg,var(--g0) 0%,var(--g1) 40%,var(--g2) 70%,#043325 100%);display:flex;align-items:center;padding:80px 40px 60px;position:relative;overflow:hidden}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(16,185,129,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hero-blob-1{width:500px;height:500px;background:radial-gradient(circle,rgba(5,150,105,.25),transparent 70%);top:-100px;right:-100px}
+.hero-blob-2{width:400px;height:400px;background:radial-gradient(circle,rgba(16,185,129,.15),transparent 70%);bottom:-80px;left:100px}
+.hero-inner{max-width:1120px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--g5);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:22px}
+.hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--g5);animation:heroPulse 2s infinite}
+@keyframes heroPulse{0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}50%{box-shadow:0 0 0 6px rgba(52,211,153,0)}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(38px,4.5vw,58px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--g5);font-family:'DM Sans',sans-serif;font-weight:800;font-size:.88em;display:block}
+.hero-desc{font-size:15.5px;color:rgba(255,255,255,.62);line-height:1.75;margin-bottom:28px;max-width:480px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+.btn-hero{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;padding:13px 24px;border-radius:12px;cursor:pointer;transition:all .2s;border:none}
+.btn-primary{background:var(--g3);color:#fff;box-shadow:0 6px 24px rgba(5,150,105,.35)}
+.btn-primary:hover{background:var(--g4);transform:translateY(-1px);box-shadow:0 10px 32px rgba(5,150,105,.45)}
+.btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.2);backdrop-filter:blur(8px)}
+.btn-secondary:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35)}
+.hero-stats{display:flex;gap:24px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat-num{font-size:22px;font-weight:800;color:#fff;font-family:'DM Mono',monospace;line-height:1}
+.hero-stat-label{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 
-  /* ── HERO ── */
-  .hero {
-    background: var(--green-dark);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 24px 100px;
-    position: relative;
-    overflow: hidden;
-  }
+/* Hero visual — mock app */
+.hero-visual{position:relative}
+.mock-app{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 32px 80px rgba(0,0,0,.4);position:relative}
+.mock-bar{background:rgba(255,255,255,.08);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mock-dot{width:10px;height:10px;border-radius:50%}
+.mock-url{background:rgba(255,255,255,.08);border-radius:6px;flex:1;height:24px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace}
+.mock-body{padding:20px;display:flex;gap:14px}
+.mock-sidebar{width:120px;flex-shrink:0}
+.mock-logo-area{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mock-logo-area img{width:24px;height:24px;border-radius:5px;object-fit:contain}
+.mock-logo-area span{font-size:10px;font-weight:700;color:rgba(255,255,255,.8)}
+.mock-nav-item{display:flex;align-items:center;gap:7px;font-size:10px;color:rgba(255,255,255,.45);padding:6px 8px;border-radius:6px;margin-bottom:2px;cursor:default}
+.mock-nav-item.active{background:rgba(16,185,129,.2);color:var(--g5);font-weight:600}
+.mock-nav-item i{font-size:10px;width:12px}
+.mock-main{flex:1}
+.mock-stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.mock-stat-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px}
+.mock-stat-num{font-size:16px;font-weight:800;color:#fff;font-family:'DM Mono',monospace}
+.mock-stat-label{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.mock-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px}
+.mock-card-title{font-size:10px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.mock-bar-chart{display:flex;align-items:flex-end;gap:6px;height:50px}
+.mock-bar-item{flex:1;border-radius:4px 4px 0 0;background:var(--g4);opacity:.7}
+.mock-live-row{display:flex;align-items:center;justify-content:space-between;font-size:9px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.mock-live-row:last-child{border-bottom:none}
+.mock-live-name{color:rgba(255,255,255,.6);font-weight:500}
+.mock-live-badge{background:rgba(16,185,129,.2);color:var(--g5);padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700}
+.mock-live-badge.done{background:rgba(148,163,184,.15);color:rgba(255,255,255,.35)}
 
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(5,150,105,0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(5,150,105,0.08) 1px, transparent 1px);
-    background-size: 48px 48px;
-    animation: gridMove 20s linear infinite;
-  }
-  @keyframes gridMove {
-    to { background-position: 48px 48px; }
-  }
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero{min-height:auto;padding-bottom:80px}
+}
+@media(max-width:600px){.hero{padding:80px 20px 60px}}
 
-  .hero-glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(5,150,105,0.18) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
+/* ══════════════════════════════════════
+   SECTION COMMONS
+══════════════════════════════════════ */
+section{padding:80px 40px}
+@media(max-width:600px){section{padding:60px 20px}}
+.wrap{max-width:1120px;margin:0 auto}
+.sec-label{display:inline-flex;align-items:center;gap:7px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px}
+.sec-h{font-size:clamp(24px,3.5vw,38px);font-weight:800;color:var(--ink);line-height:1.2;letter-spacing:-.02em;margin-bottom:10px}
+.sec-sub{font-size:15px;color:var(--mute);line-height:1.7;max-width:560px}
+.sec-header{margin-bottom:48px}
+.sec-header.center{text-align:center}
+.sec-header.center .sec-sub{margin:0 auto}
 
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(5,150,105,0.15);
-    border: 1px solid rgba(5,150,105,0.35);
-    color: #6ee7b7;
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 100px;
-    margin-bottom: 28px;
-    position: relative;
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #6ee7b7;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+/* ══════════════════════════════════════
+   FITUR UTAMA
+══════════════════════════════════════ */
+#fitur{background:#fff}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.feature-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.feature-grid{grid-template-columns:1fr}}
+.feat-card{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:28px;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--g8),transparent 60%);opacity:0;transition:opacity .2s}
+.feat-card:hover{border-color:var(--g4);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.feat-card:hover::before{opacity:1}
+.feat-icon{width:48px;height:48px;background:var(--g7);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;position:relative;z-index:1}
+.feat-title{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:7px;position:relative;z-index:1}
+.feat-desc{font-size:13px;color:var(--mute);line-height:1.65;position:relative;z-index:1}
+.feat-badge{display:inline-flex;align-items:center;gap:4px;background:var(--g7);color:var(--g2);font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;margin-top:12px;position:relative;z-index:1}
+.feat-badge.exclusive{background:#fef3c7;color:#92400e}
 
-  .hero h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(40px, 7vw, 76px);
-    font-weight: 800;
-    line-height: 1.05;
-    color: #fff;
-    margin-bottom: 8px;
-    position: relative;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
-  .hero h1 span {
-    color: var(--green);
-    position: relative;
-  }
-  .hero h1 span::after {
-    content: '';
-    position: absolute;
-    bottom: -4px; left: 0; right: 0;
-    height: 3px;
-    background: var(--green);
-    border-radius: 2px;
-    animation: lineGrow 0.8s 0.6s ease both;
-    transform-origin: left;
-    transform: scaleX(0);
-  }
-  @keyframes lineGrow { to { transform: scaleX(1); } }
+/* ══════════════════════════════════════
+   PANDUAN — ADMIN
+══════════════════════════════════════ */
+#panduan-admin{background:var(--bg)}
+.steps-layout{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
+@media(max-width:860px){.steps-layout{grid-template-columns:1fr}}
+.steps-nav{position:sticky;top:80px}
+.step-nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;margin-bottom:4px}
+.step-nav-item.active{background:#fff;border-color:var(--g3);box-shadow:var(--shadow)}
+.step-nav-item:hover:not(.active){background:rgba(5,150,105,.06)}
+.step-nav-num{width:28px;height:28px;border-radius:8px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-nav-item.active .step-nav-num{background:var(--g3);color:#fff}
+.step-nav-label{font-size:13px;font-weight:600;color:var(--mute)}
+.step-nav-item.active .step-nav-label{color:var(--ink);font-weight:700}
+.steps-content{display:flex;flex-direction:column;gap:28px}
+.step-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;scroll-margin-top:90px}
+.step-card-header{background:linear-gradient(135deg,var(--g1),var(--g2));padding:20px 24px;display:flex;align-items:center;gap:14px}
+.step-num-big{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-title{font-size:16px;font-weight:800;color:#fff}
+.step-subtitle{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
+.step-body{padding:24px}
+.step-items{display:flex;flex-direction:column;gap:14px}
+.step-item{display:flex;gap:14px;align-items:flex-start}
+.step-item-num{width:24px;height:24px;border-radius:7px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:'DM Mono',monospace}
+.step-item-content{}
+.step-item-title{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.step-item-desc{font-size:12.5px;color:var(--mute);line-height:1.6}
+.step-tip{background:var(--g8);border:1px solid var(--g7);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink3);margin-top:16px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.step-tip i{color:var(--g3);flex-shrink:0;margin-top:1px}
+.step-warn{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#78350f;margin-top:12px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.step-warn i{color:var(--amber);flex-shrink:0;margin-top:1px}
 
-  .hero-sub {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(16px, 2.5vw, 22px);
-    font-weight: 600;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 20px;
-    letter-spacing: 0.03em;
-    animation: fadeUp 0.7s 0.2s ease both;
-  }
+/* ══════════════════════════════════════
+   PANDUAN — SISWA
+══════════════════════════════════════ */
+#panduan-siswa{background:#fff}
+.siswa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:860px){.siswa-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.siswa-grid{grid-template-columns:1fr}}
+.siswa-card{background:var(--bg);border:1.5px solid var(--border);border-radius:18px;padding:22px;position:relative}
+.siswa-card-num{width:32px;height:32px;border-radius:9px;background:var(--g3);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-family:'DM Mono',monospace}
+.siswa-card-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:6px}
+.siswa-card-desc{font-size:12.5px;color:var(--mute);line-height:1.65}
 
-  .hero p {
-    font-size: 16px;
-    color: rgba(255,255,255,0.55);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 44px;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
+/* ══════════════════════════════════════
+   FAQ
+══════════════════════════════════════ */
+#faq{background:var(--bg)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.faq-grid{grid-template-columns:1fr}}
+.faq-item{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;cursor:pointer;transition:background .15s;font-size:13.5px;font-weight:700;color:var(--ink);user-select:none}
+.faq-q:hover{background:var(--g8)}
+.faq-q i{color:var(--g3);transition:transform .25s;flex-shrink:0}
+.faq-item.open .faq-q i{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 18px 16px;font-size:13px;color:var(--mute);line-height:1.7;border-top:1px solid var(--border)}
+.faq-a-inner{padding-top:12px}
 
-  .hero-stats {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    animation: fadeUp 0.7s 0.4s ease both;
-  }
-  .hero-stat { text-align: center; }
-  .hero-stat-num {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 32px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-  }
-  .hero-stat-num span { color: var(--green); }
-  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; letter-spacing: 0.05em; }
+/* ══════════════════════════════════════
+   KOMPARASI
+══════════════════════════════════════ */
+#komparasi{background:#fff}
+.comp-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.comp-tab{font-size:13px;font-weight:600;padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--mute);cursor:pointer;transition:all .2s}
+.comp-tab.active{background:var(--g3);border-color:var(--g3);color:#fff;font-weight:700}
+.comp-tab:hover:not(.active){border-color:var(--g3);color:var(--g3)}
+.comp-table-wrap{overflow-x:auto;border-radius:16px;border:1.5px solid var(--border);box-shadow:var(--shadow)}
+table.ctbl{width:100%;border-collapse:collapse;min-width:700px;background:#fff;border-radius:14px;overflow:hidden}
+table.ctbl thead tr{background:var(--ink)}
+table.ctbl thead th{padding:13px 16px;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
+table.ctbl thead th:first-child{text-align:left;color:rgba(255,255,255,.3);font-size:10px;width:32%}
+table.ctbl thead th.emes-col{background:var(--g2);color:#fff;font-size:13px;letter-spacing:0;font-weight:800}
+table.ctbl thead th.emes-col img{width:18px;height:18px;object-fit:contain;border-radius:4px;vertical-align:middle;margin-right:6px;filter:brightness(0) invert(1)}
+table.ctbl tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
+table.ctbl tbody tr:last-child{border-bottom:none}
+table.ctbl tbody tr:hover{background:var(--g8)}
+table.ctbl tbody tr.cat-row td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--g2);padding:8px 16px;border-bottom:1px solid var(--g7)}
+table.ctbl tbody td{padding:11px 16px;font-size:12.5px;text-align:center;vertical-align:middle}
+table.ctbl tbody td:first-child{text-align:left;font-weight:600;color:var(--ink2)}
+table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weight:400;margin-top:2px}
+.ic-y{color:#059669;font-size:16px}
+.ic-n{color:#dc2626;font-size:16px}
+.ic-p{color:#d97706;font-size:16px}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* ══════════════════════════════════════
+   SCORING STRIP
+══════════════════════════════════════ */
+.score-strip{background:var(--g1);border-radius:16px;padding:24px 28px;margin-bottom:28px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;text-align:center}
+@media(max-width:700px){.score-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:460px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-item{}
+.score-item .app-name{font-size:11px;font-weight:600;color:rgba(255,255,255,.45);margin-bottom:5px}
+.score-item .score-num{font-size:24px;font-weight:900;font-family:'DM Mono',monospace;line-height:1}
+.score-item .score-num.winner{color:var(--g5)}
+.score-item .score-num.ok{color:#94a3b8}
+.score-item .score-max{font-size:11px;color:rgba(255,255,255,.3)}
+.score-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:2px;background:rgba(255,255,255,.2)}
+.score-bar-fill.winner-bar{background:linear-gradient(90deg,var(--g4),var(--g5))}
 
-  /* ── SCROLL INDICATOR ── */
-  .scroll-hint {
-    position: absolute;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    color: rgba(255,255,255,0.25);
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    animation: fadeUp 1s 1s ease both;
-  }
-  .scroll-dot {
-    width: 20px; height: 34px;
-    border: 1.5px solid rgba(255,255,255,0.2);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    padding-top: 6px;
-  }
-  .scroll-dot::after {
-    content: '';
-    width: 3px; height: 6px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 2px;
-    animation: scrollBounce 1.5s infinite;
-  }
-  @keyframes scrollBounce {
-    0%,100%{transform:translateY(0);opacity:1} 80%{transform:translateY(8px);opacity:0}
-  }
+/* ══════════════════════════════════════
+   PRICING
+══════════════════════════════════════ */
+#harga{background:var(--bg)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
+@media(max-width:700px){.pricing-grid{grid-template-columns:1fr}}
+.price-card{background:#fff;border:2px solid var(--border);border-radius:20px;padding:28px;position:relative;transition:transform .2s,box-shadow .2s}
+.price-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.price-card.popular{border-color:var(--amber);box-shadow:0 8px 32px rgba(245,158,11,.15)}
+.price-card.lifetime{border-color:var(--violet);box-shadow:0 8px 32px rgba(139,92,246,.12)}
+.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--amber);color:#fff;font-size:10px;font-weight:800;padding:4px 14px;border-radius:100px;white-space:nowrap;letter-spacing:.05em}
+.price-plan{font-size:13px;font-weight:700;color:var(--mute);margin-bottom:6px}
+.price-amount{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.3}
+.price-note{font-size:12px;color:var(--mute);margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:8px}
+.price-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink2);line-height:1.45}
+.price-features li i{color:var(--g3);font-size:12px;margin-top:2px;flex-shrink:0}
+.price-info{background:var(--g8);border:1px solid var(--g7);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink3);margin-top:28px;max-width:900px;margin-left:auto;margin-right:auto;display:flex;gap:10px;align-items:flex-start;line-height:1.6}
+.price-info i{color:var(--g3);flex-shrink:0;margin-top:1px}
 
-  /* ── SECTION WRAPPER ── */
-  .section {
-    padding: 96px 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+/* ══════════════════════════════════════
+   CTA
+══════════════════════════════════════ */
+#cta{background:linear-gradient(135deg,var(--g0),var(--g2));padding:80px 40px;text-align:center;position:relative;overflow:hidden}
+#cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 50%,rgba(16,185,129,.12),transparent 50%),radial-gradient(circle at 70% 50%,rgba(5,150,105,.1),transparent 50%)}
+#cta h2{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;margin-bottom:12px;position:relative}
+#cta p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:30px;max-width:500px;margin-left:auto;margin-right:auto;position:relative;line-height:1.7}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
 
-  .section-label {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--green);
-    background: var(--green-pale);
-    border: 1px solid var(--green-light);
-    padding: 4px 12px;
-    border-radius: 100px;
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(26px, 4vw, 40px);
-    font-weight: 800;
-    line-height: 1.15;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-
-  .section-desc {
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 56px;
-  }
-
-  /* ── MAIN FEATURES ── */
-  .features-main {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .feat-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  }
-  .feat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(5,150,105,0.12);
-    border-color: var(--green-light);
-  }
-  .feat-card.featured {
-    background: var(--green-dark);
-    border-color: var(--green-mid);
-    grid-column: span 1;
-  }
-  .feat-card.featured .feat-title { color: #fff; }
-  .feat-card.featured .feat-desc { color: rgba(255,255,255,0.55); }
-  .feat-card.featured .feat-icon-wrap { background: rgba(5,150,105,0.25); }
-  .feat-card.featured .feat-icon-wrap i { color: #6ee7b7; }
-
-  .feat-card-accent {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--green), #6ee7b7);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-  }
-  .feat-card:hover .feat-card-accent { transform: scaleX(1); }
-  .feat-card.featured .feat-card-accent { transform: scaleX(1); background: linear-gradient(90deg, var(--green), #6ee7b7); }
-
-  .feat-icon-wrap {
-    width: 44px; height: 44px;
-    background: var(--green-pale);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px;
-    font-size: 18px;
-    color: var(--green);
-  }
-
-  .feat-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-
-  .feat-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
-  /* ── BIG FEATURE STRIP ── */
-  .strip {
-    background: var(--green-dark);
-    padding: 80px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  .strip-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-  .strip-noise {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-  }
-  .strip .section-label { background: rgba(5,150,105,0.2); border-color: rgba(5,150,105,0.3); color: #6ee7b7; }
-  .strip .section-title { color: #fff; }
-  .strip .section-desc { color: rgba(255,255,255,0.5); margin-bottom: 32px; }
-
-  .strip-list { display: flex; flex-direction: column; gap: 14px; }
-  .strip-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .strip-check {
-    width: 22px; height: 22px; min-width: 22px;
-    background: rgba(5,150,105,0.25);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    color: #6ee7b7;
-    margin-top: 1px;
-  }
-  .strip-item-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.5; }
-  .strip-item-text strong { color: #fff; }
-
-  .strip-right {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .strip-stat-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-    padding: 20px;
-    transition: background 0.2s;
-  }
-  .strip-stat-card:hover { background: rgba(5,150,105,0.12); border-color: rgba(5,150,105,0.3); }
-  .strip-stat-card:first-child { grid-column: span 2; }
-  .strip-stat-num {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 36px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .strip-stat-num em { color: var(--green); font-style: normal; }
-  .strip-stat-label { font-size: 12.5px; color: rgba(255,255,255,0.45); }
-
-  /* ── PRICING ── */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 48px;
-  }
-  .price-card {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 28px;
-    position: relative;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .price-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
-  .price-card.best {
-    background: var(--green-dark);
-    border-color: var(--green);
-    transform: scale(1.04);
-  }
-  .price-card.best:hover { transform: scale(1.04) translateY(-4px); }
-  .price-badge {
-    position: absolute;
-    top: -12px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--gold);
-    color: #fff;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 3px 14px;
-    border-radius: 100px;
-    white-space: nowrap;
-  }
-  .price-type { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-  .price-card.best .price-type { color: rgba(255,255,255,0.45); }
-  .price-amount {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 38px;
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .price-card.best .price-amount { color: #fff; }
-  .price-note { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
-  .price-card.best .price-note { color: rgba(255,255,255,0.4); }
-  .price-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
-  .price-card.best .price-divider { background: rgba(255,255,255,0.1); }
-  .price-perks { display: flex; flex-direction: column; gap: 10px; text-align: left; }
-  .price-perk { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--muted); }
-  .price-card.best .price-perk { color: rgba(255,255,255,0.6); }
-  .price-perk-dot { width: 16px; height: 16px; min-width: 16px; border-radius: 50%; background: var(--green-light); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 8px; margin-top: 1px; }
-  .price-card.best .price-perk-dot { background: rgba(5,150,105,0.25); color: #6ee7b7; }
-  .price-cta {
-    display: block;
-    margin-top: 28px;
-    padding: 11px 20px;
-    border-radius: 10px;
-    font-size: 13.5px;
-    font-weight: 700;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-    transition: all 0.15s;
-  }
-  .price-cta.outline { background: none; border: 1.5px solid var(--border); color: var(--text); }
-  .price-cta.outline:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
-  .price-cta.solid { background: var(--green); color: #fff; }
-  .price-cta.solid:hover { background: #047857; }
-
-  /* ── COMPARE TABLE ── */
-  .compare-wrap { overflow-x: auto; margin-top: 48px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  thead th {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 700;
-    font-size: 13px;
-    padding: 14px 16px;
-    text-align: center;
-    background: var(--green-dark);
-    color: rgba(255,255,255,0.6);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  thead th:first-child { text-align: left; color: #fff; border-radius: 12px 0 0 0; }
-  thead th:last-child { border-radius: 0 12px 0 0; }
-  thead th.hl { color: #6ee7b7; }
-  tbody tr:nth-child(even) td { background: var(--off); }
-  tbody td {
-    padding: 13px 16px;
-    border-bottom: 1px solid var(--border);
-    color: var(--muted);
-    text-align: center;
-  }
-  tbody td:first-child { text-align: left; color: var(--text); font-weight: 500; }
-  .check-y { color: var(--green); font-size: 16px; }
-  .check-n { color: #cbd5e1; font-size: 14px; }
-  .check-p { color: var(--gold); font-size: 13px; font-weight: 600; }
-
-  /* ── BOTTOM CTA ── */
-  .bottom-cta {
-    background: linear-gradient(135deg, var(--green-dark), #065f46);
-    padding: 80px 24px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .bottom-cta::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(5,150,105,0.2) 0%, transparent 70%);
-  }
-  .bottom-cta h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(26px, 4vw, 44px);
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 12px;
-    position: relative;
-  }
-  .bottom-cta p {
-    font-size: 16px;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 36px;
-    position: relative;
-  }
-  .cta-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-  }
-  .cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-    transition: all 0.15s;
-  }
-  .cta-btn.primary { background: var(--green); color: #fff; }
-  .cta-btn.primary:hover { background: #047857; transform: translateY(-2px); }
-  .cta-btn.ghost { background: rgba(255,255,255,0.08); color: #fff; border: 1.5px solid rgba(255,255,255,0.2); }
-  .cta-btn.ghost:hover { background: rgba(255,255,255,0.14); }
-
-  /* ── FOOTER NOTE ── */
-  .footer-note {
-    text-align: center;
-    padding: 24px;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-  }
-
-  @media (max-width: 768px) {
-    .features-main { grid-template-columns: 1fr; }
-    .strip-inner { grid-template-columns: 1fr; gap: 40px; }
-    .strip-right { display: none; }
-    .pricing-grid { grid-template-columns: 1fr; }
-    .price-card.best { transform: none; }
-    .price-card.best:hover { transform: translateY(-4px); }
-  }
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);font-size:13px}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:9px}
+.footer-brand img{width:28px;height:28px;border-radius:7px;object-fit:contain}
+.footer-brand span{font-size:13px;font-weight:700;color:rgba(255,255,255,.7)}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-
-  <div class="hero-badge">Solusi Ujian Digital Sekolah</div>
-  <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT Logo" style="width:72px;height:72px;object-fit:contain;margin-bottom:20px;filter:brightness(0) invert(1);opacity:.9;animation:fadeUp 0.5s ease both">
-  <h1>Emes <span>CBT</span><br>System</h1>
-  <p class="hero-sub">Ujian Online. Tanpa Internet. Tanpa Ribet.</p>
-  <p>Platform Computer Based Test offline untuk sekolah — cukup satu komputer guru, seluruh kelas bisa ujian dari HP atau laptop masing-masing.</p>
-
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num">40<span>+</span></div>
-      <div class="hero-stat-label">Siswa Bersamaan</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">100<span>%</span></div>
-      <div class="hero-stat-label">Offline / Lokal</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">0</div>
-      <div class="hero-stat-label">Biaya Langganan Cloud</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">1</div>
-      <div class="hero-stat-label">File Backup (eschool.db)</div>
-    </div>
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <div class="nav-brand">
+    <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
+    <span class="nav-brand-name">Emes CBT</span>
   </div>
-
-  <div class="scroll-hint">
-    <div class="scroll-dot"></div>
-    Scroll
+  <div class="nav-links">
+    <a href="#fitur">Fitur</a>
+    <a href="#panduan-admin">Panduan Admin</a>
+    <a href="#panduan-siswa">Panduan Siswa</a>
+    <a href="#faq">FAQ</a>
+    <a href="#komparasi">Komparasi</a>
+    <a href="#harga">Harga</a>
+    <a href="#cta" class="nav-cta">Dapatkan Akses</a>
   </div>
-</section>
+</nav>
 
-<!-- MAIN FEATURES -->
-<div style="background:var(--off);padding:96px 24px">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="section-label">Fitur Unggulan</div>
-    <h2 class="section-title">Semua yang dibutuhkan<br>untuk ujian sekolah</h2>
-    <p class="section-desc">Dirancang khusus untuk kondisi sekolah Indonesia — tidak bergantung internet, ringan, dan mudah dioperasikan guru tanpa keahlian IT.</p>
-
-    <div class="features-main">
-
-      <div class="feat-card featured">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">📡</div>
-        <div class="feat-title">100% Offline & Lokal</div>
-        <div class="feat-desc">Server berjalan di komputer guru sendiri. Tidak perlu internet saat ujian — data tidak keluar dari sekolah.</div>
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-left reveal">
+      <div class="hero-badge"><span class="pulse"></span> Platform CBT On-Premise untuk Sekolah Indonesia</div>
+      <h1>Platform Ujian Digital<em>untuk Sekolah Anda</em></h1>
+      <p class="hero-desc">Emes CBT berjalan di server sekolah sendiri — tanpa internet, tanpa biaya cloud. Lengkap dengan KaTeX, import Word, monitor real-time, dan analisis butir soal.</p>
+      <div class="hero-actions">
+        <a href="#panduan-admin" class="btn-hero btn-primary"><i class="fa-solid fa-rocket"></i> Mulai Panduan</a>
+        <a href="#komparasi" class="btn-hero btn-secondary"><i class="fa-solid fa-scale-balanced"></i> Bandingkan Platform</a>
       </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">📱</div>
-        <div class="feat-title">Siswa Pakai HP / Laptop</div>
-        <div class="feat-desc">Siswa cukup buka browser dan ketik alamat IP yang ditulis di papan tulis. Tidak perlu install aplikasi apa pun.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">⚡</div>
-        <div class="feat-title">Langsung Jalan</div>
-        <div class="feat-desc">Dobel klik <code style="background:var(--green-pale);color:var(--green);padding:1px 5px;border-radius:4px;font-size:12px">Jalankan-CBT.bat</code> — server langsung aktif dalam hitungan detik. Tidak perlu konfigurasi.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">🧮</div>
-        <div class="feat-title">Soal dengan Rumus & Gambar</div>
-        <div class="feat-desc">Editor soal mendukung rumus matematika (KaTeX), gambar (paste/drag-drop/upload), pilihan ganda, dan soal uraian.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">🖥️</div>
-        <div class="feat-title">Monitor Ujian Real-Time</div>
-        <div class="feat-desc">Pantau siapa yang sudah mengerjakan, berapa soal yang dijawab, dan paksa selesai ujian langsung dari dashboard guru.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">📊</div>
-        <div class="feat-title">Nilai Otomatis & Analisa</div>
-        <div class="feat-desc">Penilaian pilihan ganda otomatis, rekap nilai per kelas, analisa tingkat kesulitan per butir soal, dan cetak laporan.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">🖨️</div>
-        <div class="feat-title">Cetak Dokumen Resmi</div>
-        <div class="feat-desc">Rekap nilai, daftar hadir, dan berita acara ujian bisa dicetak langsung dengan kop surat sekolah otomatis.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">💾</div>
-        <div class="feat-title">Backup Sangat Mudah</div>
-        <div class="feat-desc">Seluruh data — soal, nilai, siswa, logo, KOP surat — tersimpan dalam satu file <code style="background:var(--green-pale);color:var(--green);padding:1px 5px;border-radius:4px;font-size:12px">eschool.db</code>. Backup cukup copy satu file.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card-accent"></div>
-        <div class="feat-icon-wrap">🔐</div>
-        <div class="feat-title">Sistem Lisensi per Sekolah</div>
-        <div class="feat-desc">Lisensi terkunci ke NPSN sekolah — tidak bisa dipindahtangankan. Nama sekolah tampil otomatis di seluruh dokumen.</div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- STRIP: Keamanan & Kemudahan -->
-<section class="strip">
-  <div class="strip-noise"></div>
-  <div class="strip-inner">
-    <div>
-      <div class="section-label">Kenapa Emes CBT?</div>
-      <h2 class="section-title">Dirancang untuk<br>realita sekolah kita</h2>
-      <p class="section-desc">Bukan aplikasi CBT generik. Dibangun dengan memahami keterbatasan infrastruktur dan kebiasaan pengguna di sekolah Indonesia.</p>
-      <div class="strip-list">
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Tidak perlu internet</strong> saat ujian — cocok untuk sekolah dengan koneksi tidak stabil</div>
-        </div>
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Tidak ada biaya berlangganan server</strong> — bayar sekali, pakai selamanya</div>
-        </div>
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Auto-save jawaban</strong> setiap 30 detik — aman meski listrik tiba-tiba padam</div>
-        </div>
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Multi-role</strong>: Administrator, Guru, Proktor — dengan hak akses berbeda</div>
-        </div>
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Token ujian</strong> opsional untuk mencegah siswa akses soal sebelum waktunya</div>
-        </div>
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Blokir login ganda</strong> — satu akun hanya bisa digunakan dari satu perangkat</div>
-        </div>
-        <div class="strip-item">
-          <div class="strip-check">✓</div>
-          <div class="strip-item-text"><strong>Mini game & leaderboard</strong> untuk meningkatkan motivasi belajar siswa</div>
-        </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">Offline Ready</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">6+</span><span class="hero-stat-label">Tipe Soal</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">KaTeX</span><span class="hero-stat-label">Rumus Ilmiah</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">NPSN</span><span class="hero-stat-label">Lisensi Terkunci</span></div>
       </div>
     </div>
-
-    <div class="strip-right">
-      <div class="strip-stat-card">
-        <div class="strip-stat-num">30 <em>detik</em></div>
-        <div class="strip-stat-label">Dari dobel-klik sampai server aktif siap digunakan siswa</div>
-      </div>
-      <div class="strip-stat-card">
-        <div class="strip-stat-num">40<em>+</em></div>
-        <div class="strip-stat-label">Siswa bersamaan tanpa lag</div>
-      </div>
-      <div class="strip-stat-card">
-        <div class="strip-stat-num">1<em> file</em></div>
-        <div class="strip-stat-label">Semua data dalam satu file backup</div>
+    <div class="hero-visual reveal-r d2">
+      <div class="mock-app">
+        <div class="mock-bar">
+          <div class="mock-dot" style="background:#ff5f56"></div>
+          <div class="mock-dot" style="background:#ffbd2e"></div>
+          <div class="mock-dot" style="background:#27c93f"></div>
+          <div class="mock-url">emes-cbt.local / admin</div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-sidebar">
+            <div class="mock-logo-area">
+              <img src="https://i.imgur.com/bT70O4C.png" alt="logo">
+              <span>Emes CBT</span>
+            </div>
+            <div class="mock-nav-item active"><i class="fa-solid fa-gauge-high"></i> Dashboard</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-book-open"></i> Bank Soal</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-calendar-check"></i> Jadwal</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-display"></i> Monitor</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-chart-line"></i> Hasil</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-users"></i> Siswa</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-comments"></i> Chat</div>
+            <div class="mock-nav-item"><i class="fa-solid fa-sliders"></i> Pengaturan</div>
+          </div>
+          <div class="mock-main">
+            <div class="mock-stat-row">
+              <div class="mock-stat-card"><div class="mock-stat-num">247</div><div class="mock-stat-label">Total Siswa</div></div>
+              <div class="mock-stat-card"><div class="mock-stat-num">18</div><div class="mock-stat-label">Paket Soal</div></div>
+              <div class="mock-stat-card"><div class="mock-stat-num">83.4</div><div class="mock-stat-label">Rata Nilai</div></div>
+              <div class="mock-stat-card"><div class="mock-stat-num">4</div><div class="mock-stat-label">Ujian Aktif</div></div>
+            </div>
+            <div class="mock-card" style="margin-bottom:10px">
+              <div class="mock-card-title"><i class="fa-solid fa-display" style="color:var(--g5)"></i> Monitor Live</div>
+              <div class="mock-live-row"><span class="mock-live-name">Ahmad F.</span><span class="mock-live-badge">Mengerjakan</span></div>
+              <div class="mock-live-row"><span class="mock-live-name">Siti N.</span><span class="mock-live-badge">Mengerjakan</span></div>
+              <div class="mock-live-row"><span class="mock-live-name">Budi S.</span><span class="mock-live-badge done">Selesai</span></div>
+              <div class="mock-live-row"><span class="mock-live-name">Rina M.</span><span class="mock-live-badge">Mengerjakan</span></div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-title"><i class="fa-solid fa-chart-bar" style="color:var(--g5)"></i> Nilai per Mapel</div>
+              <div class="mock-bar-chart">
+                <div class="mock-bar-item" style="height:65%"></div>
+                <div class="mock-bar-item" style="height:80%"></div>
+                <div class="mock-bar-item" style="height:55%"></div>
+                <div class="mock-bar-item" style="height:90%"></div>
+                <div class="mock-bar-item" style="height:72%"></div>
+                <div class="mock-bar-item" style="height:68%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<div style="background:var(--off);padding:96px 24px">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="section-label">Harga Lisensi</div>
-    <h2 class="section-title">Investasi sekali,<br>manfaat jangka panjang</h2>
-    <p class="section-desc">Tanpa biaya berlangganan, tanpa biaya server, tanpa biaya tersembunyi.</p>
+<!-- ════════ FITUR UTAMA ════════ -->
+<section id="fitur">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-star"></i> Fitur Lengkap</span>
+      <h2 class="sec-h reveal d1">Semua yang Dibutuhkan<br>untuk Ujian Digital Modern</h2>
+      <p class="sec-sub reveal d2">Dari pembuatan soal hingga analisis mendalam — semuanya dalam satu platform yang berjalan di jaringan sekolah Anda.</p>
+    </div>
+    <div class="feature-grid">
 
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-type">1 Semester</div>
-        <div class="price-amount">350rb</div>
-        <div class="price-note">Berlaku ±6 bulan</div>
-        <div class="price-divider"></div>
-        <div class="price-perks">
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Akses semua fitur</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Lisensi terkunci ke NPSN</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Update selama masa aktif</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Support via WhatsApp</div>
-        </div>
-        <a href="https://wa.me/6289619760801?text=Halo%2C%20saya%20ingin%20lisensi%201%20Semester%20Rp%20350.000%20untuk%20Emes%20CBT%20System.%0ANPSN%3A%20%0ANama%20Sekolah%3A%20%0AKab%2FKota%3A%20" target="_blank" class="price-cta outline">Pesan Sekarang</a>
+      <div class="feat-card reveal d1">
+        <div class="feat-icon">🔢</div>
+        <div class="feat-title">Rumus KaTeX / LaTeX</div>
+        <div class="feat-desc">Render formula matematika, fisika, dan kimia secara native. Guru cukup ketik sintaks LaTeX — tampil indah otomatis di soal maupun pilihan jawaban.</div>
+        <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
 
-      <div class="price-card best">
-        <div class="price-badge">⭐ Paling Populer</div>
-        <div class="price-type">1 Tahun</div>
-        <div class="price-amount">650rb</div>
-        <div class="price-note">Hemat vs 2× semester</div>
-        <div class="price-divider"></div>
-        <div class="price-perks">
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Akses semua fitur</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Lisensi terkunci ke NPSN</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Update selama masa aktif</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Support via WhatsApp</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Cocok untuk 2 semester ujian</div>
-        </div>
-        <a href="https://wa.me/6289619760801?text=Halo%2C%20saya%20ingin%20lisensi%201%20Tahun%20Rp%20650.000%20untuk%20Emes%20CBT%20System.%0ANPSN%3A%20%0ANama%20Sekolah%3A%20%0AKab%2FKota%3A%20" target="_blank" class="price-cta solid">Pesan Sekarang</a>
+      <div class="feat-card reveal d2">
+        <div class="feat-icon">📄</div>
+        <div class="feat-title">Import Soal dari Word (.docx)</div>
+        <div class="feat-desc">Upload file Word langsung — soal terurai otomatis. Hemat puluhan jam kerja guru yang sudah punya bank soal dalam format Microsoft Word.</div>
+        <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
       </div>
 
-      <div class="price-card">
-        <div class="price-type">Selamanya</div>
-        <div class="price-amount">1,5jt</div>
-        <div class="price-note">Bayar sekali, pakai selamanya</div>
-        <div class="price-divider"></div>
-        <div class="price-perks">
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Akses semua fitur</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Lisensi terkunci ke NPSN</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Update seumur hidup</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Support via WhatsApp</div>
-          <div class="price-perk"><div class="price-perk-dot">✓</div>Tidak perlu perpanjang lagi</div>
+      <div class="feat-card reveal d3">
+        <div class="feat-icon">📶</div>
+        <div class="feat-title">100% Offline Ready</div>
+        <div class="feat-desc">Berjalan penuh di jaringan lokal (LAN) sekolah. Internet putus? Ujian tetap berjalan normal — tidak bergantung pada koneksi luar sama sekali.</div>
+        <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
+      </div>
+
+      <div class="feat-card reveal d1">
+        <div class="feat-icon">📡</div>
+        <div class="feat-title">Monitor Ujian Real-time</div>
+        <div class="feat-desc">Pantau status setiap siswa saat ujian berlangsung — siapa yang sedang mengerjakan, berapa soal dijawab, dan siapa yang sudah selesai. Semuanya live.</div>
+        <span class="feat-badge">Fitur Unggulan</span>
+      </div>
+
+      <div class="feat-card reveal d2">
+        <div class="feat-icon">💬</div>
+        <div class="feat-title">Chat Guru–Siswa Live</div>
+        <div class="feat-desc">Siswa bisa bertanya langsung ke guru saat ujian tanpa keluar dari platform. Guru membalas dari dashboard admin. Tidak ada platform CBT lokal lain yang punya ini.</div>
+        <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
+      </div>
+
+      <div class="feat-card reveal d3">
+        <div class="feat-icon">🔬</div>
+        <div class="feat-title">Analisis Butir Soal</div>
+        <div class="feat-desc">Setiap soal dianalisis otomatis: tingkat kesukaran, daya beda, dan reliabilitas. Guru tahu soal mana yang perlu direvisi atau dibuang.</div>
+        <span class="feat-badge">Psikometri Otomatis</span>
+      </div>
+
+      <div class="feat-card reveal d1">
+        <div class="feat-icon">🔒</div>
+        <div class="feat-title">Anti-Tab & Keamanan Ujian</div>
+        <div class="feat-desc">Deteksi otomatis jika siswa pindah tab atau keluar dari jendela ujian. Didukung dengan mode exam browser, satu login per sesi, dan randomisasi soal.</div>
+        <span class="feat-badge">Integritas Ujian</span>
+      </div>
+
+      <div class="feat-card reveal d2">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Export Nilai ke Excel</div>
+        <div class="feat-desc">Rekap nilai lengkap per kelas, rombel, dan mata pelajaran siap diunduh dalam format .xlsx. Lengkap dengan statistik tuntas/belum tuntas dan rata-rata kelas.</div>
+        <span class="feat-badge">Format Siap Raport</span>
+      </div>
+
+      <div class="feat-card reveal d3">
+        <div class="feat-icon">🏷️</div>
+        <div class="feat-title">Branding Logo Sekolah</div>
+        <div class="feat-desc">Logo dan nama sekolah tampil di seluruh platform — sidebar, halaman login, header ujian, hingga kartu soal cetak. Semua terkunci ke NPSN sekolah Anda.</div>
+        <span class="feat-badge">Identitas Sekolah</span>
+      </div>
+
+      <div class="feat-card reveal d1">
+        <div class="feat-icon">✍️</div>
+        <div class="feat-title">Koreksi Manual Essay</div>
+        <div class="feat-desc">Dashboard khusus untuk guru mengoreksi jawaban uraian. Baca jawaban siswa, beri skor, tambahkan komentar — nilai final terhitung otomatis.</div>
+        <span class="feat-badge">Penilaian Holistik</span>
+      </div>
+
+      <div class="feat-card reveal d2">
+        <div class="feat-icon">📋</div>
+        <div class="feat-title">Cetak Berita Acara & Kartu Soal</div>
+        <div class="feat-desc">Cetak dokumen resmi ujian langsung dari platform dengan kop sekolah, daftar hadir, dan kartu soal. Format PDF siap tanda tangan panitia.</div>
+        <span class="feat-badge exclusive">⭐ Eksklusif Emes CBT</span>
+      </div>
+
+      <div class="feat-card reveal d3">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">QR Code Akses Siswa</div>
+        <div class="feat-desc">Siswa scan QR Code untuk login ke ujian. Tidak perlu menghafal password panjang — cukup arahkan kamera dan ujian dimulai dalam hitungan detik.</div>
+        <span class="feat-badge">Login Instan</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PANDUAN ADMIN ════════ -->
+<section id="panduan-admin">
+  <div class="wrap">
+    <div class="sec-header">
+      <span class="sec-label reveal"><i class="fa-solid fa-user-shield"></i> Panel Admin</span>
+      <h2 class="sec-h reveal d1">Panduan Lengkap untuk<br>Admin & Guru</h2>
+      <p class="sec-sub reveal d2">Ikuti langkah-langkah berikut untuk menyiapkan dan menjalankan ujian dari awal hingga rekap nilai.</p>
+    </div>
+    <div class="steps-layout">
+      <div class="steps-nav reveal-l">
+        <div class="step-nav-item active" onclick="scrollToStep(1)">
+          <div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div>
         </div>
-        <a href="https://wa.me/6289619760801?text=Halo%2C%20saya%20ingin%20lisensi%20Selamanya%20Rp%201.500.000%20untuk%20Emes%20CBT%20System.%0ANPSN%3A%20%0ANama%20Sekolah%3A%20%0AKab%2FKota%3A%20" target="_blank" class="price-cta outline">Pesan Sekarang</a>
+        <div class="step-nav-item" onclick="scrollToStep(2)">
+          <div class="step-nav-num">2</div><div class="step-nav-label">Data Siswa</div>
+        </div>
+        <div class="step-nav-item" onclick="scrollToStep(3)">
+          <div class="step-nav-num">3</div><div class="step-nav-label">Bank Soal</div>
+        </div>
+        <div class="step-nav-item" onclick="scrollToStep(4)">
+          <div class="step-nav-num">4</div><div class="step-nav-label">Jadwal Ujian</div>
+        </div>
+        <div class="step-nav-item" onclick="scrollToStep(5)">
+          <div class="step-nav-num">5</div><div class="step-nav-label">Monitor & Kontrol</div>
+        </div>
+        <div class="step-nav-item" onclick="scrollToStep(6)">
+          <div class="step-nav-num">6</div><div class="step-nav-label">Hasil & Analisis</div>
+        </div>
+        <div class="step-nav-item" onclick="scrollToStep(7)">
+          <div class="step-nav-num">7</div><div class="step-nav-label">Koreksi Essay</div>
+        </div>
+      </div>
+      <div class="steps-content">
+
+        <div class="step-card" id="step-1">
+          <div class="step-card-header">
+            <div class="step-num-big">1</div>
+            <div><div class="step-title">Pengaturan Awal Sekolah</div><div class="step-subtitle">Menu: Pengaturan → Pengaturan Sistem</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Masuk ke Menu Pengaturan</div><div class="step-item-desc">Login sebagai Admin, klik menu <strong>Pengaturan</strong> di sidebar kiri bagian bawah.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Isi Identitas Sekolah</div><div class="step-item-desc">Masukkan nama sekolah, alamat, nama kepala sekolah, dan NPSN. Data ini akan tampil di seluruh tampilan dan dokumen cetak.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Upload Logo Sekolah</div><div class="step-item-desc">Klik tombol upload logo. Logo akan otomatis muncul di sidebar, halaman login, dan kartu soal cetak. Format: PNG/JPG, resolusi minimal 128×128px.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Atur KKM Default & Nama Ujian</div><div class="step-item-desc">Tentukan KKM default (misalnya 75) dan template nama ujian. Nilai ini bisa diubah per paket soal saat membuat ujian.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Setelah menyimpan, logo dan nama sekolah langsung berubah di seluruh tampilan tanpa perlu reload.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-2">
+          <div class="step-card-header">
+            <div class="step-num-big">2</div>
+            <div><div class="step-title">Manajemen Data Siswa</div><div class="step-subtitle">Menu: Data Pengguna → Data Siswa</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Tambah Siswa Manual</div><div class="step-item-desc">Klik tombol <strong>+ Tambah Siswa</strong>, isi nama, NISN, kelas, rombel, dan password awal. Satu siswa selesai dalam 30 detik.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Import Massal dari Excel</div><div class="step-item-desc">Klik <strong>Import Excel</strong>, download template, isi data semua siswa sesuai format, lalu upload. Ratusan siswa bisa diimport sekaligus dalam satu klik.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Kelola Kelas & Rombel</div><div class="step-item-desc">Siswa dikelompokkan berdasarkan kelas (X, XI, XII) dan rombel (A, B, C, dst). Filter rombel digunakan saat membuat jadwal ujian per kelas.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Reset Password Siswa</div><div class="step-item-desc">Jika siswa lupa password, admin bisa reset langsung dari tabel Data Siswa — klik ikon edit dan ganti password tanpa menghapus data ujian siswa.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Template Excel import tersedia langsung di tombol Import — pastikan kolom NISN, nama, kelas, rombel, dan password diisi dengan benar.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-3">
+          <div class="step-card-header">
+            <div class="step-num-big">3</div>
+            <div><div class="step-title">Membuat Bank Soal</div><div class="step-subtitle">Menu: Bank Soal → Paket Soal & Butir Soal</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buat Paket Soal Baru</div><div class="step-item-desc">Klik <strong>+ Paket Baru</strong>, isi nama ujian, mata pelajaran, kelas target, jumlah soal, waktu, dan KKM. Paket adalah wadah untuk kumpulan butir soal.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Tambah Butir Soal Manual</div><div class="step-item-desc">Pilih tipe soal (PG, PG Kompleks, Essay, Menjodohkan, Benar/Salah), ketik pertanyaan menggunakan editor kaya — termasuk gambar, rumus KaTeX, dan tabel.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Import dari Word (.docx)</div><div class="step-item-desc">Punya file Word? Klik <strong>Import Word</strong>, pilih file .docx berisi soal bergaya pilihan ganda standar — sistem otomatis mengurai soal dan opsi jawaban.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Input Rumus KaTeX</div><div class="step-item-desc">Klik tombol <strong>∑ Rumus</strong> di toolbar editor, pilih template formula atau ketik sintaks LaTeX langsung. Preview muncul real-time sebelum disimpan.</div></div></div>
+              <div class="step-item"><div class="step-item-num">e</div><div class="step-item-content"><div class="step-item-title">Atur Kunci Jawaban & Bobot</div><div class="step-item-desc">Untuk PG, centang opsi yang benar. Untuk essay, tentukan skor maksimal. Bobot nilai dihitung otomatis berdasarkan total soal dan tipe.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Format Word yang didukung: soal diawali nomor, diikuti 4–5 opsi (A. B. C. D. E.), kunci jawaban di baris terakhir per soal atau di akhir file.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-4">
+          <div class="step-card-header">
+            <div class="step-num-big">4</div>
+            <div><div class="step-title">Menjadwalkan Ujian</div><div class="step-subtitle">Menu: Pelaksanaan Ujian → Jadwal Ujian</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buat Jadwal Baru</div><div class="step-item-desc">Klik <strong>+ Jadwal Baru</strong>, pilih paket soal yang sudah dibuat, tentukan tanggal, jam buka, dan jam tutup ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Pilih Target Peserta</div><div class="step-item-desc">Pilih kelas dan rombel yang akan mengikuti ujian ini. Siswa di rombel tersebut otomatis muncul di daftar peserta ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Atur Token (Opsional)</div><div class="step-item-desc">Aktifkan <strong>Token Ujian</strong> agar siswa harus memasukkan kode yang Anda berikan sebelum bisa mulai. Cocok sebagai kendali tambahan di ruang ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Aktifkan Randomisasi</div><div class="step-item-desc">Centang <strong>Acak Soal</strong> dan <strong>Acak Jawaban</strong> agar urutan soal dan opsi berbeda setiap siswa — efektif mencegah kecurangan.</div></div></div>
+            </div>
+            <div class="step-warn"><i class="fa-solid fa-triangle-exclamation"></i><span>Pastikan jam buka dan tutup sudah benar sebelum menyimpan. Siswa hanya bisa masuk ke ujian dalam rentang waktu yang ditentukan.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-5">
+          <div class="step-card-header">
+            <div class="step-num-big">5</div>
+            <div><div class="step-title">Monitor & Kontrol Ujian Live</div><div class="step-subtitle">Menu: Pelaksanaan Ujian → Monitor Ujian</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Pilih Sesi Ujian yang Dipantau</div><div class="step-item-desc">Dari dropdown, pilih paket soal yang sedang berlangsung. Daftar peserta beserta status langsung muncul dan diperbarui otomatis setiap beberapa detik.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Lihat Status per Siswa</div><div class="step-item-desc">Setiap siswa terlihat: sedang mengerjakan, berapa soal sudah dijawab, berapa menit tersisa, dan apakah sudah selesai submit.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Paksa Selesai (Force Finish)</div><div class="step-item-desc">Jika diperlukan, admin bisa memaksa siswa tertentu untuk selesai — jawaban yang sudah ada otomatis disimpan dan dinilai.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Chat dengan Siswa</div><div class="step-item-desc">Siswa yang mengirim pertanyaan via Chat akan muncul notifikasi. Klik menu <strong>Chat Siswa</strong> untuk membalas langsung.</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Halaman Monitor Ujian otomatis refresh — tidak perlu F5. Buka di layar besar atau proyektor untuk memantau seluruh kelas sekaligus.</span></div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-6">
+          <div class="step-card-header">
+            <div class="step-num-big">6</div>
+            <div><div class="step-title">Lihat Hasil & Analisis</div><div class="step-subtitle">Menu: Hasil & Laporan → Hasil Ujian / Analisa Per-butir</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Rekap Nilai per Kelas</div><div class="step-item-desc">Buka menu <strong>Hasil Ujian</strong>, pilih paket soal. Tabel menampilkan seluruh peserta, nilai, ketuntasan, jumlah benar/salah, dan tanggal ujian.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Export ke Excel</div><div class="step-item-desc">Klik <strong>Export Excel</strong> untuk download rekap dalam format .xlsx. File berisi dua sheet: rekap nilai dan statistik kelas (rata-rata, tuntas, nilai tertinggi/terendah).</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Analisis Butir Soal</div><div class="step-item-desc">Menu <strong>Analisa Per-butir</strong> menampilkan tingkat kesukaran, daya beda, dan reliabilitas setiap soal. Soal bermasalah ditandai otomatis dengan warna dan rekomendasi.</div></div></div>
+              <div class="step-item"><div class="step-item-num">d</div><div class="step-item-content"><div class="step-item-title">Leaderboard</div><div class="step-item-desc">Menu <strong>Leaderboard</strong> menampilkan peringkat siswa berdasarkan nilai untuk ujian tertentu. Bisa difilter per kelas dan rombel.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card" id="step-7">
+          <div class="step-card-header">
+            <div class="step-num-big">7</div>
+            <div><div class="step-title">Koreksi Manual Soal Essay</div><div class="step-subtitle">Menu: Hasil & Laporan → Hasil Ujian → Koreksi Essay</div></div>
+          </div>
+          <div class="step-body">
+            <div class="step-items">
+              <div class="step-item"><div class="step-item-num">a</div><div class="step-item-content"><div class="step-item-title">Buka Daftar Essay yang Belum Dikoreksi</div><div class="step-item-desc">Di tabel Hasil Ujian, siswa dengan soal uraian belum terkoreksi ditandai dengan status <strong>"Belum Dinilai"</strong>. Klik ikon koreksi di kolom aksi.</div></div></div>
+              <div class="step-item"><div class="step-item-num">b</div><div class="step-item-content"><div class="step-item-title">Baca Jawaban & Beri Skor</div><div class="step-item-desc">Panel koreksi menampilkan jawaban siswa di sebelah kiri dan kolom penilaian di kanan. Masukkan skor per soal essay sesuai rubrik yang sudah disiapkan.</div></div></div>
+              <div class="step-item"><div class="step-item-num">c</div><div class="step-item-content"><div class="step-item-title">Simpan — Nilai Terhitung Otomatis</div><div class="step-item-desc">Setelah klik <strong>Simpan Koreksi</strong>, nilai final siswa dihitung ulang menggabungkan skor PG dan skor essay. Status berubah menjadi "Selesai".</div></div></div>
+            </div>
+            <div class="step-tip"><i class="fa-solid fa-lightbulb"></i><span>Nilai final = (Skor PG + Skor Essay) ÷ Total Skor Maksimal × 100. Formula ini berlaku otomatis dan tidak perlu dihitung manual.</span></div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- COMPARISON TABLE -->
-<div style="background:white;padding:0 24px 96px">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="section-label" style="margin-bottom:16px">Perbandingan</div>
-    <h2 class="section-title" style="margin-bottom:40px">Emes CBT vs solusi lain</h2>
-    <div class="compare-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Fitur / Kondisi</th>
-            <th class="hl">Emes CBT</th>
-            <th>CBT Online Berbayar</th>
-            <th>Google Form</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Tidak butuh internet saat ujian</td><td><span class="check-y">✓</span></td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td></tr>
-          <tr><td>Biaya berlangganan server</td><td><span class="check-y">Tidak ada</span></td><td><span class="check-n">Ada</span></td><td><span class="check-y">Tidak ada</span></td></tr>
-          <tr><td>Nilai otomatis & rekap</td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td><td><span class="check-p">Terbatas</span></td></tr>
-          <tr><td>Monitor ujian real-time</td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td><td><span class="check-n">✗</span></td></tr>
-          <tr><td>Cetak dokumen + kop sekolah</td><td><span class="check-y">✓</span></td><td><span class="check-p">Tergantung paket</span></td><td><span class="check-n">✗</span></td></tr>
-          <tr><td>Rumus matematika (KaTeX)</td><td><span class="check-y">✓</span></td><td><span class="check-p">Tergantung platform</span></td><td><span class="check-n">✗</span></td></tr>
-          <tr><td>Data tersimpan di sekolah sendiri</td><td><span class="check-y">✓</span></td><td><span class="check-n">✗ (di server vendor)</span></td><td><span class="check-n">✗ (di Google)</span></td></tr>
-          <tr><td>Token ujian & blokir login ganda</td><td><span class="check-y">✓</span></td><td><span class="check-p">Tergantung paket</span></td><td><span class="check-n">✗</span></td></tr>
-          <tr><td>Bisa pakai tanpa IT support</td><td><span class="check-y">✓</span></td><td><span class="check-p">Perlu setup</span></td><td><span class="check-y">✓</span></td></tr>
-        </tbody>
-      </table>
+<!-- ════════ PANDUAN SISWA ════════ -->
+<section id="panduan-siswa">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-graduation-cap"></i> Portal Siswa</span>
+      <h2 class="sec-h reveal d1">Panduan untuk Siswa</h2>
+      <p class="sec-sub reveal d2">Cara menggunakan Emes CBT sebagai peserta ujian — dari login hingga melihat nilai.</p>
+    </div>
+    <div class="siswa-grid">
+      <div class="siswa-card reveal d1">
+        <div class="siswa-card-num">1</div>
+        <div class="siswa-card-title">Login ke Portal Siswa</div>
+        <div class="siswa-card-desc">Buka browser, masukkan alamat server yang diberikan guru (biasanya berupa IP lokal seperti 192.168.x.x). Klik <strong>Login Siswa</strong>, masukkan NISN/username dan password yang diberikan admin.</div>
+      </div>
+      <div class="siswa-card reveal d2">
+        <div class="siswa-card-num">2</div>
+        <div class="siswa-card-title">Lihat Daftar Ujian Tersedia</div>
+        <div class="siswa-card-desc">Setelah masuk, buka menu <strong>Daftar Ujian</strong>. Ujian yang sudah dijadwalkan untuk kelas Anda akan muncul di sini. Status ujian terlihat jelas: aktif, belum dibuka, atau sudah ditutup.</div>
+      </div>
+      <div class="siswa-card reveal d3">
+        <div class="siswa-card-num">3</div>
+        <div class="siswa-card-title">Mulai Ujian</div>
+        <div class="siswa-card-desc">Klik tombol <strong>Mulai Ujian</strong> pada ujian yang aktif. Jika ada token, masukkan kode yang diberikan guru. Baca petunjuk ujian lalu klik Mulai — timer langsung berjalan.</div>
+      </div>
+      <div class="siswa-card reveal d1">
+        <div class="siswa-card-num">4</div>
+        <div class="siswa-card-title">Kerjakan Soal</div>
+        <div class="siswa-card-desc">Klik pilihan jawaban untuk soal PG, atau ketik jawaban untuk soal essay. Navigasi antar soal dengan tombol nomor di panel samping. Jawaban tersimpan otomatis — tidak perlu khawatir jika koneksi terganggu.</div>
+      </div>
+      <div class="siswa-card reveal d2">
+        <div class="siswa-card-num">5</div>
+        <div class="siswa-card-title">Gunakan Fitur Chat (Jika Ada Pertanyaan)</div>
+        <div class="siswa-card-desc">Klik ikon Chat di pojok layar jika ingin bertanya ke guru. Ketik pertanyaan dan kirim — guru akan melihat dan membalas dari panel admin. Jangan keluar dari halaman ujian.</div>
+      </div>
+      <div class="siswa-card reveal d3">
+        <div class="siswa-card-num">6</div>
+        <div class="siswa-card-title">Selesai & Lihat Nilai</div>
+        <div class="siswa-card-desc">Jika semua soal selesai atau waktu habis, klik <strong>Selesai & Kumpulkan</strong>. Nilai untuk soal PG muncul langsung. Untuk essay, tunggu guru selesai mengoreksi — cek di menu <strong>Nilai Saya</strong>.</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- BOTTOM CTA -->
-<section class="bottom-cta">
-  <h2>Siap mencoba<br>Emes CBT System?</h2>
-  <p>Trial gratis 7 sesi. Tidak perlu kartu kredit. Tidak perlu internet.</p>
-  <div class="cta-buttons">
-    <a href="https://drive.google.com/uc?export=download&id=1WbHUHB8CiQWG3YZFqb1cXvk-RYDD6OcK" target="_blank" class="cta-btn primary" onclick="hitDownload()">
-      ⬇️ Download Aplikasi Gratis
-    </a>
+<!-- ════════ FAQ ════════ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-circle-question"></i> FAQ</span>
+      <h2 class="sec-h reveal d1">Pertanyaan yang Sering Diajukan</h2>
+      <p class="sec-sub reveal d2">Jawaban cepat untuk pertanyaan yang paling sering muncul dari admin dan siswa.</p>
+    </div>
+    <div class="faq-grid reveal">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apakah Emes CBT bisa digunakan tanpa internet? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Ya, sepenuhnya. Emes CBT berjalan di server lokal sekolah (on-premise). Selama komputer server dan komputer siswa terhubung dalam jaringan LAN yang sama, ujian berjalan normal meski internet mati total.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Berapa banyak siswa yang bisa ujian bersamaan? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Tidak ada batas siswa yang dipasang di aplikasi. Kapasitas tergantung spesifikasi server sekolah. Rata-rata komputer sekolah biasa mampu menangani 100–300 siswa secara bersamaan dengan baik.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara import soal dari Word? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Buka menu Bank Soal → pilih Paket Soal → klik tombol Import Word. Upload file .docx dengan format: nomor soal, teks soal, opsi A–E di baris terpisah, dan kunci jawaban. Sistem akan mengurai otomatis. Ada panduan format di halaman import.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apa itu Analisis Butir Soal dan apa manfaatnya? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Analisis Butir Soal adalah teknik psikometri untuk mengukur kualitas setiap soal. Emes CBT menghitung Tingkat Kesukaran (mudah/sedang/sulit), Daya Beda (soal membedakan siswa pintar dan lemah), dan Reliabilitas (konsistensi soal). Hasilnya membantu guru memperbaiki bank soal.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apakah data ujian siswa aman? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Sangat aman. Data tersimpan di server sekolah sendiri — tidak dikirim ke server luar atau cloud manapun. Hanya orang dengan akses jaringan sekolah yang bisa mengakses data tersebut. Ini berbeda dengan platform cloud yang menyimpan data di server vendor.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana jika siswa tidak sengaja menutup browser saat ujian? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Jawaban siswa tersimpan otomatis setiap kali berpindah soal. Jika browser ditutup atau koneksi terputus, siswa bisa login ulang dan melanjutkan dari soal terakhir — selama waktu ujian belum habis.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Bisakah beberapa guru mengelola soal masing-masing? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Ya. Admin bisa membuat akun untuk beberapa guru melalui menu Manajemen User. Setiap guru bisa login, membuat paket soal, dan menjadwalkan ujian untuk mata pelajarannya sendiri. Admin tetap punya kontrol penuh atas semua paket soal.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Apakah lisensi bisa dipindah ke sekolah lain? <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><div class="faq-a-inner">Tidak. Setiap lisensi Emes CBT dikunci ke NPSN sekolah tertentu. Hal ini untuk memastikan lisensi digunakan hanya oleh sekolah yang berhak, sekaligus menampilkan nama dan logo sekolah yang benar di seluruh platform.</div></div>
+      </div>
+
+    </div>
   </div>
-  <div style="margin-top:20px;position:relative">
-    <span style="font-size:13px;color:rgba(255,255,255,0.4)">Sudah diunduh </span>
-    <span id="dlCount" style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#6ee7b7">...</span>
-    <span style="font-size:13px;color:rgba(255,255,255,0.4)"> kali</span>
+</section>
+
+<!-- ════════ KOMPARASI ════════ -->
+<section id="komparasi">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-scale-balanced"></i> Perbandingan</span>
+      <h2 class="sec-h reveal d1">Emes CBT vs Platform Lain</h2>
+      <p class="sec-sub reveal d2">Bandingkan fitur secara jujur — baik dengan sesama platform CBT Indonesia maupun dengan platform survei umum.</p>
+    </div>
+
+    <div class="comp-tabs reveal">
+      <button class="comp-tab active" onclick="switchTab('cbt')">vs Platform CBT Indonesia</button>
+      <button class="comp-tab" onclick="switchTab('umum')">vs Platform Ujian Umum</button>
+    </div>
+
+    <!-- TAB: CBT Indonesia -->
+    <div id="tab-cbt">
+      <div class="score-strip reveal">
+        <div class="score-item">
+          <div class="app-name">Emes CBT</div>
+          <div class="score-num winner">29<span style="font-size:13px;opacity:.5">/34</span></div>
+          <div class="score-bar"><div class="score-bar-fill winner-bar" style="width:85%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">Candy CBT</div>
+          <div class="score-num ok">18<span style="font-size:13px;opacity:.5">/34</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:53%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">e-ujian.id</div>
+          <div class="score-num ok">17<span style="font-size:13px;opacity:.5">/34</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:50%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">My Exams</div>
+          <div class="score-num ok">14<span style="font-size:13px;opacity:.5">/34</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:41%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">Moodle</div>
+          <div class="score-num ok">13<span style="font-size:13px;opacity:.5">/34</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:38%"></div></div>
+        </div>
+      </div>
+      <div class="comp-table-wrap reveal">
+        <table class="ctbl">
+          <thead>
+            <tr>
+              <th>Fitur</th>
+              <th class="emes-col"><img src="https://i.imgur.com/bT70O4C.png" alt="logo">Emes CBT</th>
+              <th>Candy CBT</th>
+              <th>e-ujian.id</th>
+              <th>My Exams</th>
+              <th>Moodle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cat-row"><td colspan="6">🏛️ Infrastruktur</td></tr>
+            <tr><td>Offline / LAN<div class="sub">Tanpa internet</div></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td></tr>
+            <tr><td>Mudah install<div class="sub">Non-IT bisa setup</div></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Data di server sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
+            <tr><td>Tidak perlu hosting VPS</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">🔢 Fitur Soal</td></tr>
+            <tr><td>KaTeX / LaTeX<div class="sub">Rumus matematika native</div></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td></tr>
+            <tr><td>Import dari Word (.docx)</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Soal Menjodohkan</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">🔒 Keamanan</td></tr>
+            <tr><td>Deteksi pindah tab</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td></tr>
+            <tr><td>Satu login per sesi</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">📊 Penilaian</td></tr>
+            <tr><td>Analisis butir soal</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td></tr>
+            <tr><td>Koreksi essay manual</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
+            <tr><td>Export Excel rekap nilai</td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-y">✅</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">🏫 Manajemen</td></tr>
+            <tr><td>Monitor real-time</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-p">⚠️</span></td></tr>
+            <tr><td>Chat guru–siswa live</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Cetak berita acara</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Branding logo sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Lisensi terkunci NPSN</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">💰 Biaya</td></tr>
+            <tr><td>Tanpa biaya hosting tambahan</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Tidak ada biaya per-siswa</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-y">✅</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB: Platform Umum -->
+    <div id="tab-umum" style="display:none">
+      <div class="score-strip reveal">
+        <div class="score-item">
+          <div class="app-name">Emes CBT</div>
+          <div class="score-num winner">28<span style="font-size:13px;opacity:.5">/32</span></div>
+          <div class="score-bar"><div class="score-bar-fill winner-bar" style="width:87%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">Google Forms</div>
+          <div class="score-num ok">14<span style="font-size:13px;opacity:.5">/32</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:43%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">MS Forms</div>
+          <div class="score-num ok">12<span style="font-size:13px;opacity:.5">/32</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:37%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">Quizizz</div>
+          <div class="score-num ok">11<span style="font-size:13px;opacity:.5">/32</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:34%"></div></div>
+        </div>
+        <div class="score-item">
+          <div class="app-name">Typeform</div>
+          <div class="score-num ok">9<span style="font-size:13px;opacity:.5">/32</span></div>
+          <div class="score-bar"><div class="score-bar-fill" style="width:28%"></div></div>
+        </div>
+      </div>
+      <div class="comp-table-wrap reveal">
+        <table class="ctbl">
+          <thead>
+            <tr>
+              <th>Fitur</th>
+              <th class="emes-col"><img src="https://i.imgur.com/bT70O4C.png" alt="logo">Emes CBT</th>
+              <th>Google Forms</th>
+              <th>MS Forms</th>
+              <th>Quizizz</th>
+              <th>Typeform</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cat-row"><td colspan="6">🎯 Fokus Penggunaan</td></tr>
+            <tr><td>Dirancang khusus untuk ujian sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Offline / jaringan lokal</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Data di server sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">🔢 Soal & Konten</td></tr>
+            <tr><td>KaTeX / LaTeX rumus</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Import Word (.docx)</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Soal Essay dengan koreksi guru</td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">🔒 Keamanan Ujian</td></tr>
+            <tr><td>Anti-tab / deteksi keluar layar</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Randomisasi soal & jawaban</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Token/password sesi ujian</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">📊 Analisis & Rekap</td></tr>
+            <tr><td>Analisis butir soal psikometri</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Export Excel rekap per kelas</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td></tr>
+            <tr><td>Monitor real-time per siswa</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">🏫 Fitur Khusus Sekolah</td></tr>
+            <tr><td>Manajemen siswa & rombel</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Chat guru–siswa</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Cetak kartu soal / berita acara</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Branding logo sekolah</td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+
+            <tr class="cat-row"><td colspan="6">💰 Biaya</td></tr>
+            <tr><td>Tanpa biaya berlangganan cloud</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-p">⚠️</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-n">❌</span></td></tr>
+            <tr><td>Tidak ada iklan</td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-y">✅</span></td><td><span class="ic-n">❌</span></td><td><span class="ic-y">✅</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:12px;color:var(--mute);margin-top:14px">✅ Tersedia penuh &nbsp;⚠️ Terbatas &nbsp;❌ Tidak ada</div>
   </div>
+</section>
+
+<!-- ════════ HARGA ════════ -->
+<section id="harga">
+  <div class="wrap">
+    <div class="sec-header center">
+      <span class="sec-label reveal"><i class="fa-solid fa-tag"></i> Lisensi</span>
+      <h2 class="sec-h reveal d1">Pilih Durasi Lisensi<br>yang Paling Sesuai</h2>
+      <p class="sec-sub reveal d2">Semua paket mendapatkan fitur yang sama. Perbedaan hanya pada durasi aktif. Tidak ada biaya tambahan, tidak ada per-siswa, tidak ada per-guru.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-plan">1 Semester</div>
+        <div class="price-amount">Aktif ±6 Bulan</div>
+        <div class="price-note">Cocok untuk 1 semester akademik atau coba sebelum komitmen lebih lama</div>
+        <ul class="price-features">
+          <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+          <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa</li>
+          <li><i class="fa-solid fa-check"></i> Data di server sekolah</li>
+          <li><i class="fa-solid fa-check"></i> Support teknis</li>
+          <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
+        </ul>
+      </div>
+      <div class="price-card popular">
+        <div class="popular-badge">⭐ TERPOPULER</div>
+        <div class="price-plan">Tahunan</div>
+        <div class="price-amount">Aktif ±12 Bulan</div>
+        <div class="price-note">Hemat untuk 2 semester / 1 tahun ajaran penuh — nilai terbaik per bulan</div>
+        <ul class="price-features">
+          <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+          <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa</li>
+          <li><i class="fa-solid fa-check"></i> Support prioritas</li>
+          <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
+          <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
+        </ul>
+      </div>
+      <div class="price-card lifetime">
+        <div class="price-plan">Selamanya</div>
+        <div class="price-amount">Lisensi Permanen</div>
+        <div class="price-note">Bayar sekali, pakai selamanya — investasi terbaik untuk sekolah jangka panjang</div>
+        <ul class="price-features">
+          <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+          <li><i class="fa-solid fa-check"></i> Tidak ada masa kadaluarsa</li>
+          <li><i class="fa-solid fa-check"></i> Update selamanya</li>
+          <li><i class="fa-solid fa-check"></i> Support seumur lisensi</li>
+          <li><i class="fa-solid fa-check"></i> ROI terbaik jangka panjang</li>
+        </ul>
+      </div>
+    </div>
+    <div class="price-info reveal">
+      <i class="fa-solid fa-circle-info"></i>
+      <div><strong>Semua paket mendapatkan fitur yang sama persis</strong> — tidak ada fitur yang dikunci di paket tertentu. Lisensi terkunci ke NPSN sekolah Anda dan tidak bisa dipindahtangankan. Untuk info harga terkini, hubungi kami langsung.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<section id="cta">
+  <div class="wrap">
+    <h2 class="reveal">Siap Mulai Ujian Digital<br>di Sekolah Anda?</h2>
+    <p class="reveal d1">Bergabung bersama sekolah-sekolah yang sudah menggunakan Emes CBT. Platform CBT on-premise terlengkap untuk sekolah Indonesia.</p>
+    <div class="cta-actions reveal d2">
+      <a href="#panduan-admin" class="btn-hero btn-primary"><i class="fa-solid fa-book-open"></i> Baca Panduan Lengkap</a>
+      <a href="#fitur" class="btn-hero btn-secondary"><i class="fa-solid fa-list-check"></i> Lihat Semua Fitur</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
+      <span>Emes CBT System</span>
+    </div>
+    <div>Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
+    <div style="display:flex;gap:16px">
+      <a href="#fitur" style="color:rgba(255,255,255,.4)">Fitur</a>
+      <a href="#panduan-admin" style="color:rgba(255,255,255,.4)">Panduan</a>
+      <a href="#komparasi" style="color:rgba(255,255,255,.4)">Komparasi</a>
+      <a href="#harga" style="color:rgba(255,255,255,.4)">Harga</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-const COUNT_KEY = 'emes-cbt-download';
-const COUNT_URL = 'https://countapi.mileshilliard.com/api/v1';
+// ── Navbar scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  highlightStepNav();
+});
 
-async function loadCount() {
-  try {
-    const r = await fetch(`${COUNT_URL}/get/${COUNT_KEY}`);
-    const d = await r.json();
-    const val = parseInt(d.value) || 0;
-    document.getElementById('dlCount').textContent = val.toLocaleString('id-ID');
-  } catch(e) {
-    document.getElementById('dlCount').textContent = '—';
+// ── Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => observer.observe(el));
+
+// ── FAQ toggle
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── Comparison tabs
+function switchTab(tab) {
+  document.getElementById('tab-cbt').style.display = tab === 'cbt' ? '' : 'none';
+  document.getElementById('tab-umum').style.display = tab === 'umum' ? '' : 'none';
+  document.querySelectorAll('.comp-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', (tab === 'cbt' && i === 0) || (tab === 'umum' && i === 1));
+  });
+}
+
+// ── Step navigation
+function scrollToStep(n) {
+  const el = document.getElementById('step-' + n);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.step-nav-item').forEach((item, i) => {
+    item.classList.toggle('active', i === n - 1);
+  });
+}
+
+function highlightStepNav() {
+  const steps = [1,2,3,4,5,6,7];
+  for (let i = steps.length - 1; i >= 0; i--) {
+    const el = document.getElementById('step-' + steps[i]);
+    if (el && el.getBoundingClientRect().top <= 120) {
+      document.querySelectorAll('.step-nav-item').forEach((item, idx) => {
+        item.classList.toggle('active', idx === i);
+      });
+      break;
+    }
   }
 }
-
-async function hitDownload() {
-  try {
-    const r = await fetch(`${COUNT_URL}/hit/${COUNT_KEY}`);
-    const d = await r.json();
-    const val = parseInt(d.value) || 0;
-    document.getElementById('dlCount').textContent = val.toLocaleString('id-ID');
-  } catch(e) {}
-}
-
-loadCount();
 </script>
-</section>
-
-<div class="footer-note">
-  © 2026 Emes EduTech &nbsp;·&nbsp; Emes CBT System — Solusi Ujian Offline untuk Sekolah Indonesia
-</div>
-
 </body>
 </html>
