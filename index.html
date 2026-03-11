@@ -32,6 +32,83 @@
 <link rel="icon" href="https://i.imgur.com/bT70O4C.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Firebase — load di head agar reseller tersedia sedini mungkin -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+(function() {
+  firebase.initializeApp({
+    apiKey:            "AIzaSyDmMDFiyQVr5aTM-52Z6aMcojoNsR-BAd0",
+    authDomain:        "admin-emescbt.firebaseapp.com",
+    projectId:         "admin-emescbt",
+    storageBucket:     "admin-emescbt.firebasestorage.app",
+    messagingSenderId: "557191510104",
+    appId:             "1:557191510104:web:fbe4092553ff69e2f9322d"
+  });
+  var db = firebase.firestore();
+
+  var DEFAULT = { nama:'Emes EduTech', wa:'6289619760801', label:'Tim Emes CBT' };
+
+  // Set default dulu sebelum Firestore selesai
+  window._resellerWA    = DEFAULT.wa;
+  window._resellerNama  = DEFAULT.nama;
+  window._resellerLabel = DEFAULT.label;
+
+  function applyToDOM(data, isReseller) {
+    window._resellerWA    = data.wa;
+    window._resellerNama  = data.nama;
+    window._resellerLabel = data.label;
+    document.querySelectorAll('[data-reseller-nama]').forEach(function(el){ el.textContent = data.nama; });
+    document.querySelectorAll('[data-reseller-label]').forEach(function(el){ el.textContent = data.label; });
+    if (isReseller) {
+      var banner = document.getElementById('reseller-banner');
+      if (banner) {
+        banner.querySelector('.rb-nama').textContent = data.nama;
+        banner.style.display = 'flex';
+        requestAnimationFrame(function() {
+          var bh = banner.offsetHeight;
+          var nav = document.getElementById('mainNav');
+          if (nav) nav.style.top = bh + 'px';
+          document.querySelectorAll('.page').forEach(function(p){ p.setAttribute('data-banner-offset', bh); });
+          var pp = document.getElementById('page-panduan');
+          if (pp) pp.style.paddingTop = (64 + bh) + 'px';
+          document.documentElement.style.setProperty('--banner-h', bh + 'px');
+        });
+      }
+    }
+  }
+
+  var ref = (new URLSearchParams(window.location.search).get('ref') || '').toLowerCase().trim();
+
+  if (!ref) {
+    // Tidak ada reseller, terapkan default saat DOM siap
+    document.addEventListener('DOMContentLoaded', function(){ applyToDOM(DEFAULT, false); });
+  } else {
+    db.collection('resellers').get().then(function(snap) {
+      var found = null;
+      snap.forEach(function(doc) {
+        var d = doc.data();
+        if ((d.code || '').toLowerCase() === ref) found = { nama:d.nama, wa:d.wa, label:d.label };
+      });
+      var data = found || DEFAULT;
+      // Terapkan ke window dulu (untuk sendWA)
+      window._resellerWA    = data.wa;
+      window._resellerNama  = data.nama;
+      window._resellerLabel = data.label;
+      // Terapkan ke DOM setelah siap
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function(){ applyToDOM(data, !!found); });
+      } else {
+        applyToDOM(data, !!found);
+      }
+    }).catch(function() {
+      window._resellerWA = DEFAULT.wa;
+      document.addEventListener('DOMContentLoaded', function(){ applyToDOM(DEFAULT, false); });
+    });
+  }
+})();
+</script>
 <style>
 /* ══════════════════════════════════════
    RESET & ROOT
@@ -2143,91 +2220,8 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
     </div>
   </footer>
 
+
 </div><!-- end page-panduan -->
-
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script>
-// ══════════════════════════════════════════════════════════
-// SISTEM RESELLER — baca otomatis dari Firestore
-// ══════════════════════════════════════════════════════════
-(function() {
-  var firebaseConfig = {
-    apiKey:            "AIzaSyDmMDFiyQVr5aTM-52Z6aMcojoNsR-BAd0",
-    authDomain:        "admin-emescbt.firebaseapp.com",
-    projectId:         "admin-emescbt",
-    storageBucket:     "admin-emescbt.firebasestorage.app",
-    messagingSenderId: "557191510104",
-    appId:             "1:557191510104:web:fbe4092553ff69e2f9322d"
-  };
-
-  // Cegah inisialisasi duplikat
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-  var db = firebase.firestore();
-
-  var RESELLER_DEFAULT = {
-    nama  : 'Emes EduTech',
-    wa    : '6289619760801',
-    label : 'Tim Emes CBT'
-  };
-
-  function applyResellerData(data, isReseller) {
-    window._resellerWA    = data.wa;
-    window._resellerNama  = data.nama;
-    window._resellerLabel = data.label;
-
-    document.querySelectorAll('[data-reseller-nama]').forEach(function(el) {
-      el.textContent = data.nama;
-    });
-    document.querySelectorAll('[data-reseller-label]').forEach(function(el) {
-      el.textContent = data.label;
-    });
-
-    if (isReseller) {
-      var banner = document.getElementById('reseller-banner');
-      if (banner) {
-        banner.querySelector('.rb-nama').textContent = data.nama;
-        banner.style.display = 'flex';
-        requestAnimationFrame(function() {
-          var bh = banner.offsetHeight;
-          var nav = document.getElementById('mainNav');
-          if (nav) nav.style.top = bh + 'px';
-          document.querySelectorAll('.page').forEach(function(p) {
-            p.setAttribute('data-banner-offset', bh);
-          });
-          var pagePanduan = document.getElementById('page-panduan');
-          if (pagePanduan) pagePanduan.style.paddingTop = (64 + bh) + 'px';
-          document.documentElement.style.setProperty('--banner-h', bh + 'px');
-        });
-      }
-    }
-  }
-
-  var params = new URLSearchParams(window.location.search);
-  var ref    = (params.get('ref') || '').toLowerCase().trim();
-
-  if (!ref) {
-    applyResellerData(RESELLER_DEFAULT, false);
-  } else {
-    db.collection('resellers').get().then(function(snap) {
-      var found = null;
-      snap.forEach(function(doc) {
-        var d = doc.data();
-        if ((d.code || '').toLowerCase() === ref) {
-          found = { nama: d.nama, wa: d.wa, label: d.label };
-        }
-      });
-      applyResellerData(found || RESELLER_DEFAULT, !!found);
-    }).catch(function(e) {
-      console.warn('Reseller fetch gagal:', e.message);
-      applyResellerData(RESELLER_DEFAULT, false);
-    });
-  }
-})();
-</script>
 
 <script>
 // ── SPA Page Navigation ────────────────────────────────────────
