@@ -2146,97 +2146,87 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
 </div><!-- end page-panduan -->
 
 
-<script type="module">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
 // ══════════════════════════════════════════════════════════
-// SISTEM RESELLER — ?ref=KODE_UNIK
-// Data reseller dibaca otomatis dari Firestore.
-// Tidak perlu lagi edit kode ini saat menambah reseller baru.
+// SISTEM RESELLER — baca otomatis dari Firestore
 // ══════════════════════════════════════════════════════════
+(function() {
+  var firebaseConfig = {
+    apiKey:            "AIzaSyDmMDFiyQVr5aTM-52Z6aMcojoNsR-BAd0",
+    authDomain:        "admin-emescbt.firebaseapp.com",
+    projectId:         "admin-emescbt",
+    storageBucket:     "admin-emescbt.firebasestorage.app",
+    messagingSenderId: "557191510104",
+    appId:             "1:557191510104:web:fbe4092553ff69e2f9322d"
+  };
 
-// ── Konfigurasi Firebase (sama dengan admin panel) ─────────
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  // Cegah inisialisasi duplikat
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  var db = firebase.firestore();
 
-const _firebaseConfig = {
-  apiKey:            "AIzaSyDmMDFiyQVr5aTM-52Z6aMcojoNsR-BAd0",
-  authDomain:        "admin-emescbt.firebaseapp.com",
-  projectId:         "admin-emescbt",
-  storageBucket:     "admin-emescbt.firebasestorage.app",
-  messagingSenderId: "557191510104",
-  appId:             "1:557191510104:web:fbe4092553ff69e2f9322d"
-};
-const _fbApp = initializeApp(_firebaseConfig, "landing");
-const _fbDb  = getFirestore(_fbApp);
+  var RESELLER_DEFAULT = {
+    nama  : 'Emes EduTech',
+    wa    : '6289619760801',
+    label : 'Tim Emes CBT'
+  };
 
-// ── Default jika reseller tidak ditemukan ──────────────────
-const RESELLER_DEFAULT = {
-  nama  : 'Emes EduTech',
-  wa    : '6289619760801',
-  label : 'Tim Emes CBT'
-};
+  function applyResellerData(data, isReseller) {
+    window._resellerWA    = data.wa;
+    window._resellerNama  = data.nama;
+    window._resellerLabel = data.label;
 
-// ── Fungsi terapkan data reseller ke halaman ───────────────
-function applyResellerData(data, ref) {
-  window._resellerWA    = data.wa;
-  window._resellerNama  = data.nama;
-  window._resellerLabel = data.label;
+    document.querySelectorAll('[data-reseller-nama]').forEach(function(el) {
+      el.textContent = data.nama;
+    });
+    document.querySelectorAll('[data-reseller-label]').forEach(function(el) {
+      el.textContent = data.label;
+    });
 
-  document.querySelectorAll('[data-reseller-nama]').forEach(function(el) {
-    el.textContent = data.nama;
-  });
-  document.querySelectorAll('[data-reseller-label]').forEach(function(el) {
-    el.textContent = data.label;
-  });
-
-  if (ref) {
-    var banner = document.getElementById('reseller-banner');
-    if (banner) {
-      banner.querySelector('.rb-nama').textContent = data.nama;
-      banner.style.display = 'flex';
-      requestAnimationFrame(function() {
-        var bh = banner.offsetHeight;
-        var nav = document.getElementById('mainNav');
-        if (nav) nav.style.top = bh + 'px';
-        document.querySelectorAll('.page').forEach(function(p) {
-          p.setAttribute('data-banner-offset', bh);
+    if (isReseller) {
+      var banner = document.getElementById('reseller-banner');
+      if (banner) {
+        banner.querySelector('.rb-nama').textContent = data.nama;
+        banner.style.display = 'flex';
+        requestAnimationFrame(function() {
+          var bh = banner.offsetHeight;
+          var nav = document.getElementById('mainNav');
+          if (nav) nav.style.top = bh + 'px';
+          document.querySelectorAll('.page').forEach(function(p) {
+            p.setAttribute('data-banner-offset', bh);
+          });
+          var pagePanduan = document.getElementById('page-panduan');
+          if (pagePanduan) pagePanduan.style.paddingTop = (64 + bh) + 'px';
+          document.documentElement.style.setProperty('--banner-h', bh + 'px');
         });
-        var pagePanduan = document.getElementById('page-panduan');
-        if (pagePanduan) pagePanduan.style.paddingTop = (64 + bh) + 'px';
-        document.documentElement.style.setProperty('--banner-h', bh + 'px');
-      });
+      }
     }
   }
-}
 
-// ── Baca ?ref= dari URL, cari di Firestore, terapkan ───────
-(async function applyReseller() {
-  const params = new URLSearchParams(window.location.search);
-  const ref    = (params.get('ref') || '').toLowerCase().trim();
+  var params = new URLSearchParams(window.location.search);
+  var ref    = (params.get('ref') || '').toLowerCase().trim();
 
-  // Jika tidak ada ?ref=, langsung pakai default
   if (!ref) {
-    applyResellerData(RESELLER_DEFAULT, null);
-    return;
-  }
-
-  try {
-    const snap = await getDocs(collection(_fbDb, 'resellers'));
-    var found = null;
-    snap.forEach(function(docSnap) {
-      var d = docSnap.data();
-      if ((d.code || '').toLowerCase() === ref) {
-        found = { nama: d.nama, wa: d.wa, label: d.label };
-      }
+    applyResellerData(RESELLER_DEFAULT, false);
+  } else {
+    db.collection('resellers').get().then(function(snap) {
+      var found = null;
+      snap.forEach(function(doc) {
+        var d = doc.data();
+        if ((d.code || '').toLowerCase() === ref) {
+          found = { nama: d.nama, wa: d.wa, label: d.label };
+        }
+      });
+      applyResellerData(found || RESELLER_DEFAULT, !!found);
+    }).catch(function(e) {
+      console.warn('Reseller fetch gagal:', e.message);
+      applyResellerData(RESELLER_DEFAULT, false);
     });
-    applyResellerData(found || RESELLER_DEFAULT, found ? ref : null);
-  } catch(e) {
-    // Jika Firestore gagal (misal offline), pakai default
-    console.warn('Reseller fetch gagal:', e.message);
-    applyResellerData(RESELLER_DEFAULT, null);
   }
 })();
-</script>
 
 <script>
 // ── SPA Page Navigation ────────────────────────────────────────
@@ -2426,8 +2416,9 @@ function sendWA() {
 Mohon informasi lebih lanjut. Terima kasih!`;
 
   const encoded = encodeURIComponent(msg);
+  // Ambil nomor WA reseller — sudah di-set oleh module Firestore
   const waNum = window._resellerWA || '6289619760801';
-  window.open(`https://wa.me/${waNum}?text=${encoded}`, '_blank');
+  window.open('https://wa.me/' + waNum + '?text=' + encoded, '_blank');
   closeWAModal();
 }
 
