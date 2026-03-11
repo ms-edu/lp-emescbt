@@ -588,25 +588,6 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 </section>
 
 <style>
-/* ══ NETWORK SETUP STYLES ══════════════════════════════════ */
-.net-section-label{font-size:13px;font-weight:800;color:var(--ink2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;padding-left:2px;border-left:3px solid var(--blue);padding-left:10px}
-.net-diagram-wrap{background:#0f172a;border-radius:16px;overflow:hidden;margin-bottom:24px;box-shadow:0 8px 32px rgba(0,0,0,.2);border:1px solid #1e3a8a}
-.net-svg{width:100%;height:auto;display:block}
-.net-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
-@media(max-width:700px){.net-info-grid{grid-template-columns:1fr}}
-.net-info-card{border-radius:14px;padding:18px;border:1.5px solid}
-.net-info-card.blue{background:#eff6ff;border-color:#93c5fd}
-.net-info-card.green{background:#f0fdf4;border-color:#86efac}
-.net-info-card.slate{background:#f8fafc;border-color:#cbd5e1}
-.net-info-icon{font-size:24px;margin-bottom:8px}
-.net-info-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:5px}
-.net-info-desc{font-size:12px;color:var(--mute);line-height:1.7}
-.net-info-desc code{background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px}
-.net-config-box{background:#1e293b;border-radius:10px;padding:12px 16px;font-family:'DM Mono',monospace;font-size:12px;line-height:2;color:#94a3b8;border:1px solid #334155}
-.net-config-box strong{color:#34d399}
-.net-mikrotik-badge{background:#fff7ed;border:1.5px solid #fdba74;border-radius:12px;padding:12px 16px;display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#9a3412;line-height:1.6;margin-bottom:18px}
-.net-mikrotik-badge span:first-child{font-size:20px;flex-shrink:0;line-height:1.2}
-
 /* ── Cara Pakai Steps ─────────────────────────────────────── */
 .cp-steps{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto 40px}
 .cp-step{display:flex;gap:0;position:relative}
@@ -1234,6 +1215,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
       <div class="panduan-tabs">
         <button class="panduan-tab active" onclick="switchPanduanTab('admin')"><i class="fa-solid fa-user-shield"></i> Panduan Admin & Guru</button>
         <button class="panduan-tab" onclick="switchPanduanTab('siswa')"><i class="fa-solid fa-graduation-cap"></i> Panduan Siswa</button>
+        <button class="panduan-tab" onclick="switchPanduanTab('jaringan')"><i class="fa-solid fa-network-wired"></i> Setting Jaringan</button>
       </div>
     </div>
   </div>
@@ -1242,8 +1224,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
   <div class="panduan-body" id="panduan-tab-admin">
     <div class="steps-layout">
       <div class="steps-nav">
-        <div class="step-nav-item active" onclick="scrollToStep('net')"><div class="step-nav-num" style="background:var(--blue);font-size:11px">🌐</div><div class="step-nav-label">Setup Jaringan</div></div>
-        <div class="step-nav-item" onclick="scrollToStep(1)"><div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div></div>
+        <div class="step-nav-item active" onclick="scrollToStep(1)"><div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div></div>
         <div class="step-nav-item" onclick="scrollToStep(2)"><div class="step-nav-num">2</div><div class="step-nav-label">Data Siswa</div></div>
         <div class="step-nav-item" onclick="scrollToStep(3)"><div class="step-nav-num">3</div><div class="step-nav-label">Bank Soal</div></div>
         <div class="step-nav-item" onclick="scrollToStep(4)"><div class="step-nav-num">4</div><div class="step-nav-label">Jadwal Ujian</div></div>
@@ -1252,304 +1233,6 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
         <div class="step-nav-item" onclick="scrollToStep(7)"><div class="step-nav-num">7</div><div class="step-nav-label">Koreksi Essay</div></div>
       </div>
       <div class="steps-content">
-        <!-- ══ STEP JARINGAN ══ -->
-        <div class="step-card" id="step-net" style="border-top:3px solid var(--blue)">
-          <div class="step-card-header">
-            <div class="step-num-big" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);font-size:22px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:16px;color:#fff;flex-shrink:0">🌐</div>
-            <div>
-              <div class="step-title">Setup Jaringan Ujian Offline</div>
-              <div class="step-subtitle">Skema: 1 Ruang Ujian · 1 Laptop Server · 1 Router (termasuk MikroTik)</div>
-            </div>
-          </div>
-          <div class="step-body">
-
-            <!-- ═══ ILUSTRASI TOPOLOGI ═══ -->
-            <div class="net-section-label">📐 Ilustrasi Topologi Jaringan</div>
-            <div class="net-diagram-wrap">
-              <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" class="net-svg">
-                <defs>
-                  <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                    <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
-                  </marker>
-                  <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                    <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
-                  </marker>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                    <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                  </filter>
-                </defs>
-
-                <!-- Background -->
-                <rect width="780" height="340" rx="16" fill="#0f172a"/>
-                <!-- Grid lines -->
-                <line x1="0" y1="170" x2="780" y2="170" stroke="#1e293b" stroke-width="1"/>
-                <line x1="390" y1="0" x2="390" y2="340" stroke="#1e293b" stroke-width="1"/>
-
-                <!-- ── ROUTER (center) ── -->
-                <rect x="315" y="128" width="150" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2" filter="url(#glow)"/>
-                <!-- Router icon -->
-                <rect x="330" y="143" width="120" height="10" rx="3" fill="#2563eb" opacity=".6"/>
-                <rect x="330" y="157" width="120" height="10" rx="3" fill="#2563eb" opacity=".4"/>
-                <circle cx="380" cy="181" r="5" fill="#3b82f6" opacity=".8"/>
-                <circle cx="395" cy="181" r="5" fill="#10b981" opacity=".8"/>
-                <circle cx="410" cy="181" r="5" fill="#f59e0b" opacity=".8"/>
-                <!-- Router antenna left -->
-                <line x1="335" y1="128" x2="320" y2="100" stroke="#3b82f6" stroke-width="2"/>
-                <circle cx="320" cy="98" r="4" fill="#3b82f6"/>
-                <!-- Router antenna right -->
-                <line x1="445" y1="128" x2="460" y2="100" stroke="#3b82f6" stroke-width="2"/>
-                <circle cx="460" cy="98" r="4" fill="#3b82f6"/>
-                <text x="390" y="210" text-anchor="middle" fill="#93c5fd" font-size="12" font-family="monospace" font-weight="700">ROUTER</text>
-                <text x="390" y="224" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">192.168.1.1</text>
-
-                <!-- ── LAPTOP SERVER (kiri) ── -->
-                <rect x="60" y="130" width="130" height="80" rx="10" fill="#14532d" stroke="#10b981" stroke-width="2" filter="url(#glow)"/>
-                <rect x="73" y="143" width="104" height="52" rx="5" fill="#0d2818"/>
-                <!-- Screen content -->
-                <rect x="78" y="148" width="94" height="5" rx="2" fill="#34d399" opacity=".7"/>
-                <rect x="78" y="157" width="70" height="3" rx="1" fill="#10b981" opacity=".4"/>
-                <rect x="78" y="163" width="82" height="3" rx="1" fill="#10b981" opacity=".3"/>
-                <rect x="78" y="169" width="60" height="3" rx="1" fill="#10b981" opacity=".3"/>
-                <rect x="78" y="175" width="86" height="3" rx="1" fill="#10b981" opacity=".2"/>
-                <rect x="78" y="181" width="50" height="3" rx="1" fill="#34d399" opacity=".5"/>
-                <!-- Laptop base -->
-                <rect x="65" y="193" width="143" height="8" rx="4" fill="#166534" stroke="#10b981" stroke-width="1"/>
-                <rect x="115" y="193" width="42" height="5" rx="2" fill="#0d2818"/>
-                <text x="125" y="225" text-anchor="middle" fill="#34d399" font-size="11" font-family="monospace" font-weight="700">LAPTOP SERVER</text>
-                <text x="125" y="238" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">192.168.1.100</text>
-                <text x="125" y="251" text-anchor="middle" fill="#52796f" font-size="9" font-family="monospace">Port: 3000</text>
-                <!-- Server badge -->
-                <rect x="78" y="110" width="94" height="18" rx="6" fill="#052e16" stroke="#10b981" stroke-width="1"/>
-                <text x="125" y="123" text-anchor="middle" fill="#34d399" font-size="9" font-family="monospace">▶ Emes CBT Running</text>
-
-                <!-- ── KOMPUTER SISWA (kanan atas) ── -->
-                <rect x="590" y="50" width="90" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
-                <rect x="598" y="58" width="74" height="42" rx="3" fill="#0f172a"/>
-                <rect x="602" y="62" width="66" height="4" rx="1" fill="#38bdf8" opacity=".5"/>
-                <rect x="602" y="69" width="50" height="3" rx="1" fill="#475569" opacity=".5"/>
-                <rect x="602" y="75" width="58" height="3" rx="1" fill="#475569" opacity=".4"/>
-                <rect x="602" y="81" width="40" height="3" rx="1" fill="#475569" opacity=".3"/>
-                <rect x="620" y="86" width="22" height="14" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                <rect x="590" y="114" width="90" height="7" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
-                <text x="635" y="136" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Siswa 1</text>
-                <text x="635" y="148" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">192.168.1.11</text>
-
-                <!-- ── KOMPUTER SISWA (kanan tengah) ── -->
-                <rect x="590" y="170" width="90" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
-                <rect x="598" y="178" width="74" height="42" rx="3" fill="#0f172a"/>
-                <rect x="602" y="182" width="66" height="4" rx="1" fill="#38bdf8" opacity=".5"/>
-                <rect x="602" y="189" width="50" height="3" rx="1" fill="#475569" opacity=".5"/>
-                <rect x="602" y="195" width="58" height="3" rx="1" fill="#475569" opacity=".4"/>
-                <rect x="602" y="201" width="40" height="3" rx="1" fill="#475569" opacity=".3"/>
-                <rect x="620" y="206" width="22" height="14" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                <rect x="590" y="234" width="90" height="7" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
-                <text x="635" y="256" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Siswa 2</text>
-                <text x="635" y="268" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">192.168.1.12</text>
-
-                <!-- ── KOMPUTER SISWA (kanan bawah — dst) ── -->
-                <rect x="590" y="290" width="90" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
-                <text x="635" y="313" text-anchor="middle" fill="#475569" font-size="11" font-family="monospace">Siswa 3–30</text>
-
-                <!-- ── GARIS KONEKSI: Server → Router ── -->
-                <line x1="190" y1="170" x2="315" y2="170" stroke="#10b981" stroke-width="2.5" marker-end="url(#arr2)" stroke-dasharray="6,3"/>
-                <text x="252" y="162" text-anchor="middle" fill="#10b981" font-size="9" font-family="monospace">LAN / Kabel</text>
-
-                <!-- ── GARIS KONEKSI: Router → Siswa 1 ── -->
-                <line x1="465" y1="155" x2="590" y2="95" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="5,3"/>
-
-                <!-- ── GARIS KONEKSI: Router → Siswa 2 ── -->
-                <line x1="465" y1="170" x2="590" y2="200" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="5,3"/>
-
-                <!-- ── GARIS KONEKSI: Router → Siswa 3-30 ── -->
-                <line x1="465" y1="188" x2="590" y2="305" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="4,4" opacity=".5"/>
-
-                <!-- WiFi label -->
-                <text x="540" y="130" text-anchor="middle" fill="#60a5fa" font-size="9" font-family="monospace">WiFi / LAN</text>
-                <text x="540" y="141" text-anchor="middle" fill="#60a5fa" font-size="9" font-family="monospace">192.168.1.x</text>
-
-                <!-- ── LEGEND ── -->
-                <rect x="20" y="280" width="220" height="48" rx="8" fill="#0f1a2b" stroke="#1e3a8a" stroke-width="1"/>
-                <line x1="32" y1="296" x2="52" y2="296" stroke="#10b981" stroke-width="2" stroke-dasharray="5,3"/>
-                <text x="58" y="300" fill="#94a3b8" font-size="9" font-family="monospace">Server ke Router (Kabel/WiFi)</text>
-                <line x1="32" y1="314" x2="52" y2="314" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,3"/>
-                <text x="58" y="318" fill="#94a3b8" font-size="9" font-family="monospace">Router ke Siswa (WiFi/Kabel)</text>
-
-                <!-- Internet blocked label -->
-                <rect x="310" y="14" width="160" height="24" rx="6" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
-                <text x="390" y="30" text-anchor="middle" fill="#fca5a5" font-size="10" font-family="monospace">🚫 Internet tidak diperlukan</text>
-              </svg>
-            </div>
-
-            <!-- ═══ KETERANGAN TOPOLOGI ═══ -->
-            <div class="net-info-grid">
-              <div class="net-info-card blue">
-                <div class="net-info-icon">🖥️</div>
-                <div class="net-info-title">Laptop Server</div>
-                <div class="net-info-desc">Laptop/PC tempat Emes CBT dijalankan. IP statis: <code>192.168.1.100</code>. Hubungkan ke router via kabel LAN atau WiFi. Jalankan <code>Jalankan CBT.bat</code> → server aktif di port <code>3000</code>.</div>
-              </div>
-              <div class="net-info-card green">
-                <div class="net-info-icon">📡</div>
-                <div class="net-info-title">Router</div>
-                <div class="net-info-desc">Berfungsi sebagai pusat distribusi jaringan lokal. IP Router biasanya <code>192.168.1.1</code>. Semua perangkat (server + siswa) terhubung ke router ini. Tidak perlu koneksi internet.</div>
-              </div>
-              <div class="net-info-card slate">
-                <div class="net-info-icon">💻</div>
-                <div class="net-info-title">Komputer Siswa</div>
-                <div class="net-info-desc">Buka browser, ketik alamat server: <code>http://192.168.1.100:3000</code>. Siswa tidak perlu install apapun. Bisa menggunakan komputer, laptop, atau tablet yang terhubung ke router yang sama.</div>
-              </div>
-            </div>
-
-            <!-- ═══ PANDUAN ROUTER BIASA ═══ -->
-            <div class="net-section-label" style="margin-top:32px">⚙️ Pengaturan Router Biasa (TP-Link / D-Link / Tenda)</div>
-            <div class="step-items">
-              <div class="step-item">
-                <div class="step-item-num" style="background:#1d4ed8">1</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Login ke Halaman Admin Router</div>
-                  <div class="step-item-desc">Buka browser, masuk ke <code>192.168.1.1</code> atau <code>192.168.0.1</code> (cek label belakang router). Username/password default biasanya <code>admin / admin</code> atau <code>admin / 1234</code>.</div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#1d4ed8">2</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Aktifkan DHCP Server</div>
-                  <div class="step-item-desc">Pastikan DHCP Server aktif dengan range IP misalnya <code>192.168.1.10</code> s/d <code>192.168.1.200</code>. DHCP akan memberi IP otomatis ke setiap komputer siswa yang terhubung.</div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#1d4ed8">3</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Atur IP Statis untuk Laptop Server</div>
-                  <div class="step-item-desc">Di Windows: Klik kanan ikon jaringan → <strong>Open Network &amp; Internet Settings</strong> → <strong>Change adapter options</strong> → klik kanan adapter WiFi/LAN → Properties → IPv4 → atur IP Manual:<br><br>
-                    <div class="net-config-box">
-                      IP Address: &nbsp;&nbsp;<strong>192.168.1.100</strong><br>
-                      Subnet Mask: <strong>255.255.255.0</strong><br>
-                      Gateway: &nbsp;&nbsp;&nbsp;&nbsp;<strong>192.168.1.1</strong><br>
-                      DNS: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>8.8.8.8</strong> (opsional)
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#1d4ed8">4</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Atur SSID WiFi (Nama Jaringan)</div>
-                  <div class="step-item-desc">Di pengaturan Wireless router, beri nama SSID yang mudah dikenali siswa, misalnya <code>UJIAN-CBT-RUANG1</code>. Pasang password WiFi agar tidak diakses pihak luar. Semua komputer siswa hubungkan ke SSID ini.</div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#1d4ed8">5</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Nonaktifkan Koneksi ke Internet (Opsional)</div>
-                  <div class="step-item-desc">Untuk keamanan ujian, cabut kabel WAN/Internet dari router. Router tetap melayani jaringan lokal antar perangkat tanpa internet — ujian tetap berjalan normal karena Emes CBT 100% offline.</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ═══ PANDUAN MIKROTIK ═══ -->
-            <div class="net-section-label" style="margin-top:36px">🔶 Pengaturan MikroTik untuk Ujian Emes CBT</div>
-            <div class="net-mikrotik-badge">
-              <span>🔶</span>
-              <span>Panduan berikut berlaku untuk MikroTik dengan akses via <strong>Winbox</strong> atau <strong>WebFig</strong>. Skema: MikroTik sebagai DHCP Server + Access Point jaringan lokal ujian.</span>
-            </div>
-            <div class="step-items">
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">1</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Login ke MikroTik via Winbox</div>
-                  <div class="step-item-desc">Buka Winbox, klik <strong>Neighbors</strong> untuk scan otomatis. Klik MAC address MikroTik yang terdeteksi → Login dengan <code>admin</code> / kosong (default). Atau buka WebFig via <code>http://192.168.88.1</code>.</div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">2</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Atur IP Address Interface LAN</div>
-                  <div class="step-item-desc">Buka <strong>IP → Addresses</strong> → klik <strong>+</strong>. Atur interface bridge/ether (sesuai port LAN MikroTik):
-                    <div class="net-config-box" style="margin-top:8px">
-                      Address: &nbsp;&nbsp;<strong>192.168.1.1/24</strong><br>
-                      Interface: <strong>bridge</strong> (atau ether1-lan / wlan1)
-                    </div>
-                    Klik <strong>OK</strong> untuk menyimpan.
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">3</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Aktifkan DHCP Server</div>
-                  <div class="step-item-desc">Buka <strong>IP → DHCP Server</strong> → klik <strong>DHCP Setup</strong> → pilih interface bridge/LAN → ikuti wizard:
-                    <div class="net-config-box" style="margin-top:8px">
-                      DHCP Address Space: &nbsp;<strong>192.168.1.0/24</strong><br>
-                      Gateway for DHCP: &nbsp;&nbsp;&nbsp;<strong>192.168.1.1</strong><br>
-                      IP Pool: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>192.168.1.10 – 192.168.1.200</strong><br>
-                      DNS Server: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>192.168.1.1</strong><br>
-                      Lease Time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>1d</strong> (1 hari)
-                    </div>
-                    Klik <strong>Next</strong> sampai selesai. DHCP aktif otomatis.
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">4</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Atur Static IP untuk Laptop Server</div>
-                  <div class="step-item-desc">Agar IP server tidak berubah, tambahkan static lease di MikroTik: buka <strong>IP → DHCP Server → Leases</strong>. Cari MAC Address laptop server (sudah muncul setelah laptop terhubung) → klik → centang <strong>Make Static</strong> → ubah IP ke <code>192.168.1.100</code> → OK.<br><br>Atau atur langsung di laptop server via IPv4 statis seperti panduan di atas.</div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">5</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Pengaturan WiFi (Jika MikroTik punya Wireless)</div>
-                  <div class="step-item-desc">Buka <strong>Wireless → WiFi Interfaces</strong> → double-klik <strong>wlan1</strong> → tab <strong>Wireless</strong>:
-                    <div class="net-config-box" style="margin-top:8px">
-                      Mode: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>ap bridge</strong><br>
-                      Band: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>2GHz-b/g/n</strong> (atau 5GHz jika didukung)<br>
-                      SSID: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>UJIAN-CBT</strong><br>
-                      Security: <strong>WPA2-PSK</strong>
-                    </div>
-                    Tab <strong>Security Profiles</strong> → buat profil baru → atur password WiFi. Tambahkan wlan1 ke dalam bridge agar satu subnet dengan LAN.
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">6</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Blokir Akses Internet (Isolasi Ujian)</div>
-                  <div class="step-item-desc">Untuk memastikan siswa tidak bisa akses internet saat ujian, buka <strong>IP → Firewall → Filter Rules</strong> → klik <strong>+</strong>:
-                    <div class="net-config-box" style="margin-top:8px">
-                      Chain: &nbsp;&nbsp;&nbsp;&nbsp;<strong>forward</strong><br>
-                      In. Interface: <strong>bridge</strong><br>
-                      Out. Interface: <strong>ether1</strong> (port WAN)<br>
-                      Action: &nbsp;&nbsp;&nbsp;<strong>drop</strong>
-                    </div>
-                    Rule ini memblokir traffic dari LAN ke WAN. Ujian tetap berjalan karena Emes CBT hanya butuh jaringan lokal. <strong>Atau cara paling mudah: cabut saja kabel WAN dari MikroTik.</strong>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-item-num" style="background:#b45309">7</div>
-                <div class="step-item-content">
-                  <div class="step-item-title">Verifikasi & Uji Coba Sebelum Ujian</div>
-                  <div class="step-item-desc">
-                    <ol style="margin-left:16px;line-height:1.9;font-size:13px;color:var(--mute)">
-                      <li>Jalankan <code>Jalankan CBT.bat</code> di laptop server</li>
-                      <li>Di laptop server, buka browser → <code>http://192.168.1.100:3000</code> — harus muncul halaman login Emes CBT</li>
-                      <li>Sambungkan satu komputer siswa ke WiFi <code>UJIAN-CBT</code></li>
-                      <li>Buka browser siswa → ketik <code>http://192.168.1.100:3000</code> — harus muncul halaman login</li>
-                      <li>Cek di <strong>IP → DHCP Server → Leases</strong> di Winbox — pastikan semua perangkat siswa mendapat IP</li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="step-tip" style="margin-top:20px"><i class="fa-solid fa-lightbulb"></i><span><strong>Tips:</strong> Simpan konfigurasi MikroTik via <strong>Files → Backup</strong> setelah selesai setup. Saat ujian berikutnya, tidak perlu konfigurasi ulang — cukup nyalakan MikroTik dan jalankan CBT.bat di laptop server.</span></div>
-            <div class="step-warn" style="margin-top:12px"><i class="fa-solid fa-triangle-exclamation"></i><span>Pastikan laptop server <strong>tidak sleep/hibernate</strong> selama ujian berlangsung. Ubah pengaturan daya Windows agar layar tidak mati: <strong>Settings → Power → Screen timeout → Never</strong>.</span></div>
-
-          </div>
-        </div><!-- end step-net -->
-
         <div class="step-card" id="step-1">
           <div class="step-card-header"><div class="step-num-big">1</div><div><div class="step-title">Pengaturan Awal Sekolah</div><div class="step-subtitle">Menu: Pengaturan → Pengaturan Sistem</div></div></div>
           <div class="step-body">
@@ -1679,6 +1362,753 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
     </div>
   </div>
 
+  <!-- ══ TAB JARINGAN ══════════════════════════════════════════ -->
+  <div class="panduan-body" id="panduan-tab-jaringan" style="display:none">
+
+    <!-- Intro banner -->
+    <div class="jar-intro">
+      <div class="jar-intro-icon">🌐</div>
+      <div>
+        <div class="jar-intro-title">Panduan Setting Jaringan LAN untuk Emes CBT</div>
+        <div class="jar-intro-desc">Emes CBT berjalan sepenuhnya di jaringan lokal (LAN) — tidak perlu internet. Setiap skema mendukung dua mode perangkat siswa: <strong style="color:#6ee7b7">💻 Laptop/PC (Lab Komputer)</strong> via kabel LAN, dan <strong style="color:#6ee7b7">📱 HP Siswa (BYOD)</strong> via WiFi. Pilih skema sesuai ukuran sekolah Anda.</div>
+      </div>
+    </div>
+
+    <!-- 3 Skema pilih -->
+    <div class="jar-skema-row">
+
+      <div class="jar-skema-card s-kecil" onclick="showJar('kecil',this)">
+        <div class="jar-sk-icon">🏫</div>
+        <div class="jar-sk-badge bkecil">SKEMA 1</div>
+        <div class="jar-sk-title">Sekolah Kecil</div>
+        <div class="jar-sk-ruang">1 – 2 Ruang Ujian</div>
+        <div class="jar-sk-detail">s/d ~60 siswa bersamaan</div>
+        <div class="jar-sk-versi vstd">✅ Versi Standard</div>
+        <div class="jar-sk-cta">Lihat Skema →</div>
+      </div>
+
+      <div class="jar-skema-card s-menengah" onclick="showJar('menengah',this)">
+        <div class="jar-sk-icon">🏢</div>
+        <div class="jar-sk-badge bmenengah">SKEMA 2</div>
+        <div class="jar-sk-title">Sekolah Menengah</div>
+        <div class="jar-sk-ruang">3 – 6 Ruang Ujian</div>
+        <div class="jar-sk-detail">s/d ~200 siswa bersamaan</div>
+        <div class="jar-sk-versi vstd">✅ Standard / Pro</div>
+        <div class="jar-sk-cta">Lihat Skema →</div>
+      </div>
+
+      <div class="jar-skema-card s-besar" onclick="showJar('besar',this)">
+        <div class="jar-sk-icon">🏛️</div>
+        <div class="jar-sk-badge bbesar">SKEMA 3</div>
+        <div class="jar-sk-title">Sekolah Besar</div>
+        <div class="jar-sk-ruang">7 + Ruang Ujian</div>
+        <div class="jar-sk-detail">500 + siswa bersamaan</div>
+        <div class="jar-sk-versi vpro">🔵 Wajib Pro</div>
+        <div class="jar-sk-cta">Lihat Skema →</div>
+      </div>
+
+    </div><!-- end jar-skema-row -->
+
+    <!-- ══ DETAIL SKEMA 1: KECIL ══ -->
+    <div class="jar-detail" id="jar-kecil" style="display:none">
+      <div class="jar-det-header hkecil">
+        <div>
+          <div class="jar-det-badge bkecil">🏫 SKEMA 1 — Sekolah Kecil</div>
+          <h3 class="jar-det-title">1–2 Ruang Ujian Bersamaan</h3>
+          <p class="jar-det-sub">SD/MI, SMP/MTs kecil, atau sekolah dengan maksimal 60 siswa ujian serentak. Pilih mode perangkat siswa di bawah.</p>
+        </div>
+        <button class="jar-close" onclick="hideJar('kecil')">✕ Tutup</button>
+      </div>
+
+      <!-- Mode toggle -->
+      <div class="jar-mode-toggle">
+        <button class="jar-mode-btn active" onclick="switchMode('kecil','laptop',this)">💻 Laptop / PC (Lab)</button>
+        <button class="jar-mode-btn" onclick="switchMode('kecil','hp',this)">📱 HP Siswa (BYOD WiFi)</button>
+      </div>
+
+      <!-- MODE: LAPTOP -->
+      <div id="jar-kecil-laptop">
+
+      <div class="jar-diagram">
+        <div class="jar-diag-label"><i class="fa-solid fa-sitemap"></i> Topologi Jaringan — Lab Komputer</div>
+        <div class="jar-topo">
+          <div class="jar-node nserver">
+            <div class="jar-nd-ico">🖥️</div>
+            <div class="jar-nd-name">PC / Laptop Server</div>
+            <div class="jar-nd-sub">Jalankan CBT.bat<br><code>192.168.1.1</code> (static)</div>
+          </div>
+          <div class="jar-arrow">▼</div>
+          <div class="jar-node nswitch">
+            <div class="jar-nd-ico">🔀</div>
+            <div class="jar-nd-name">Switch 8-port</div>
+            <div class="jar-nd-sub">Unmanaged · ~Rp 150rb</div>
+          </div>
+          <div class="jar-branches">
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom">
+                <div class="jar-nd-ico">🖥️🖥️</div>
+                <div class="jar-nd-name">Ruang 1</div>
+                <div class="jar-nd-sub">s/d 30 siswa<br><code>192.168.1.10 – .40</code></div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom">
+                <div class="jar-nd-ico">🖥️🖥️</div>
+                <div class="jar-nd-name">Ruang 2</div>
+                <div class="jar-nd-sub">s/d 30 siswa<br><code>192.168.1.41 – .70</code></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jar-2col">
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-server"></i> Spesifikasi Server</div>
+          <table class="jar-spec-tbl">
+            <tr><td>CPU</td><td>Core i3 / setara (min. 4 core)</td></tr>
+            <tr><td>RAM</td><td>4 GB</td></tr>
+            <tr><td>Storage</td><td>HDD/SSD 100 GB</td></tr>
+            <tr><td>OS</td><td>Windows 10 / 11</td></tr>
+            <tr><td>Versi CBT</td><td><span class="tag-std">Standard (SQLite)</span></td></tr>
+            <tr><td>Port aplikasi</td><td>3000 (default)</td></tr>
+          </table>
+        </div>
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-network-wired"></i> Perangkat Jaringan</div>
+          <table class="jar-spec-tbl">
+            <tr><td>Switch</td><td>1× Switch 8-port unmanaged</td></tr>
+            <tr><td>Kabel</td><td>UTP Cat5e / Cat6</td></tr>
+            <tr><td>IP Server</td><td><code>192.168.1.1</code> (static)</td></tr>
+            <tr><td>IP Klien</td><td><code>192.168.1.10 – .70</code></td></tr>
+            <tr><td>Subnet</td><td><code>255.255.255.0</code></td></tr>
+            <tr><td>Internet</td><td>❌ Tidak diperlukan</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="jar-steps">
+        <div class="jar-steps-title">Langkah Konfigurasi</div>
+        <div class="jar-st"><div class="jar-st-num">1</div><div><strong>Set IP static di server</strong> — Buka Control Panel → Network Connections → klik kanan adapter LAN → Properties → IPv4 → isi IP: <code>192.168.1.1</code>, Subnet: <code>255.255.255.0</code>, Gateway dikosongkan.</div></div>
+        <div class="jar-st"><div class="jar-st-num">2</div><div><strong>Set IP di setiap PC siswa</strong> — Isi IP unik mulai <code>192.168.1.10</code> dan seterusnya, subnet <code>255.255.255.0</code>, Gateway isi <code>192.168.1.1</code>.</div></div>
+        <div class="jar-st"><div class="jar-st-num">3</div><div><strong>Hubungkan semua PC ke switch</strong> dengan kabel UTP. Server dan semua PC siswa di kedua ruang tersambung ke switch yang sama.</div></div>
+        <div class="jar-st"><div class="jar-st-num">4</div><div><strong>Izinkan port 3000 di Windows Firewall</strong> — Windows Defender Firewall → Inbound Rules → New Rule → Port → TCP 3000 → Allow.</div></div>
+        <div class="jar-st"><div class="jar-st-num">5</div><div><strong>Jalankan CBT.bat</strong> di server — catat IP yang tampil di terminal hitam.</div></div>
+        <div class="jar-st"><div class="jar-st-num">6</div><div><strong>Buka browser di PC siswa</strong> → ketik <code>http://192.168.1.1:3000</code> → halaman login langsung muncul.</div></div>
+      </div>
+      <div class="jar-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Tips:</strong> Jika hanya 1 ruang dan kurang dari 30 siswa, server bisa berupa laptop biasa yang sudah ada di sekolah. Tidak perlu PC server khusus.</div>
+
+      </div><!-- end kecil-laptop -->
+
+      <!-- MODE: HP -->
+      <div id="jar-kecil-hp" style="display:none">
+
+      <div class="jar-diagram">
+        <div class="jar-diag-label"><i class="fa-solid fa-sitemap"></i> Topologi Jaringan — HP Siswa via WiFi (BYOD)</div>
+        <div class="jar-topo">
+          <div class="jar-node nserver">
+            <div class="jar-nd-ico">🖥️</div>
+            <div class="jar-nd-name">PC / Laptop Server</div>
+            <div class="jar-nd-sub">Jalankan CBT.bat<br><code>192.168.1.1</code> (static, via LAN)</div>
+          </div>
+          <div class="jar-arrow">▼</div>
+          <div class="jar-node nswitch">
+            <div class="jar-nd-ico">🔀</div>
+            <div class="jar-nd-name">Router / Access Point</div>
+            <div class="jar-nd-sub">WiFi + DHCP aktif · ~Rp 200–400rb<br>SSID: <code>UJIAN-CBT</code> (tanpa password publik)</div>
+          </div>
+          <div class="jar-branches">
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📱📱</div>
+                <div class="jar-nd-name">HP Siswa Ruang 1</div>
+                <div class="jar-nd-sub">s/d 30 HP<br>IP otomatis via DHCP</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📱📱</div>
+                <div class="jar-nd-name">HP Siswa Ruang 2</div>
+                <div class="jar-nd-sub">s/d 30 HP<br>IP otomatis via DHCP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="jar-diag-note" style="background:#f5f3ff;border-color:#c4b5fd;color:#5b21b6">📡 Server tetap terhubung ke router via kabel LAN. Siswa konek WiFi dari HP masing-masing — tidak perlu konfigurasi apapun di HP siswa.</div>
+      </div>
+
+      <div class="jar-2col">
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-server"></i> Spesifikasi Server</div>
+          <table class="jar-spec-tbl">
+            <tr><td>CPU</td><td>Core i3 / setara (min. 4 core)</td></tr>
+            <tr><td>RAM</td><td>4 GB</td></tr>
+            <tr><td>Storage</td><td>HDD/SSD 100 GB</td></tr>
+            <tr><td>OS</td><td>Windows 10 / 11</td></tr>
+            <tr><td>Versi CBT</td><td><span class="tag-std">Standard (SQLite)</span></td></tr>
+            <tr><td>Koneksi server</td><td>Kabel LAN ke router</td></tr>
+          </table>
+        </div>
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-wifi"></i> Perangkat Jaringan</div>
+          <table class="jar-spec-tbl">
+            <tr><td>Router/AP</td><td>1× Router WiFi (TP-Link, dll)</td></tr>
+            <tr><td>Kabel LAN</td><td>1 kabel UTP server → router</td></tr>
+            <tr><td>IP Server</td><td><code>192.168.1.1</code> (static)</td></tr>
+            <tr><td>IP HP siswa</td><td>Otomatis via DHCP router</td></tr>
+            <tr><td>SSID WiFi</td><td>Bebas, tanpa internet</td></tr>
+            <tr><td>Internet</td><td>❌ Matikan / tidak perlu</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="jar-steps">
+        <div class="jar-steps-title">Langkah Konfigurasi</div>
+        <div class="jar-st"><div class="jar-st-num">1</div><div><strong>Set IP static di server</strong> — IP: <code>192.168.1.1</code>, Subnet: <code>255.255.255.0</code>, Gateway: <code>192.168.1.254</code> (IP router). Hubungkan server ke router via kabel LAN.</div></div>
+        <div class="jar-st"><div class="jar-st-num">2</div><div><strong>Konfigurasi router</strong> — Pastikan DHCP aktif (range <code>192.168.1.10–100</code>). Nonaktifkan akses internet di router agar siswa tidak bisa browsing selama ujian.</div></div>
+        <div class="jar-st"><div class="jar-st-num">3</div><div><strong>Izinkan port 3000 di Windows Firewall</strong> di PC server — Inbound Rules → New Rule → TCP 3000 → Allow.</div></div>
+        <div class="jar-st"><div class="jar-st-num">4</div><div><strong>Jalankan CBT.bat</strong> di server. Catat IP server yang tampil di terminal.</div></div>
+        <div class="jar-st"><div class="jar-st-num">5</div><div><strong>Siswa konek WiFi</strong> dari HP ke SSID router sekolah. Buka browser → ketik <code>http://192.168.1.1:3000</code> → login dengan NISN dan password.</div></div>
+        <div class="jar-st"><div class="jar-st-num">6</div><div><strong>Minta siswa aktifkan mode pesawat + WiFi saja</strong> — ini memastikan HP siswa tidak menggunakan data seluler dan tidak bisa akses internet selama ujian.</div></div>
+      </div>
+      <div class="jar-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Tips BYOD:</strong> Untuk 1–2 ruang kecil, satu router WiFi rumahan sudah cukup. Posisikan router di tengah agar sinyal merata ke semua ruang.</div>
+      <div class="jar-warn"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Perhatian:</strong> Minta siswa menonaktifkan data seluler dan hanya menggunakan WiFi sekolah. Pastikan browser HP sudah mendukung (Chrome/Firefox terbaru). Hindari HP dengan RAM di bawah 2 GB.</div>
+
+      </div><!-- end kecil-hp -->
+    </div><!-- end jar-kecil -->
+
+    <!-- ══ DETAIL SKEMA 2: MENENGAH ══ -->
+    <div class="jar-detail" id="jar-menengah" style="display:none">
+      <div class="jar-det-header hmenengah">
+        <div>
+          <div class="jar-det-badge bmenengah">🏢 SKEMA 2 — Sekolah Menengah</div>
+          <h3 class="jar-det-title">3–6 Ruang Ujian Bersamaan</h3>
+          <p class="jar-det-sub">SMP/SMA/SMK menengah dengan 3–6 kelas ujian paralel, total s/d 200 siswa bersamaan. Pilih mode perangkat siswa di bawah.</p>
+        </div>
+        <button class="jar-close" onclick="hideJar('menengah')">✕ Tutup</button>
+      </div>
+
+      <!-- Mode toggle -->
+      <div class="jar-mode-toggle">
+        <button class="jar-mode-btn active" onclick="switchMode('menengah','laptop',this)">💻 Laptop / PC (Lab)</button>
+        <button class="jar-mode-btn" onclick="switchMode('menengah','hp',this)">📱 HP Siswa (BYOD WiFi)</button>
+      </div>
+
+      <!-- MODE: LAPTOP -->
+      <div id="jar-menengah-laptop">
+
+      <div class="jar-diagram">
+        <div class="jar-diag-label"><i class="fa-solid fa-sitemap"></i> Topologi Jaringan — Lab Komputer</div>
+        <div class="jar-topo">
+          <div class="jar-node nserver">
+            <div class="jar-nd-ico">🖥️</div>
+            <div class="jar-nd-name">PC Server</div>
+            <div class="jar-nd-sub">Jalankan CBT.bat<br><code>192.168.1.1</code> (static)</div>
+          </div>
+          <div class="jar-arrow">▼</div>
+          <div class="jar-node nswitch">
+            <div class="jar-nd-ico">🔀</div>
+            <div class="jar-nd-name">Switch Utama 24-port</div>
+            <div class="jar-nd-sub">Managed/Unmanaged · ~Rp 300–500rb</div>
+          </div>
+          <div class="jar-branches jar-branches-3">
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom">
+                <div class="jar-nd-ico">🖥️🖥️</div>
+                <div class="jar-nd-name">Ruang 1 – 2</div>
+                <div class="jar-nd-sub">s/d 60 siswa<br><code>.10 – .70</code></div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom">
+                <div class="jar-nd-ico">🖥️🖥️</div>
+                <div class="jar-nd-name">Ruang 3 – 4</div>
+                <div class="jar-nd-sub">s/d 60 siswa<br><code>.71 – .130</code></div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom">
+                <div class="jar-nd-ico">🖥️🖥️</div>
+                <div class="jar-nd-name">Ruang 5 – 6</div>
+                <div class="jar-nd-sub">s/d 80 siswa<br><code>.131 – .200</code></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jar-2col">
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-server"></i> Spesifikasi Server</div>
+          <table class="jar-spec-tbl">
+            <tr><td>CPU</td><td>Core i5 / setara (min. 4 core)</td></tr>
+            <tr><td>RAM</td><td>8 GB (rekomendasi 16 GB)</td></tr>
+            <tr><td>Storage</td><td>SSD 120 GB+</td></tr>
+            <tr><td>OS</td><td>Windows 10 / 11</td></tr>
+            <tr><td>Versi CBT</td><td><span class="tag-std">Standard</span> atau <span class="tag-pro">Pro</span></td></tr>
+            <tr><td>Kapasitas</td><td>s/d 200 siswa bersamaan</td></tr>
+          </table>
+        </div>
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-network-wired"></i> Perangkat Jaringan</div>
+          <table class="jar-spec-tbl">
+            <tr><td>Switch utama</td><td>1× Switch 24-port</td></tr>
+            <tr><td>Switch ruangan</td><td>Opsional: 1× switch 8-port per ruang</td></tr>
+            <tr><td>Kabel</td><td>UTP Cat5e / Cat6</td></tr>
+            <tr><td>IP Server</td><td><code>192.168.1.1</code> (static)</td></tr>
+            <tr><td>IP Klien</td><td><code>192.168.1.10 – .200</code></td></tr>
+            <tr><td>Internet</td><td>❌ Tidak diperlukan</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="jar-steps">
+        <div class="jar-steps-title">Langkah Konfigurasi</div>
+        <div class="jar-st"><div class="jar-st-num">1</div><div><strong>Set IP static di server</strong> — IP: <code>192.168.1.1</code>, Subnet: <code>255.255.255.0</code>. Pastikan adapter LAN yang terhubung ke switch utama yang dikonfigurasi.</div></div>
+        <div class="jar-st"><div class="jar-st-num">2</div><div><strong>Hubungkan semua ruang ke switch utama</strong> — Jika jarak antar ruang jauh, gunakan switch kecil tambahan di tiap ruang yang dihubungkan ke switch utama dengan satu kabel.</div></div>
+        <div class="jar-st"><div class="jar-st-num">3</div><div><strong>Set IP di setiap PC siswa</strong> — Gunakan range <code>192.168.1.10</code> s/d <code>192.168.1.200</code>. Bisa manual atau aktifkan DHCP server di router/switch managed.</div></div>
+        <div class="jar-st"><div class="jar-st-num">4</div><div><strong>Izinkan port 3000 di Windows Firewall</strong> di PC server — Inbound Rules → New Rule → TCP 3000 → Allow.</div></div>
+        <div class="jar-st"><div class="jar-st-num">5</div><div><strong>Jalankan CBT.bat</strong> di server. Untuk Versi Pro: pastikan konfirmasi PostgreSQL terhubung muncul di terminal.</div></div>
+        <div class="jar-st"><div class="jar-st-num">6</div><div><strong>Uji koneksi sebelum ujian</strong> — Dari minimal 1 PC tiap ruang, buka browser → <code>http://192.168.1.1:3000</code> → pastikan halaman login muncul tanpa timeout.</div></div>
+      </div>
+      <div class="jar-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Tips:</strong> Untuk 3–4 ruang dengan total 100–150 siswa, Versi Standard sudah sangat cukup dan stabil. Upgrade ke Pro hanya jika sering ujian 5–6 ruang serentak atau lebih dari 150 siswa bersamaan.</div>
+
+      </div><!-- end menengah-laptop -->
+
+      <!-- MODE: HP -->
+      <div id="jar-menengah-hp" style="display:none">
+
+      <div class="jar-diagram">
+        <div class="jar-diag-label"><i class="fa-solid fa-sitemap"></i> Topologi Jaringan — HP Siswa via WiFi (BYOD)</div>
+        <div class="jar-topo">
+          <div class="jar-node nserver">
+            <div class="jar-nd-ico">🖥️</div>
+            <div class="jar-nd-name">PC Server</div>
+            <div class="jar-nd-sub">Jalankan CBT.bat<br><code>192.168.1.1</code> (via kabel LAN)</div>
+          </div>
+          <div class="jar-arrow">▼</div>
+          <div class="jar-node nswitch">
+            <div class="jar-nd-ico">🔀</div>
+            <div class="jar-nd-name">Switch / Router Utama</div>
+            <div class="jar-nd-sub">Kabel LAN ke server · DHCP aktif</div>
+          </div>
+          <div class="jar-branches jar-branches-3">
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📡</div>
+                <div class="jar-nd-name">AP Ruang 1–2</div>
+                <div class="jar-nd-sub">1 Access Point<br>s/d 60 HP siswa</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📡</div>
+                <div class="jar-nd-name">AP Ruang 3–4</div>
+                <div class="jar-nd-sub">1 Access Point<br>s/d 60 HP siswa</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node nroom" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📡</div>
+                <div class="jar-nd-name">AP Ruang 5–6</div>
+                <div class="jar-nd-sub">1 Access Point<br>s/d 80 HP siswa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="jar-diag-note" style="background:#f5f3ff;border-color:#c4b5fd;color:#5b21b6">📡 Gunakan 1 Access Point per 2 ruang berdekatan. Semua AP terhubung ke switch utama via kabel LAN. Siswa cukup konek ke WiFi — tidak perlu setting apapun di HP.</div>
+      </div>
+
+      <div class="jar-2col">
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-server"></i> Spesifikasi Server</div>
+          <table class="jar-spec-tbl">
+            <tr><td>CPU</td><td>Core i5 / setara</td></tr>
+            <tr><td>RAM</td><td>8 GB</td></tr>
+            <tr><td>Storage</td><td>SSD 120 GB+</td></tr>
+            <tr><td>OS</td><td>Windows 10 / 11</td></tr>
+            <tr><td>Versi CBT</td><td><span class="tag-std">Standard</span> atau <span class="tag-pro">Pro</span></td></tr>
+            <tr><td>Koneksi server</td><td>Kabel LAN ke switch/router</td></tr>
+          </table>
+        </div>
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-wifi"></i> Perangkat Jaringan</div>
+          <table class="jar-spec-tbl">
+            <tr><td>Switch utama</td><td>1× Switch 8–16 port</td></tr>
+            <tr><td>Access Point</td><td>1× AP per 2 ruang berdekatan</td></tr>
+            <tr><td>Kapasitas AP</td><td>Min. 30–40 klien per AP</td></tr>
+            <tr><td>IP Server</td><td><code>192.168.1.1</code> (static)</td></tr>
+            <tr><td>IP HP siswa</td><td>Otomatis via DHCP</td></tr>
+            <tr><td>Internet</td><td>❌ Matikan / tidak perlu</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="jar-steps">
+        <div class="jar-steps-title">Langkah Konfigurasi</div>
+        <div class="jar-st"><div class="jar-st-num">1</div><div><strong>Set IP static di server</strong> — IP: <code>192.168.1.1</code>, Subnet: <code>255.255.255.0</code>, Gateway: IP router. Hubungkan server ke switch utama via kabel LAN.</div></div>
+        <div class="jar-st"><div class="jar-st-num">2</div><div><strong>Pasang Access Point di setiap 2 ruang berdekatan</strong> — Hubungkan tiap AP ke switch utama via kabel. Gunakan SSID yang sama untuk semua AP agar HP bisa berpindah AP otomatis (roaming).</div></div>
+        <div class="jar-st"><div class="jar-st-num">3</div><div><strong>Aktifkan DHCP di router</strong> — range <code>192.168.1.10 – .200</code>. Nonaktifkan akses internet agar siswa tidak bisa browsing selama ujian.</div></div>
+        <div class="jar-st"><div class="jar-st-num">4</div><div><strong>Izinkan port 3000 di Windows Firewall</strong> di PC server.</div></div>
+        <div class="jar-st"><div class="jar-st-num">5</div><div><strong>Jalankan CBT.bat</strong> di server. Catat IP server yang tampil.</div></div>
+        <div class="jar-st"><div class="jar-st-num">6</div><div><strong>Siswa konek WiFi dari HP</strong> → buka browser → ketik <code>http://192.168.1.1:3000</code> → login. Minta siswa aktifkan mode pesawat + WiFi saja untuk blokir data seluler.</div></div>
+        <div class="jar-st"><div class="jar-st-num">7</div><div><strong>Uji beban WiFi sebelum hari ujian</strong> — simulasikan semua HP konek serentak dari semua ruang. Pastikan tidak ada AP yang overload.</div></div>
+      </div>
+      <div class="jar-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Tips BYOD:</strong> Gunakan AP yang mendukung minimal 40 klien simultan (contoh: TP-Link EAP225, Ubiquiti UniFi). Router rumahan biasa tidak direkomendasikan untuk lebih dari 2 ruang.</div>
+      <div class="jar-warn"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Perhatian:</strong> Minta siswa menonaktifkan data seluler dan hanya pakai WiFi sekolah. Pastikan baterai HP siswa cukup untuk durasi ujian. Sediakan colokan cadangan di tiap ruang bila perlu.</div>
+
+      </div><!-- end menengah-hp -->
+    </div><!-- end jar-menengah -->
+
+    <!-- ══ DETAIL SKEMA 3: BESAR ══ -->
+    <div class="jar-detail" id="jar-besar" style="display:none">
+      <div class="jar-det-header hbesar">
+        <div>
+          <div class="jar-det-badge bbesar">🏛️ SKEMA 3 — Sekolah Besar</div>
+          <h3 class="jar-det-title">7+ Ruang Ujian Bersamaan — 1 Server</h3>
+          <p class="jar-det-sub">SMA/SMK besar atau pesantren yang menyelenggarakan ujian seluruh sekolah serentak (500+ siswa). Wajib Versi Pro. Pilih mode perangkat siswa di bawah.</p>
+        </div>
+        <button class="jar-close" onclick="hideJar('besar')">✕ Tutup</button>
+      </div>
+
+      <!-- Mode toggle -->
+      <div class="jar-mode-toggle">
+        <button class="jar-mode-btn active" onclick="switchMode('besar','laptop',this)">💻 Laptop / PC (Lab)</button>
+        <button class="jar-mode-btn" onclick="switchMode('besar','hp',this)">📱 HP Siswa (BYOD WiFi)</button>
+      </div>
+
+      <!-- MODE: LAPTOP -->
+      <div id="jar-besar-laptop">
+      <div class="jar-diagram">
+        <div class="jar-diag-label"><i class="fa-solid fa-sitemap"></i> Topologi Star Berlapis — 1 Server Pusat · Lab Komputer</div>
+        <div class="jar-topo">
+          <div class="jar-node nserver nserver-pro">
+            <div class="jar-nd-ico">🖥️</div>
+            <div class="jar-nd-name">Server Pusat (Pro)</div>
+            <div class="jar-nd-sub">PostgreSQL · i5/i7 · 16 GB · SSD<br><code>192.168.1.1</code> (static)</div>
+          </div>
+          <div class="jar-arrow">▼</div>
+          <div class="jar-node nswitch nswitch-core">
+            <div class="jar-nd-ico">🔀</div>
+            <div class="jar-nd-name">Switch Core 48-port (Managed)</div>
+            <div class="jar-nd-sub">Di ruang server / ruang TIK</div>
+          </div>
+          <div class="jar-branches jar-branches-3">
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node ndist">
+                <div class="jar-nd-ico">🔀</div>
+                <div class="jar-nd-name">Switch Distribusi<br>Gedung A</div>
+                <div class="jar-nd-sub">16–24 port<br>Ruang 1–3 · s/d 90 PC</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node ndist">
+                <div class="jar-nd-ico">🔀</div>
+                <div class="jar-nd-name">Switch Distribusi<br>Gedung B</div>
+                <div class="jar-nd-sub">16–24 port<br>Ruang 4–6 · s/d 90 PC</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node ndist">
+                <div class="jar-nd-ico">🔀</div>
+                <div class="jar-nd-name">Switch Distribusi<br>Gedung C</div>
+                <div class="jar-nd-sub">16–24 port<br>Ruang 7+ · s/d 300 PC</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="jar-diag-note">💡 Setiap switch distribusi terhubung ke switch core dengan kabel UTP Cat6 atau fiber patch. PC siswa terhubung ke switch distribusi gedung masing-masing.</div>
+      </div>
+      <div class="jar-2col">
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-server"></i> Spesifikasi Server (Wajib)</div>
+          <table class="jar-spec-tbl">
+            <tr><td>CPU</td><td>Core i5 Gen10+ / i7 (min. 6 core)</td></tr>
+            <tr><td>RAM</td><td>16 GB (rekomendasi 32 GB)</td></tr>
+            <tr><td>Storage</td><td>SSD NVMe 256 GB+</td></tr>
+            <tr><td>NIC</td><td>Gigabit LAN (bawaan sudah cukup)</td></tr>
+            <tr><td>OS</td><td>Windows 10/11 atau Windows Server</td></tr>
+            <tr><td>Versi CBT</td><td><span class="tag-pro">🔵 Pro (PostgreSQL) — Wajib</span></td></tr>
+          </table>
+        </div>
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-network-wired"></i> Perangkat Jaringan</div>
+          <table class="jar-spec-tbl">
+            <tr><td>Switch core</td><td>1× Switch 48-port managed</td></tr>
+            <tr><td>Switch distribusi</td><td>1× per gedung/lantai (16–24 port)</td></tr>
+            <tr><td>Kabel trunk</td><td>UTP Cat6 atau fiber patch antar gedung</td></tr>
+            <tr><td>Kabel klien</td><td>UTP Cat5e / Cat6</td></tr>
+            <tr><td>IP Server</td><td><code>192.168.1.1</code> (static)</td></tr>
+            <tr><td>IP Klien</td><td><code>192.168.1.10 – .254</code></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="jar-steps">
+        <div class="jar-steps-title">Langkah Konfigurasi</div>
+        <div class="jar-st"><div class="jar-st-num">1</div><div><strong>Siapkan server performa tinggi</strong> — SSD NVMe dan RAM minimal 16 GB. PostgreSQL sangat terbantu dengan SSD untuk I/O cepat.</div></div>
+        <div class="jar-st"><div class="jar-st-num">2</div><div><strong>Set IP static di server</strong> — IP: <code>192.168.1.1</code>, Subnet: <code>255.255.255.0</code>. Jika lebih dari 245 PC, gunakan subnet <code>/16</code> (255.255.0.0).</div></div>
+        <div class="jar-st"><div class="jar-st-num">3</div><div><strong>Susun topologi star</strong> — Switch core di ruang server. Switch distribusi per gedung terhubung ke switch core. PC siswa ke switch distribusi terdekat.</div></div>
+        <div class="jar-st"><div class="jar-st-num">4</div><div><strong>Aktifkan DHCP di switch managed</strong> — range <code>192.168.1.10 – .250</code> agar tidak perlu set IP manual di ratusan PC.</div></div>
+        <div class="jar-st"><div class="jar-st-num">5</div><div><strong>Izinkan port 3000 di Windows Firewall</strong> di server. Port PostgreSQL (5432) tidak perlu dibuka ke luar.</div></div>
+        <div class="jar-st"><div class="jar-st-num">6</div><div><strong>Jalankan CBT.bat</strong> — konfirmasi PostgreSQL terhubung muncul di terminal. Catat IP server.</div></div>
+        <div class="jar-st"><div class="jar-st-num">7</div><div><strong>Uji beban H-3</strong> — Simulasikan 20–30 PC dari gedung berbeda login serentak. Pastikan respons server di bawah 2 detik dari semua gedung.</div></div>
+        <div class="jar-st"><div class="jar-st-num">8</div><div><strong>Siswa buka browser</strong> → <code>http://192.168.1.1:3000</code> → login dengan NISN dan password.</div></div>
+      </div>
+      <div class="jar-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Tips:</strong> Gunakan kabel Cat6 untuk semua koneksi antar switch. Hindari WiFi untuk PC ujian — kabel jauh lebih stabil dan latensi jauh lebih rendah.</div>
+      <div class="jar-warn"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Perhatian:</strong> Versi Standard (SQLite) tidak disarankan untuk lebih dari 6 ruang ujian bersamaan. Gunakan Versi Pro (PostgreSQL) agar tidak terjadi bottleneck saat ratusan siswa submit serentak.</div>
+      </div><!-- end besar-laptop -->
+
+      <!-- MODE: HP -->
+      <div id="jar-besar-hp" style="display:none">
+      <div class="jar-diagram">
+        <div class="jar-diag-label"><i class="fa-solid fa-sitemap"></i> Topologi Star Berlapis — 1 Server Pusat · HP Siswa via WiFi (BYOD)</div>
+        <div class="jar-topo">
+          <div class="jar-node nserver nserver-pro">
+            <div class="jar-nd-ico">🖥️</div>
+            <div class="jar-nd-name">Server Pusat (Pro)</div>
+            <div class="jar-nd-sub">PostgreSQL · i5/i7 · 16 GB · SSD<br><code>192.168.1.1</code> (via kabel LAN)</div>
+          </div>
+          <div class="jar-arrow">▼</div>
+          <div class="jar-node nswitch nswitch-core">
+            <div class="jar-nd-ico">🔀</div>
+            <div class="jar-nd-name">Switch Core + Router (Managed)</div>
+            <div class="jar-nd-sub">DHCP aktif · Di ruang server</div>
+          </div>
+          <div class="jar-branches jar-branches-3">
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node ndist" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📡📡</div>
+                <div class="jar-nd-name">2–3 AP Gedung A</div>
+                <div class="jar-nd-sub">Ruang 1–3<br>s/d 90 HP siswa</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node ndist" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📡📡</div>
+                <div class="jar-nd-name">2–3 AP Gedung B</div>
+                <div class="jar-nd-sub">Ruang 4–6<br>s/d 90 HP siswa</div>
+              </div>
+            </div>
+            <div class="jar-branch">
+              <div class="jar-arrow">▼</div>
+              <div class="jar-node ndist" style="border-color:#a78bfa;background:#f5f3ff">
+                <div class="jar-nd-ico">📡📡📡</div>
+                <div class="jar-nd-name">3–5 AP Gedung C</div>
+                <div class="jar-nd-sub">Ruang 7+<br>s/d 300 HP siswa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="jar-diag-note" style="background:#f5f3ff;border-color:#c4b5fd;color:#5b21b6">📡 Gunakan 1 AP enterprise per ruang (maks 30–40 HP per AP). Semua AP terhubung ke switch core via kabel. Gunakan SSID yang sama + channel berbeda agar HP bisa roaming antar AP tanpa terputus.</div>
+      </div>
+      <div class="jar-2col">
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-server"></i> Spesifikasi Server (Wajib)</div>
+          <table class="jar-spec-tbl">
+            <tr><td>CPU</td><td>Core i5 Gen10+ / i7 (min. 6 core)</td></tr>
+            <tr><td>RAM</td><td>16 GB (rekomendasi 32 GB)</td></tr>
+            <tr><td>Storage</td><td>SSD NVMe 256 GB+</td></tr>
+            <tr><td>OS</td><td>Windows 10/11 atau Windows Server</td></tr>
+            <tr><td>Versi CBT</td><td><span class="tag-pro">🔵 Pro (PostgreSQL) — Wajib</span></td></tr>
+            <tr><td>Koneksi server</td><td>Kabel LAN ke switch core</td></tr>
+          </table>
+        </div>
+        <div class="jar-spec">
+          <div class="jar-spec-title"><i class="fa-solid fa-wifi"></i> Perangkat Jaringan</div>
+          <table class="jar-spec-tbl">
+            <tr><td>Switch core</td><td>1× Switch 24–48 port managed</td></tr>
+            <tr><td>Access Point</td><td>1 AP enterprise per ruang / per 30–40 HP</td></tr>
+            <tr><td>Rekomendasi AP</td><td>TP-Link EAP, Ubiquiti UniFi, Ruijie</td></tr>
+            <tr><td>IP Server</td><td><code>192.168.1.1</code> (static)</td></tr>
+            <tr><td>IP HP siswa</td><td>Otomatis via DHCP</td></tr>
+            <tr><td>Internet</td><td>❌ Matikan / blokir selama ujian</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="jar-steps">
+        <div class="jar-steps-title">Langkah Konfigurasi</div>
+        <div class="jar-st"><div class="jar-st-num">1</div><div><strong>Siapkan server Pro performa tinggi</strong> — SSD NVMe, RAM 16 GB+. Server terhubung ke switch core via kabel LAN.</div></div>
+        <div class="jar-st"><div class="jar-st-num">2</div><div><strong>Set IP static di server</strong> — IP: <code>192.168.1.1</code>. Pastikan DHCP di router/switch managed aktif dengan range yang cukup untuk 500+ perangkat.</div></div>
+        <div class="jar-st"><div class="jar-st-num">3</div><div><strong>Pasang AP enterprise di setiap ruang ujian</strong> — Hubungkan semua AP ke switch core via kabel Cat6. Gunakan controller AP untuk manajemen terpusat (jika ada).</div></div>
+        <div class="jar-st"><div class="jar-st-num">4</div><div><strong>Gunakan SSID tunggal untuk semua AP</strong> — Set channel berbeda di AP berdekatan (1, 6, 11) untuk hindari interferensi dan aktifkan roaming otomatis HP antar AP.</div></div>
+        <div class="jar-st"><div class="jar-st-num">5</div><div><strong>Blokir internet di level router</strong> — Hanya traffic ke IP server <code>192.168.1.1</code> yang diizinkan. Siswa tidak bisa browsing selama ujian.</div></div>
+        <div class="jar-st"><div class="jar-st-num">6</div><div><strong>Izinkan port 3000 di Windows Firewall</strong> di server. Jalankan CBT.bat dan konfirmasi PostgreSQL terhubung.</div></div>
+        <div class="jar-st"><div class="jar-st-num">7</div><div><strong>Uji beban WiFi H-3</strong> — Simulasikan 50+ HP dari gedung berbeda mengakses platform serentak. Cek apakah ada AP yang drop atau overload.</div></div>
+        <div class="jar-st"><div class="jar-st-num">8</div><div><strong>Saat ujian: siswa konek WiFi → buka browser → <code>http://192.168.1.1:3000</code></strong> → login. Aktifkan mode pesawat + WiFi saja untuk blokir data seluler.</div></div>
+      </div>
+      <div class="jar-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Tips BYOD Sekolah Besar:</strong> Untuk 500+ HP, investasikan pada AP enterprise (Ubiquiti UniFi atau Ruijie). AP rumahan tidak mampu menangani 30+ klien secara stabil dalam waktu bersamaan.</div>
+      <div class="jar-warn"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Perhatian:</strong> WiFi dengan ratusan HP bersamaan adalah tantangan teknis tersendiri. Lakukan simulasi beban penuh minimal H-3. Siapkan teknisi jaringan standby di hari ujian untuk antisipasi masalah koneksi.</div>
+      </div><!-- end besar-hp -->
+
+    </div><!-- end jar-besar -->
+
+    <!-- Tabel ringkasan perbandingan -->
+    <div class="jar-compare-wrap">
+      <div class="jar-compare-title"><i class="fa-solid fa-table-columns"></i> Ringkasan Perbandingan Skema Jaringan</div>
+      <div class="jar-compare-scroll">
+        <table class="jar-tbl">
+          <thead>
+            <tr>
+              <th class="th-q">Aspek</th>
+              <th class="th-kecil">🏫 Skema 1<br><small>Sekolah Kecil</small></th>
+              <th class="th-menengah">🏢 Skema 2<br><small>Sekolah Menengah</small></th>
+              <th class="th-besar">🏛️ Skema 3<br><small>Sekolah Besar</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Ruang ujian bersamaan</td><td>1 – 2 ruang</td><td>3 – 6 ruang</td><td>7+ ruang</td></tr>
+            <tr><td>Kapasitas siswa</td><td>s/d ~60 siswa</td><td>s/d ~200 siswa</td><td>500+ siswa</td></tr>
+            <tr><td>Versi Emes CBT</td><td><span class="tag-std">Standard</span></td><td><span class="tag-std">Standard</span> / <span class="tag-pro">Pro</span></td><td><span class="tag-pro">🔵 Pro (Wajib)</span></td></tr>
+            <tr><td>Switch utama</td><td>1× 8-port unmanaged</td><td>1× 24-port</td><td>1× 48-port managed</td></tr>
+            <tr><td>Switch tambahan</td><td>Tidak perlu</td><td>Opsional per ruang</td><td>1× per gedung/lantai</td></tr>
+            <tr><td>Spesifikasi server</td><td>i3 / 4 GB RAM / HDD</td><td>i5 / 8 GB RAM / SSD</td><td>i5–i7 / 16 GB RAM / SSD NVMe</td></tr>
+            <tr><td>Setting IP klien</td><td>Manual per PC</td><td>Manual atau DHCP</td><td>DHCP (sangat direkomendasikan)</td></tr>
+            <tr><td>Internet dibutuhkan?</td><td>❌ Tidak</td><td>❌ Tidak</td><td>❌ Tidak</td></tr>
+            <tr><td>Estimasi biaya jaringan</td><td>~Rp 150rb – 500rb</td><td>~Rp 400rb – 1,5 jt</td><td>~Rp 2 jt – 5 jt+</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end panduan-tab-jaringan -->
+
+  <style>
+  /* ═══════════════════════════════════════
+     TAB JARINGAN — STYLES
+  ═══════════════════════════════════════ */
+  /* Intro */
+  .jar-intro{background:linear-gradient(135deg,var(--g0),var(--g2));border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;margin-bottom:32px}
+  .jar-intro-icon{font-size:36px;flex-shrink:0;line-height:1}
+  .jar-intro-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px}
+  .jar-intro-desc{font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.7}
+  @media(max-width:600px){.jar-intro{flex-direction:column;gap:12px;padding:20px}}
+
+  /* Skema cards */
+  .jar-skema-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+  @media(max-width:700px){.jar-skema-row{grid-template-columns:1fr}}
+  .jar-skema-card{border-radius:18px;padding:24px 20px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s,outline .15s;border:2px solid transparent;outline:3px solid transparent}
+  .jar-skema-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .jar-card-active{outline:3px solid var(--g3)!important;transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .s-kecil{background:#f0fdf4;border-color:#86efac}
+  .s-menengah{background:#fffbeb;border-color:#fde68a}
+  .s-besar{background:#eff6ff;border-color:#93c5fd}
+  .jar-sk-icon{font-size:36px;margin-bottom:10px}
+  .jar-sk-badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.1em;padding:3px 12px;border-radius:100px;margin-bottom:10px}
+  .bkecil{background:#dcfce7;color:#166534}
+  .bmenengah{background:#fef3c7;color:#92400e}
+  .bbesar{background:#dbeafe;color:#1e40af}
+  .jar-sk-title{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:4px}
+  .jar-sk-ruang{font-size:13px;font-weight:700;color:var(--mute);margin-bottom:6px}
+  .jar-sk-detail{font-size:12px;color:var(--mute2);margin-bottom:10px}
+  .jar-sk-versi{font-size:12px;font-weight:700;margin-bottom:12px}
+  .vstd{color:#16a34a}.vpro{color:#1d4ed8}
+  .jar-sk-cta{font-size:12px;font-weight:700;color:var(--g3)}
+
+  /* Detail panel */
+  .jar-detail{background:#fff;border-radius:20px;border:1.5px solid var(--border);box-shadow:var(--shadow-lg);margin-bottom:28px;overflow:hidden}
+  .jar-det-header{padding:28px 32px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .hkecil{background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+  .hmenengah{background:linear-gradient(135deg,#fffbeb,#fef3c7)}
+  .hbesar{background:linear-gradient(135deg,#eff6ff,#dbeafe)}
+  .jar-det-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 14px;border-radius:100px;margin-bottom:10px}
+  .jar-det-title{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:6px}
+  .jar-det-sub{font-size:13px;color:var(--mute);line-height:1.7;max-width:560px;margin:0}
+  .jar-close{flex-shrink:0;background:rgba(0,0,0,.08);border:none;border-radius:10px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink2);transition:background .15s}
+  .jar-close:hover{background:rgba(0,0,0,.16)}
+  @media(max-width:600px){.jar-det-header{padding:20px}}
+
+  /* Diagram */
+  .jar-diagram{padding:24px 32px;background:#f8fffe;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .jar-diag-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--g2);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+  .jar-topo{display:flex;flex-direction:column;align-items:center}
+  .jar-node{border-radius:14px;padding:12px 20px;text-align:center;border:2px solid;min-width:160px;margin:0 auto}
+  .nserver{background:#e0f2fe;border-color:#38bdf8}
+  .nserver-pro{background:#dbeafe;border-color:#3b82f6}
+  .nswitch{background:#fef3c7;border-color:#fbbf24}
+  .nswitch-core{background:#fef9c3;border-color:#eab308}
+  .ndist{background:#fff7ed;border-color:#fb923c;min-width:130px}
+  .nroom{background:#f0fdf4;border-color:#86efac;min-width:130px}
+  .jar-nd-ico{font-size:18px;margin-bottom:3px}
+  .jar-nd-name{font-size:12px;font-weight:800;color:var(--ink)}
+  .jar-nd-sub{font-size:10px;color:var(--mute);margin-top:4px;line-height:1.5}
+  .jar-nd-sub code{font-size:10px;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:4px;font-family:'DM Mono',monospace}
+  .jar-arrow{font-size:14px;color:var(--mute2);line-height:1;margin:6px 0;text-align:center}
+  .jar-branches{display:flex;gap:20px;justify-content:center;margin-top:0}
+  .jar-branches-3{gap:12px}
+  .jar-branch{display:flex;flex-direction:column;align-items:center}
+  .jar-diag-note{margin-top:16px;font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px}
+  @media(max-width:650px){
+    .jar-branches,.jar-branches-3{flex-direction:column;align-items:center;gap:0}
+    .jar-node{min-width:200px}
+    .jar-diagram{padding:16px 16px}
+  }
+
+  /* 2-col spec */
+  .jar-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px 32px;border-bottom:1px solid var(--border)}
+  @media(max-width:680px){.jar-2col{grid-template-columns:1fr;padding:16px}}
+  .jar-spec-title{font-size:13px;font-weight:800;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+  table.jar-spec-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.jar-spec-tbl tr{border-bottom:1px solid #f1f5f9}
+  table.jar-spec-tbl tr:last-child{border:none}
+  table.jar-spec-tbl td{padding:7px 0;vertical-align:middle}
+  table.jar-spec-tbl td:first-child{color:var(--mute);font-weight:600;width:42%;padding-right:10px}
+  table.jar-spec-tbl td code{font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:4px;font-family:'DM Mono',monospace}
+  .tag-std{display:inline-block;background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+  .tag-pro{display:inline-block;background:#dbeafe;color:#1e40af;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+
+  /* Steps */
+  .jar-steps{padding:24px 32px}
+  @media(max-width:600px){.jar-steps{padding:16px}}
+  .jar-steps-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--g2);margin-bottom:14px}
+  .jar-st{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;font-size:13px;color:var(--ink2);line-height:1.7}
+  .jar-st-num{width:26px;height:26px;border-radius:8px;background:var(--g3);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .jar-st code{font-size:11.5px;background:#f1f5f9;padding:1px 6px;border-radius:4px;font-family:'DM Mono',monospace}
+
+  /* Tip & warn */
+  .jar-tip{margin:0 32px 20px;background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:14px 16px;font-size:13px;color:#166534;line-height:1.65;display:flex;gap:8px;align-items:flex-start}
+  .jar-warn{margin:0 32px 24px;background:#fff7ed;border:1px solid #fdba74;border-radius:12px;padding:14px 16px;font-size:13px;color:#9a3412;line-height:1.65;display:flex;gap:8px;align-items:flex-start}
+  @media(max-width:600px){.jar-tip,.jar-warn{margin:0 0 16px}}
+
+  /* Mode toggle (Laptop / HP) */
+  .jar-mode-toggle{display:flex;gap:8px;padding:16px 32px;background:#f8fafc;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .jar-mode-btn{padding:9px 20px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--mute);cursor:pointer;transition:all .15s}
+  .jar-mode-btn:hover{border-color:var(--g3);color:var(--g2)}
+  .jar-mode-btn.active{background:var(--g3);border-color:var(--g3);color:#fff}
+  @media(max-width:500px){.jar-mode-toggle{flex-direction:column}.jar-mode-btn{text-align:center}}
+
+  /* Mode mode */
+  .jar-compare-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-top:8px}
+  .jar-compare-title{font-size:14px;font-weight:800;color:var(--ink);padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+  .jar-compare-scroll{overflow-x:auto}
+  table.jar-tbl{width:100%;border-collapse:collapse;min-width:560px;font-size:12.5px}
+  table.jar-tbl thead tr{background:var(--ink)}
+  table.jar-tbl thead th{padding:13px 16px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  table.jar-tbl thead th small{display:block;font-size:10px;font-weight:400;letter-spacing:0;text-transform:none;opacity:.8;margin-top:2px}
+  .th-q{text-align:left!important;color:rgba(255,255,255,.35)!important;font-size:10px!important;width:28%}
+  .th-kecil{background:#14532d;color:#86efac}
+  .th-menengah{background:#78350f;color:#fde68a}
+  .th-besar{background:#1e3a8a;color:#93c5fd}
+  table.jar-tbl tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
+  table.jar-tbl tbody tr:hover{background:#fafffe}
+  table.jar-tbl tbody td{padding:10px 16px;text-align:center;vertical-align:middle}
+  table.jar-tbl tbody td:first-child{text-align:left;font-weight:600;color:var(--ink2)}
+  </style>
+
   <!-- Footer di halaman panduan -->
   <footer>
     <div class="footer-inner">
@@ -1775,16 +2205,13 @@ function switchPricing(tier) {
 function scrollToStep(n) {
   const el = document.getElementById('step-' + n);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  const navItems = document.querySelectorAll('.step-nav-item');
-  // Map nav order: net=0, 1=1, 2=2, ...
-  const order = ['net',1,2,3,4,5,6,7];
-  navItems.forEach((item, i) => {
-    item.classList.toggle('active', order[i] == n);
+  document.querySelectorAll('.step-nav-item').forEach((item, i) => {
+    item.classList.toggle('active', i === n - 1);
   });
 }
 
 function highlightStepNav() {
-  const steps = ['net',1,2,3,4,5,6,7];
+  const steps = [1,2,3,4,5,6,7];
   for (let i = steps.length - 1; i >= 0; i--) {
     const el = document.getElementById('step-' + steps[i]);
     if (el && el.getBoundingClientRect().top <= 120) {
@@ -1798,11 +2225,43 @@ function highlightStepNav() {
 
 // ── Panduan sub-tab (Admin / Siswa) ───────────────────────────
 function switchPanduanTab(tab) {
-  document.getElementById('panduan-tab-admin').style.display = tab === 'admin' ? '' : 'none';
-  document.getElementById('panduan-tab-siswa').style.display = tab === 'siswa' ? '' : 'none';
+  document.getElementById('panduan-tab-admin').style.display    = tab === 'admin'    ? '' : 'none';
+  document.getElementById('panduan-tab-siswa').style.display    = tab === 'siswa'    ? '' : 'none';
+  document.getElementById('panduan-tab-jaringan').style.display = tab === 'jaringan' ? '' : 'none';
   document.querySelectorAll('.panduan-tab').forEach((btn, i) => {
-    btn.classList.toggle('active', (tab === 'admin' && i === 0) || (tab === 'siswa' && i === 1));
+    btn.classList.toggle('active',
+      (tab === 'admin'    && i === 0) ||
+      (tab === 'siswa'    && i === 1) ||
+      (tab === 'jaringan' && i === 2)
+    );
   });
+}
+
+// ── Jaringan device mode toggle (Laptop / HP) ─────────────
+function switchMode(skema, mode, btn) {
+  document.getElementById('jar-' + skema + '-laptop').style.display = mode === 'laptop' ? '' : 'none';
+  document.getElementById('jar-' + skema + '-hp').style.display    = mode === 'hp'     ? '' : 'none';
+  btn.closest('.jar-mode-toggle').querySelectorAll('.jar-mode-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+}
+
+// ── Jaringan skema toggle ──────────────────────────────────
+function showJar(id, cardEl) {
+  ['kecil','menengah','besar'].forEach(function(k) {
+    document.getElementById('jar-' + k).style.display = 'none';
+  });
+  document.querySelectorAll('.jar-skema-card').forEach(function(c) { c.classList.remove('jar-card-active'); });
+  document.getElementById('jar-' + id).style.display = 'block';
+  if (cardEl) cardEl.classList.add('jar-card-active');
+  setTimeout(function() {
+    document.getElementById('jar-' + id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+function hideJar(id) {
+  document.getElementById('jar-' + id).style.display = 'none';
+  document.querySelectorAll('.jar-skema-card').forEach(function(c) { c.classList.remove('jar-card-active'); });
 }
 
 // ── WhatsApp Modal ─────────────────────────────────────────────
