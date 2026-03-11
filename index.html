@@ -588,6 +588,25 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 </section>
 
 <style>
+/* ══ NETWORK SETUP STYLES ══════════════════════════════════ */
+.net-section-label{font-size:13px;font-weight:800;color:var(--ink2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;padding-left:2px;border-left:3px solid var(--blue);padding-left:10px}
+.net-diagram-wrap{background:#0f172a;border-radius:16px;overflow:hidden;margin-bottom:24px;box-shadow:0 8px 32px rgba(0,0,0,.2);border:1px solid #1e3a8a}
+.net-svg{width:100%;height:auto;display:block}
+.net-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+@media(max-width:700px){.net-info-grid{grid-template-columns:1fr}}
+.net-info-card{border-radius:14px;padding:18px;border:1.5px solid}
+.net-info-card.blue{background:#eff6ff;border-color:#93c5fd}
+.net-info-card.green{background:#f0fdf4;border-color:#86efac}
+.net-info-card.slate{background:#f8fafc;border-color:#cbd5e1}
+.net-info-icon{font-size:24px;margin-bottom:8px}
+.net-info-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.net-info-desc{font-size:12px;color:var(--mute);line-height:1.7}
+.net-info-desc code{background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px}
+.net-config-box{background:#1e293b;border-radius:10px;padding:12px 16px;font-family:'DM Mono',monospace;font-size:12px;line-height:2;color:#94a3b8;border:1px solid #334155}
+.net-config-box strong{color:#34d399}
+.net-mikrotik-badge{background:#fff7ed;border:1.5px solid #fdba74;border-radius:12px;padding:12px 16px;display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#9a3412;line-height:1.6;margin-bottom:18px}
+.net-mikrotik-badge span:first-child{font-size:20px;flex-shrink:0;line-height:1.2}
+
 /* ── Cara Pakai Steps ─────────────────────────────────────── */
 .cp-steps{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto 40px}
 .cp-step{display:flex;gap:0;position:relative}
@@ -1223,7 +1242,8 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
   <div class="panduan-body" id="panduan-tab-admin">
     <div class="steps-layout">
       <div class="steps-nav">
-        <div class="step-nav-item active" onclick="scrollToStep(1)"><div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div></div>
+        <div class="step-nav-item active" onclick="scrollToStep('net')"><div class="step-nav-num" style="background:var(--blue);font-size:11px">🌐</div><div class="step-nav-label">Setup Jaringan</div></div>
+        <div class="step-nav-item" onclick="scrollToStep(1)"><div class="step-nav-num">1</div><div class="step-nav-label">Pengaturan Awal</div></div>
         <div class="step-nav-item" onclick="scrollToStep(2)"><div class="step-nav-num">2</div><div class="step-nav-label">Data Siswa</div></div>
         <div class="step-nav-item" onclick="scrollToStep(3)"><div class="step-nav-num">3</div><div class="step-nav-label">Bank Soal</div></div>
         <div class="step-nav-item" onclick="scrollToStep(4)"><div class="step-nav-num">4</div><div class="step-nav-label">Jadwal Ujian</div></div>
@@ -1232,6 +1252,304 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
         <div class="step-nav-item" onclick="scrollToStep(7)"><div class="step-nav-num">7</div><div class="step-nav-label">Koreksi Essay</div></div>
       </div>
       <div class="steps-content">
+        <!-- ══ STEP JARINGAN ══ -->
+        <div class="step-card" id="step-net" style="border-top:3px solid var(--blue)">
+          <div class="step-card-header">
+            <div class="step-num-big" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);font-size:22px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:16px;color:#fff;flex-shrink:0">🌐</div>
+            <div>
+              <div class="step-title">Setup Jaringan Ujian Offline</div>
+              <div class="step-subtitle">Skema: 1 Ruang Ujian · 1 Laptop Server · 1 Router (termasuk MikroTik)</div>
+            </div>
+          </div>
+          <div class="step-body">
+
+            <!-- ═══ ILUSTRASI TOPOLOGI ═══ -->
+            <div class="net-section-label">📐 Ilustrasi Topologi Jaringan</div>
+            <div class="net-diagram-wrap">
+              <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" class="net-svg">
+                <defs>
+                  <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+                  </marker>
+                  <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
+                  </marker>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+
+                <!-- Background -->
+                <rect width="780" height="340" rx="16" fill="#0f172a"/>
+                <!-- Grid lines -->
+                <line x1="0" y1="170" x2="780" y2="170" stroke="#1e293b" stroke-width="1"/>
+                <line x1="390" y1="0" x2="390" y2="340" stroke="#1e293b" stroke-width="1"/>
+
+                <!-- ── ROUTER (center) ── -->
+                <rect x="315" y="128" width="150" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2" filter="url(#glow)"/>
+                <!-- Router icon -->
+                <rect x="330" y="143" width="120" height="10" rx="3" fill="#2563eb" opacity=".6"/>
+                <rect x="330" y="157" width="120" height="10" rx="3" fill="#2563eb" opacity=".4"/>
+                <circle cx="380" cy="181" r="5" fill="#3b82f6" opacity=".8"/>
+                <circle cx="395" cy="181" r="5" fill="#10b981" opacity=".8"/>
+                <circle cx="410" cy="181" r="5" fill="#f59e0b" opacity=".8"/>
+                <!-- Router antenna left -->
+                <line x1="335" y1="128" x2="320" y2="100" stroke="#3b82f6" stroke-width="2"/>
+                <circle cx="320" cy="98" r="4" fill="#3b82f6"/>
+                <!-- Router antenna right -->
+                <line x1="445" y1="128" x2="460" y2="100" stroke="#3b82f6" stroke-width="2"/>
+                <circle cx="460" cy="98" r="4" fill="#3b82f6"/>
+                <text x="390" y="210" text-anchor="middle" fill="#93c5fd" font-size="12" font-family="monospace" font-weight="700">ROUTER</text>
+                <text x="390" y="224" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">192.168.1.1</text>
+
+                <!-- ── LAPTOP SERVER (kiri) ── -->
+                <rect x="60" y="130" width="130" height="80" rx="10" fill="#14532d" stroke="#10b981" stroke-width="2" filter="url(#glow)"/>
+                <rect x="73" y="143" width="104" height="52" rx="5" fill="#0d2818"/>
+                <!-- Screen content -->
+                <rect x="78" y="148" width="94" height="5" rx="2" fill="#34d399" opacity=".7"/>
+                <rect x="78" y="157" width="70" height="3" rx="1" fill="#10b981" opacity=".4"/>
+                <rect x="78" y="163" width="82" height="3" rx="1" fill="#10b981" opacity=".3"/>
+                <rect x="78" y="169" width="60" height="3" rx="1" fill="#10b981" opacity=".3"/>
+                <rect x="78" y="175" width="86" height="3" rx="1" fill="#10b981" opacity=".2"/>
+                <rect x="78" y="181" width="50" height="3" rx="1" fill="#34d399" opacity=".5"/>
+                <!-- Laptop base -->
+                <rect x="65" y="193" width="143" height="8" rx="4" fill="#166534" stroke="#10b981" stroke-width="1"/>
+                <rect x="115" y="193" width="42" height="5" rx="2" fill="#0d2818"/>
+                <text x="125" y="225" text-anchor="middle" fill="#34d399" font-size="11" font-family="monospace" font-weight="700">LAPTOP SERVER</text>
+                <text x="125" y="238" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">192.168.1.100</text>
+                <text x="125" y="251" text-anchor="middle" fill="#52796f" font-size="9" font-family="monospace">Port: 3000</text>
+                <!-- Server badge -->
+                <rect x="78" y="110" width="94" height="18" rx="6" fill="#052e16" stroke="#10b981" stroke-width="1"/>
+                <text x="125" y="123" text-anchor="middle" fill="#34d399" font-size="9" font-family="monospace">▶ Emes CBT Running</text>
+
+                <!-- ── KOMPUTER SISWA (kanan atas) ── -->
+                <rect x="590" y="50" width="90" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                <rect x="598" y="58" width="74" height="42" rx="3" fill="#0f172a"/>
+                <rect x="602" y="62" width="66" height="4" rx="1" fill="#38bdf8" opacity=".5"/>
+                <rect x="602" y="69" width="50" height="3" rx="1" fill="#475569" opacity=".5"/>
+                <rect x="602" y="75" width="58" height="3" rx="1" fill="#475569" opacity=".4"/>
+                <rect x="602" y="81" width="40" height="3" rx="1" fill="#475569" opacity=".3"/>
+                <rect x="620" y="86" width="22" height="14" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                <rect x="590" y="114" width="90" height="7" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
+                <text x="635" y="136" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Siswa 1</text>
+                <text x="635" y="148" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">192.168.1.11</text>
+
+                <!-- ── KOMPUTER SISWA (kanan tengah) ── -->
+                <rect x="590" y="170" width="90" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                <rect x="598" y="178" width="74" height="42" rx="3" fill="#0f172a"/>
+                <rect x="602" y="182" width="66" height="4" rx="1" fill="#38bdf8" opacity=".5"/>
+                <rect x="602" y="189" width="50" height="3" rx="1" fill="#475569" opacity=".5"/>
+                <rect x="602" y="195" width="58" height="3" rx="1" fill="#475569" opacity=".4"/>
+                <rect x="602" y="201" width="40" height="3" rx="1" fill="#475569" opacity=".3"/>
+                <rect x="620" y="206" width="22" height="14" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                <rect x="590" y="234" width="90" height="7" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
+                <text x="635" y="256" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Siswa 2</text>
+                <text x="635" y="268" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">192.168.1.12</text>
+
+                <!-- ── KOMPUTER SISWA (kanan bawah — dst) ── -->
+                <rect x="590" y="290" width="90" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <text x="635" y="313" text-anchor="middle" fill="#475569" font-size="11" font-family="monospace">Siswa 3–30</text>
+
+                <!-- ── GARIS KONEKSI: Server → Router ── -->
+                <line x1="190" y1="170" x2="315" y2="170" stroke="#10b981" stroke-width="2.5" marker-end="url(#arr2)" stroke-dasharray="6,3"/>
+                <text x="252" y="162" text-anchor="middle" fill="#10b981" font-size="9" font-family="monospace">LAN / Kabel</text>
+
+                <!-- ── GARIS KONEKSI: Router → Siswa 1 ── -->
+                <line x1="465" y1="155" x2="590" y2="95" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="5,3"/>
+
+                <!-- ── GARIS KONEKSI: Router → Siswa 2 ── -->
+                <line x1="465" y1="170" x2="590" y2="200" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr)" stroke-dasharray="5,3"/>
+
+                <!-- ── GARIS KONEKSI: Router → Siswa 3-30 ── -->
+                <line x1="465" y1="188" x2="590" y2="305" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="4,4" opacity=".5"/>
+
+                <!-- WiFi label -->
+                <text x="540" y="130" text-anchor="middle" fill="#60a5fa" font-size="9" font-family="monospace">WiFi / LAN</text>
+                <text x="540" y="141" text-anchor="middle" fill="#60a5fa" font-size="9" font-family="monospace">192.168.1.x</text>
+
+                <!-- ── LEGEND ── -->
+                <rect x="20" y="280" width="220" height="48" rx="8" fill="#0f1a2b" stroke="#1e3a8a" stroke-width="1"/>
+                <line x1="32" y1="296" x2="52" y2="296" stroke="#10b981" stroke-width="2" stroke-dasharray="5,3"/>
+                <text x="58" y="300" fill="#94a3b8" font-size="9" font-family="monospace">Server ke Router (Kabel/WiFi)</text>
+                <line x1="32" y1="314" x2="52" y2="314" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,3"/>
+                <text x="58" y="318" fill="#94a3b8" font-size="9" font-family="monospace">Router ke Siswa (WiFi/Kabel)</text>
+
+                <!-- Internet blocked label -->
+                <rect x="310" y="14" width="160" height="24" rx="6" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
+                <text x="390" y="30" text-anchor="middle" fill="#fca5a5" font-size="10" font-family="monospace">🚫 Internet tidak diperlukan</text>
+              </svg>
+            </div>
+
+            <!-- ═══ KETERANGAN TOPOLOGI ═══ -->
+            <div class="net-info-grid">
+              <div class="net-info-card blue">
+                <div class="net-info-icon">🖥️</div>
+                <div class="net-info-title">Laptop Server</div>
+                <div class="net-info-desc">Laptop/PC tempat Emes CBT dijalankan. IP statis: <code>192.168.1.100</code>. Hubungkan ke router via kabel LAN atau WiFi. Jalankan <code>Jalankan CBT.bat</code> → server aktif di port <code>3000</code>.</div>
+              </div>
+              <div class="net-info-card green">
+                <div class="net-info-icon">📡</div>
+                <div class="net-info-title">Router</div>
+                <div class="net-info-desc">Berfungsi sebagai pusat distribusi jaringan lokal. IP Router biasanya <code>192.168.1.1</code>. Semua perangkat (server + siswa) terhubung ke router ini. Tidak perlu koneksi internet.</div>
+              </div>
+              <div class="net-info-card slate">
+                <div class="net-info-icon">💻</div>
+                <div class="net-info-title">Komputer Siswa</div>
+                <div class="net-info-desc">Buka browser, ketik alamat server: <code>http://192.168.1.100:3000</code>. Siswa tidak perlu install apapun. Bisa menggunakan komputer, laptop, atau tablet yang terhubung ke router yang sama.</div>
+              </div>
+            </div>
+
+            <!-- ═══ PANDUAN ROUTER BIASA ═══ -->
+            <div class="net-section-label" style="margin-top:32px">⚙️ Pengaturan Router Biasa (TP-Link / D-Link / Tenda)</div>
+            <div class="step-items">
+              <div class="step-item">
+                <div class="step-item-num" style="background:#1d4ed8">1</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Login ke Halaman Admin Router</div>
+                  <div class="step-item-desc">Buka browser, masuk ke <code>192.168.1.1</code> atau <code>192.168.0.1</code> (cek label belakang router). Username/password default biasanya <code>admin / admin</code> atau <code>admin / 1234</code>.</div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#1d4ed8">2</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Aktifkan DHCP Server</div>
+                  <div class="step-item-desc">Pastikan DHCP Server aktif dengan range IP misalnya <code>192.168.1.10</code> s/d <code>192.168.1.200</code>. DHCP akan memberi IP otomatis ke setiap komputer siswa yang terhubung.</div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#1d4ed8">3</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Atur IP Statis untuk Laptop Server</div>
+                  <div class="step-item-desc">Di Windows: Klik kanan ikon jaringan → <strong>Open Network &amp; Internet Settings</strong> → <strong>Change adapter options</strong> → klik kanan adapter WiFi/LAN → Properties → IPv4 → atur IP Manual:<br><br>
+                    <div class="net-config-box">
+                      IP Address: &nbsp;&nbsp;<strong>192.168.1.100</strong><br>
+                      Subnet Mask: <strong>255.255.255.0</strong><br>
+                      Gateway: &nbsp;&nbsp;&nbsp;&nbsp;<strong>192.168.1.1</strong><br>
+                      DNS: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>8.8.8.8</strong> (opsional)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#1d4ed8">4</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Atur SSID WiFi (Nama Jaringan)</div>
+                  <div class="step-item-desc">Di pengaturan Wireless router, beri nama SSID yang mudah dikenali siswa, misalnya <code>UJIAN-CBT-RUANG1</code>. Pasang password WiFi agar tidak diakses pihak luar. Semua komputer siswa hubungkan ke SSID ini.</div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#1d4ed8">5</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Nonaktifkan Koneksi ke Internet (Opsional)</div>
+                  <div class="step-item-desc">Untuk keamanan ujian, cabut kabel WAN/Internet dari router. Router tetap melayani jaringan lokal antar perangkat tanpa internet — ujian tetap berjalan normal karena Emes CBT 100% offline.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ═══ PANDUAN MIKROTIK ═══ -->
+            <div class="net-section-label" style="margin-top:36px">🔶 Pengaturan MikroTik untuk Ujian Emes CBT</div>
+            <div class="net-mikrotik-badge">
+              <span>🔶</span>
+              <span>Panduan berikut berlaku untuk MikroTik dengan akses via <strong>Winbox</strong> atau <strong>WebFig</strong>. Skema: MikroTik sebagai DHCP Server + Access Point jaringan lokal ujian.</span>
+            </div>
+            <div class="step-items">
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">1</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Login ke MikroTik via Winbox</div>
+                  <div class="step-item-desc">Buka Winbox, klik <strong>Neighbors</strong> untuk scan otomatis. Klik MAC address MikroTik yang terdeteksi → Login dengan <code>admin</code> / kosong (default). Atau buka WebFig via <code>http://192.168.88.1</code>.</div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">2</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Atur IP Address Interface LAN</div>
+                  <div class="step-item-desc">Buka <strong>IP → Addresses</strong> → klik <strong>+</strong>. Atur interface bridge/ether (sesuai port LAN MikroTik):
+                    <div class="net-config-box" style="margin-top:8px">
+                      Address: &nbsp;&nbsp;<strong>192.168.1.1/24</strong><br>
+                      Interface: <strong>bridge</strong> (atau ether1-lan / wlan1)
+                    </div>
+                    Klik <strong>OK</strong> untuk menyimpan.
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">3</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Aktifkan DHCP Server</div>
+                  <div class="step-item-desc">Buka <strong>IP → DHCP Server</strong> → klik <strong>DHCP Setup</strong> → pilih interface bridge/LAN → ikuti wizard:
+                    <div class="net-config-box" style="margin-top:8px">
+                      DHCP Address Space: &nbsp;<strong>192.168.1.0/24</strong><br>
+                      Gateway for DHCP: &nbsp;&nbsp;&nbsp;<strong>192.168.1.1</strong><br>
+                      IP Pool: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>192.168.1.10 – 192.168.1.200</strong><br>
+                      DNS Server: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>192.168.1.1</strong><br>
+                      Lease Time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>1d</strong> (1 hari)
+                    </div>
+                    Klik <strong>Next</strong> sampai selesai. DHCP aktif otomatis.
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">4</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Atur Static IP untuk Laptop Server</div>
+                  <div class="step-item-desc">Agar IP server tidak berubah, tambahkan static lease di MikroTik: buka <strong>IP → DHCP Server → Leases</strong>. Cari MAC Address laptop server (sudah muncul setelah laptop terhubung) → klik → centang <strong>Make Static</strong> → ubah IP ke <code>192.168.1.100</code> → OK.<br><br>Atau atur langsung di laptop server via IPv4 statis seperti panduan di atas.</div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">5</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Pengaturan WiFi (Jika MikroTik punya Wireless)</div>
+                  <div class="step-item-desc">Buka <strong>Wireless → WiFi Interfaces</strong> → double-klik <strong>wlan1</strong> → tab <strong>Wireless</strong>:
+                    <div class="net-config-box" style="margin-top:8px">
+                      Mode: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>ap bridge</strong><br>
+                      Band: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>2GHz-b/g/n</strong> (atau 5GHz jika didukung)<br>
+                      SSID: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>UJIAN-CBT</strong><br>
+                      Security: <strong>WPA2-PSK</strong>
+                    </div>
+                    Tab <strong>Security Profiles</strong> → buat profil baru → atur password WiFi. Tambahkan wlan1 ke dalam bridge agar satu subnet dengan LAN.
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">6</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Blokir Akses Internet (Isolasi Ujian)</div>
+                  <div class="step-item-desc">Untuk memastikan siswa tidak bisa akses internet saat ujian, buka <strong>IP → Firewall → Filter Rules</strong> → klik <strong>+</strong>:
+                    <div class="net-config-box" style="margin-top:8px">
+                      Chain: &nbsp;&nbsp;&nbsp;&nbsp;<strong>forward</strong><br>
+                      In. Interface: <strong>bridge</strong><br>
+                      Out. Interface: <strong>ether1</strong> (port WAN)<br>
+                      Action: &nbsp;&nbsp;&nbsp;<strong>drop</strong>
+                    </div>
+                    Rule ini memblokir traffic dari LAN ke WAN. Ujian tetap berjalan karena Emes CBT hanya butuh jaringan lokal. <strong>Atau cara paling mudah: cabut saja kabel WAN dari MikroTik.</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-item-num" style="background:#b45309">7</div>
+                <div class="step-item-content">
+                  <div class="step-item-title">Verifikasi & Uji Coba Sebelum Ujian</div>
+                  <div class="step-item-desc">
+                    <ol style="margin-left:16px;line-height:1.9;font-size:13px;color:var(--mute)">
+                      <li>Jalankan <code>Jalankan CBT.bat</code> di laptop server</li>
+                      <li>Di laptop server, buka browser → <code>http://192.168.1.100:3000</code> — harus muncul halaman login Emes CBT</li>
+                      <li>Sambungkan satu komputer siswa ke WiFi <code>UJIAN-CBT</code></li>
+                      <li>Buka browser siswa → ketik <code>http://192.168.1.100:3000</code> — harus muncul halaman login</li>
+                      <li>Cek di <strong>IP → DHCP Server → Leases</strong> di Winbox — pastikan semua perangkat siswa mendapat IP</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-tip" style="margin-top:20px"><i class="fa-solid fa-lightbulb"></i><span><strong>Tips:</strong> Simpan konfigurasi MikroTik via <strong>Files → Backup</strong> setelah selesai setup. Saat ujian berikutnya, tidak perlu konfigurasi ulang — cukup nyalakan MikroTik dan jalankan CBT.bat di laptop server.</span></div>
+            <div class="step-warn" style="margin-top:12px"><i class="fa-solid fa-triangle-exclamation"></i><span>Pastikan laptop server <strong>tidak sleep/hibernate</strong> selama ujian berlangsung. Ubah pengaturan daya Windows agar layar tidak mati: <strong>Settings → Power → Screen timeout → Never</strong>.</span></div>
+
+          </div>
+        </div><!-- end step-net -->
+
         <div class="step-card" id="step-1">
           <div class="step-card-header"><div class="step-num-big">1</div><div><div class="step-title">Pengaturan Awal Sekolah</div><div class="step-subtitle">Menu: Pengaturan → Pengaturan Sistem</div></div></div>
           <div class="step-body">
@@ -1457,13 +1775,16 @@ function switchPricing(tier) {
 function scrollToStep(n) {
   const el = document.getElementById('step-' + n);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  document.querySelectorAll('.step-nav-item').forEach((item, i) => {
-    item.classList.toggle('active', i === n - 1);
+  const navItems = document.querySelectorAll('.step-nav-item');
+  // Map nav order: net=0, 1=1, 2=2, ...
+  const order = ['net',1,2,3,4,5,6,7];
+  navItems.forEach((item, i) => {
+    item.classList.toggle('active', order[i] == n);
   });
 }
 
 function highlightStepNav() {
-  const steps = [1,2,3,4,5,6,7];
+  const steps = ['net',1,2,3,4,5,6,7];
   for (let i = steps.length - 1; i >= 0; i--) {
     const el = document.getElementById('step-' + steps[i]);
     if (el && el.getBoundingClientRect().top <= 120) {
