@@ -507,7 +507,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <a onclick="showPage('home');scrollToSection('#faq')">FAQ</a>
     <a onclick="showPage('home');scrollToSection('#komparasi')">Komparasi</a>
     <a onclick="showPage('home');scrollToSection('#harga')">Harga</a>
-    <a onclick="openWAModal()" class="nav-cta"><i class="fa-brands fa-whatsapp" style="margin-right:5px"></i>Dapatkan Aplikasi</a>
+    <a href="https://drive.google.com/uc?export=download&id=1osgKANPuc8TX35v1FF7Fs6v-NFLkoy6h" download class="nav-cta"><i class="fa-solid fa-download" style="margin-right:5px"></i>Download Aplikasi</a>
   </div>
 </nav>
 
@@ -992,6 +992,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
             <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
             <li><i class="fa-solid fa-check"></i> Kapasitas ~200 siswa bersamaan</li>
           </ul>
+          <button class="btn-lisensi" onclick="openWAModal('STANDAR')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
         <div class="price-card popular">
           <div class="popular-badge">⭐ TERPOPULER</div>
@@ -1006,6 +1007,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
             <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
             <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
           </ul>
+          <button class="btn-lisensi btn-lisensi-popular" onclick="openWAModal('STANDAR')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
         <div class="price-card lifetime">
           <div class="price-plan">Selamanya</div>
@@ -1018,6 +1020,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
             <li><i class="fa-solid fa-check"></i> Support seumur lisensi</li>
             <li><i class="fa-solid fa-check"></i> ROI terbaik jangka panjang</li>
           </ul>
+          <button class="btn-lisensi btn-lisensi-lifetime" onclick="openWAModal('STANDAR')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
       </div>
     </div>
@@ -1040,6 +1043,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
             <li><i class="fa-solid fa-check"></i> Support teknis prioritas</li>
             <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
           </ul>
+          <button class="btn-lisensi btn-lisensi-pro" onclick="openWAModal('PRO')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
         <div class="price-card popular">
           <div class="popular-badge">⭐ TERPOPULER</div>
@@ -1054,6 +1058,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
             <li><i class="fa-solid fa-check"></i> Support prioritas 24/7</li>
             <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
           </ul>
+          <button class="btn-lisensi btn-lisensi-pro btn-lisensi-popular" onclick="openWAModal('PRO')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
         <div class="price-card lifetime">
           <div class="price-plan">Selamanya</div>
@@ -1066,6 +1071,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
             <li><i class="fa-solid fa-check"></i> Update & support seumur hidup</li>
             <li><i class="fa-solid fa-check"></i> ROI terbaik untuk sekolah besar</li>
           </ul>
+          <button class="btn-lisensi btn-lisensi-pro btn-lisensi-lifetime" onclick="openWAModal('PRO')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
       </div>
     </div>
@@ -1263,6 +1269,20 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
 .ver-rec-icon{font-size:28px;flex-shrink:0;line-height:1;margin-top:2px}
 .ver-rec-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:5px}
 .ver-rec-desc{font-size:13px;color:var(--mute);line-height:1.6}
+
+/* ── Tombol Dapatkan Lisensi di pricing card ── */
+.btn-lisensi{width:100%;margin-top:20px;padding:11px 16px;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(37,211,102,.25)}
+.btn-lisensi:hover{background:#1ebe5d;transform:translateY(-1px)}
+.btn-lisensi-popular{background:var(--amber);box-shadow:0 4px 14px rgba(245,158,11,.25)}
+.btn-lisensi-popular:hover{background:#e8930a}
+.btn-lisensi-lifetime{background:var(--violet);box-shadow:0 4px 14px rgba(139,92,246,.25)}
+.btn-lisensi-lifetime:hover{background:#7c3aed}
+.btn-lisensi-pro{background:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,.25)}
+.btn-lisensi-pro:hover{background:#1d4ed8}
+.btn-lisensi-pro.btn-lisensi-popular{background:var(--amber);box-shadow:0 4px 14px rgba(245,158,11,.25)}
+.btn-lisensi-pro.btn-lisensi-popular:hover{background:#e8930a}
+.btn-lisensi-pro.btn-lisensi-lifetime{background:var(--violet);box-shadow:0 4px 14px rgba(139,92,246,.25)}
+.btn-lisensi-pro.btn-lisensi-lifetime:hover{background:#7c3aed}
 </style>
 
 <!-- ════════ CTA ════════ -->
@@ -1271,7 +1291,8 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
     <h2 class="reveal">Siap Mulai Ujian Digital<br>di Sekolah Anda?</h2>
     <p class="reveal d1">Bergabung bersama sekolah-sekolah yang sudah menggunakan Emes CBT. Platform CBT on-premise terlengkap untuk sekolah Indonesia.</p>
     <div class="cta-actions reveal d2">
-      <a onclick="openWAModal()" class="btn-hero btn-primary"><i class="fa-brands fa-whatsapp"></i> Dapatkan Aplikasi</a>
+      <a href="https://drive.google.com/uc?export=download&id=1osgKANPuc8TX35v1FF7Fs6v-NFLkoy6h" download class="btn-hero btn-primary"><i class="fa-solid fa-download"></i> Download Aplikasi</a>
+      <a onclick="openWAModal()" class="btn-hero btn-secondary" style="background:rgba(37,211,102,.15);border-color:rgba(37,211,102,.4);color:#25d366"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</a>
       <a onclick="showPage('panduan')" class="btn-hero btn-secondary"><i class="fa-solid fa-book-open"></i> Baca Panduan Lengkap</a>
     </div>
   </div>
@@ -2360,9 +2381,22 @@ function hideJar(id) {
 }
 
 // ── WhatsApp Modal ─────────────────────────────────────────────
-function openWAModal() {
+function openWAModal(versiDefault) {
   document.getElementById('waModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  if (versiDefault) {
+    // Auto-select versi yang sesuai
+    document.querySelectorAll('.wa-versi-btn').forEach(function(btn) {
+      btn.classList.remove('selected');
+    });
+    var map = { 'STANDAR': 1, 'PRO': 2, 'TRIAL': 0 };
+    var idx = map[versiDefault];
+    var btns = document.querySelectorAll('.wa-versi-btn');
+    if (btns[idx]) {
+      btns[idx].classList.add('selected');
+      document.getElementById('wa-versi').value = versiDefault;
+    }
+  }
 }
 function closeWAModal() {
   document.getElementById('waModal').classList.remove('open');
