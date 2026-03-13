@@ -342,6 +342,7 @@ table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weigh
 .price-info i{color:var(--g3);flex-shrink:0;margin-top:1px}
 /* tier badge on pricing header */
 .tier-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:6px;margin-bottom:10px}
+.tier-badge.trial{background:#ede9fe;color:#7c3aed}
 .tier-badge.std{background:var(--g7);color:var(--g2)}
 .tier-badge.pro{background:#1e3a8a;color:#bfdbfe}
 
@@ -965,13 +966,41 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <div class="sec-header center">
       <span class="sec-label reveal"><i class="fa-solid fa-tag"></i> Lisensi</span>
       <h2 class="sec-h reveal d1">Pilih Versi & Durasi<br>yang Paling Sesuai</h2>
-      <p class="sec-sub reveal d2">Dua versi untuk kebutuhan berbeda. Semua fitur tersedia di kedua versi — perbedaan ada pada kapasitas database dan jumlah siswa bersamaan yang ditangani.</p>
+      <p class="sec-sub reveal d2">Tiga versi untuk kebutuhan berbeda — dari coba gratis hingga kapasitas enterprise. Fitur dan kapasitas siswa berbeda antar versi sesuai kebutuhan sekolah.</p>
     </div>
 
-    <!-- Toggle Standard / Pro -->
+    <!-- Toggle Trial / Standard / Pro -->
     <div class="pricing-toggle reveal" id="pricingToggle">
+      <button onclick="switchPricing('trial')">Trial</button>
       <button class="active" onclick="switchPricing('std')">Standard</button>
       <button onclick="switchPricing('pro')">Pro</button>
+    </div>
+
+    <!-- Trial Pricing -->
+    <div id="pricing-trial" style="display:none" class="reveal">
+      <div style="text-align:center;margin-bottom:24px">
+        <span class="tier-badge trial"><i class="fa-solid fa-flask"></i> Trial — Maks 30 siswa bersamaan &bull; Ujian online saja</span>
+      </div>
+      <div class="pricing-grid" style="grid-template-columns:1fr;max-width:380px;margin:0 auto">
+        <div class="price-card" style="border-color:#7c3aed20">
+          <div class="price-plan">Coba Gratis</div>
+          <div class="price-amount" style="color:#7c3aed">Gratis<small> (hubungi kami)</small></div>
+          <div class="price-note">Cocok untuk evaluasi sebelum berkomitmen — uji coba fitur dasar tanpa biaya</div>
+          <ul class="price-features">
+            <li><i class="fa-solid fa-check" style="color:#7c3aed"></i> Ujian online</li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak hasil ujian</span></li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak soal</span></li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Ekspor data</span></li>
+            <li><i class="fa-solid fa-check" style="color:#7c3aed"></i> Maks 30 siswa bersamaan</li>
+            <li><i class="fa-solid fa-check" style="color:#7c3aed"></i> Data di server sekolah (SQLite)</li>
+          </ul>
+          <button class="btn-lisensi" style="background:#7c3aed;box-shadow:0 4px 14px rgba(124,58,237,.25)" onclick="openWAModal('TRIAL')"><i class="fa-brands fa-whatsapp"></i> Minta Lisensi Trial</button>
+        </div>
+      </div>
+      <div class="price-info reveal" style="margin-top:20px">
+        <i class="fa-solid fa-circle-info"></i>
+        <div>Trial cocok untuk mencoba sistem sebelum upgrade. Siap upgrade? Pilih <strong><a onclick="switchPricing('std');document.querySelectorAll('#pricingToggle button')[1].classList.add('active')" style="color:var(--g3);cursor:pointer">Standard</a></strong> atau <strong><a onclick="switchPricing('pro');document.querySelectorAll('#pricingToggle button')[2].classList.add('active')" style="color:#2563eb;cursor:pointer">Pro</a></strong> untuk fitur lengkap.</div>
+      </div>
     </div>
 
     <!-- Standard Pricing -->
@@ -985,12 +1014,12 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
           <div class="price-amount">Rp 350.000<small>/lisensi</small></div>
           <div class="price-note">Aktif ±6 bulan — cocok untuk 1 semester akademik atau coba sebelum komitmen lebih lama</div>
           <ul class="price-features">
-            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
-            <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa terdaftar</li>
+            <li><i class="fa-solid fa-check"></i> Ujian online</li>
+            <li><i class="fa-solid fa-check"></i> Cetak hasil ujian</li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak soal</span></li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Ekspor data</span></li>
+            <li><i class="fa-solid fa-check"></i> Maks 200 siswa bersamaan</li>
             <li><i class="fa-solid fa-check"></i> Data di server sekolah (SQLite)</li>
-            <li><i class="fa-solid fa-check"></i> Support teknis</li>
-            <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
-            <li><i class="fa-solid fa-check"></i> Kapasitas ~200 siswa bersamaan</li>
           </ul>
           <button class="btn-lisensi" onclick="openWAModal('STANDAR')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
         </div>
@@ -1000,11 +1029,11 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
           <div class="price-amount">Rp 600.000<small>/lisensi</small></div>
           <div class="price-note">Aktif ±12 bulan — hemat untuk 2 semester / 1 tahun ajaran penuh</div>
           <ul class="price-features">
-            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
-            <li><i class="fa-solid fa-check"></i> Tidak ada batas siswa terdaftar</li>
-            <li><i class="fa-solid fa-check"></i> Data di server sekolah (SQLite)</li>
+            <li><i class="fa-solid fa-check"></i> Ujian online</li>
+            <li><i class="fa-solid fa-check"></i> Cetak hasil ujian</li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak soal</span></li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Ekspor data</span></li>
             <li><i class="fa-solid fa-check"></i> Support prioritas</li>
-            <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
             <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
           </ul>
           <button class="btn-lisensi btn-lisensi-popular" onclick="openWAModal('STANDAR')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
@@ -1014,10 +1043,11 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
           <div class="price-amount">Rp 1.200.000<small>/lisensi</small></div>
           <div class="price-note">Lisensi permanen — bayar sekali, pakai selamanya tanpa masa kadaluarsa</div>
           <ul class="price-features">
-            <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
+            <li><i class="fa-solid fa-check"></i> Ujian online</li>
+            <li><i class="fa-solid fa-check"></i> Cetak hasil ujian</li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak soal</span></li>
+            <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Ekspor data</span></li>
             <li><i class="fa-solid fa-check"></i> Tidak ada masa kadaluarsa</li>
-            <li><i class="fa-solid fa-check"></i> Update selamanya</li>
-            <li><i class="fa-solid fa-check"></i> Support seumur lisensi</li>
             <li><i class="fa-solid fa-check"></i> ROI terbaik jangka panjang</li>
           </ul>
           <button class="btn-lisensi btn-lisensi-lifetime" onclick="openWAModal('STANDAR')"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</button>
@@ -1078,7 +1108,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 
     <div class="price-info reveal">
       <i class="fa-solid fa-circle-info"></i>
-      <div>Semua lisensi terkunci ke <strong>NPSN sekolah</strong> dan tidak bisa dipindahtangankan. Bingung pilih Standard atau Pro? Lihat <strong><a onclick="scrollToSection('#db-komparasi')" style="color:var(--g3);cursor:pointer">perbandingan kapasitas database</a></strong> di bawah. Untuk info harga terkini, hubungi kami langsung.</div>
+      <div>Semua lisensi terkunci ke <strong>NPSN sekolah</strong> dan tidak bisa dipindahtangankan. Bingung pilih Standard atau Pro? Lihat <strong><a onclick="scrollToSection('#db-komparasi')" style="color:var(--g3);cursor:pointer">perbandingan kapasitas database</a></strong> di bawah. Butuh semua fitur (cetak soal &amp; ekspor data)? Pilih <strong>Pro</strong>. Untuk info harga terkini, hubungi kami langsung.</div>
     </div>
   </div>
 </section>
@@ -2307,14 +2337,15 @@ function switchTab(tab) {
   });
 }
 
-// ── Pricing toggle Standard / Pro ─────────────────────────────
+// ── Pricing toggle Trial / Standard / Pro ─────────────────────────────
 function switchPricing(tier) {
-  const isStd = tier === 'std';
-  document.getElementById('pricing-std').style.display = isStd ? '' : 'none';
-  document.getElementById('pricing-pro').style.display = isStd ? 'none' : '';
+  document.getElementById('pricing-trial').style.display = tier === 'trial' ? '' : 'none';
+  document.getElementById('pricing-std').style.display   = tier === 'std'   ? '' : 'none';
+  document.getElementById('pricing-pro').style.display   = tier === 'pro'   ? '' : 'none';
   const btns = document.querySelectorAll('#pricingToggle button');
-  btns[0].classList.toggle('active', isStd);
-  btns[1].classList.toggle('active', !isStd);
+  btns[0].classList.toggle('active', tier === 'trial');
+  btns[1].classList.toggle('active', tier === 'std');
+  btns[2].classList.toggle('active', tier === 'pro');
 }
 
 // ── Step navigation (panduan page) ────────────────────────────
