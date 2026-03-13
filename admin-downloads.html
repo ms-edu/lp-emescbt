@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Data Download Emes CBT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f5f5;color:#0a0a0a;min-height:100vh}
+
+/* ── Login screen ── */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:#f5f5f5}
+.login-box{background:#fff;border-radius:20px;padding:40px 36px;width:100%;max-width:380px;box-shadow:0 8px 40px rgba(0,0,0,.1);text-align:center}
+.login-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px}
+.login-logo img{width:36px;height:36px;border-radius:9px}
+.login-logo span{font-size:17px;font-weight:800;color:#0a0a0a}
+.login-title{font-size:18px;font-weight:800;margin-bottom:6px}
+.login-sub{font-size:13px;color:#737373;margin-bottom:24px}
+.login-input{width:100%;padding:11px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:10px}
+.login-input:focus{border-color:#0a0a0a}
+.login-input.err{border-color:#ef4444;background:#fff8f8}
+.login-btn{width:100%;padding:12px;background:#0a0a0a;color:#fff;border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:2px}
+.login-btn:hover{background:#262626}
+.login-error{font-size:12.5px;color:#dc2626;background:#fff5f5;border:1px solid #fecaca;border-radius:8px;padding:9px 12px;margin-bottom:12px;display:none;text-align:left}
+
+/* ── Admin layout ── */
+#adminScreen{display:none;min-height:100vh}
+.admin-nav{background:#0a0a0a;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.admin-nav-brand{display:flex;align-items:center;gap:10px;color:#fff}
+.admin-nav-brand img{width:28px;height:28px;border-radius:7px}
+.admin-nav-brand span{font-size:14px;font-weight:800}
+.admin-nav-right{display:flex;align-items:center;gap:14px}
+.admin-badge{font-size:11px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);padding:4px 10px;border-radius:100px;font-weight:600}
+.logout-btn{font-size:12.5px;color:rgba(255,255,255,.55);background:none;border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.logout-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+
+.admin-body{max-width:1200px;margin:0 auto;padding:32px 24px}
+
+/* ── Stats ── */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:20px 22px}
+.stat-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#737373;margin-bottom:6px}
+.stat-num{font-size:30px;font-weight:800;font-family:'DM Mono',monospace;color:#0a0a0a;line-height:1}
+.stat-sub{font-size:12px;color:#a3a3a3;margin-top:4px}
+
+/* ── Table area ── */
+.table-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;overflow:hidden}
+.table-header{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0;gap:12px;flex-wrap:wrap}
+.table-header h2{font-size:15px;font-weight:800;color:#0a0a0a}
+.tbl-actions{display:flex;align-items:center;gap:10px}
+.search-input{padding:8px 12px 8px 34px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:220px;transition:border-color .2s;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 11px center}
+.search-input:focus{border-color:#0a0a0a}
+.export-btn{display:flex;align-items:center;gap:7px;padding:8px 14px;background:#0a0a0a;color:#fff;border:none;border-radius:9px;font-size:12.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;text-decoration:none}
+.export-btn:hover{background:#262626}
+
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#fafafa;padding:11px 16px;text-align:left;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#737373;border-bottom:1px solid #e5e5e5;white-space:nowrap}
+tbody tr{border-bottom:1px solid #f5f5f5;transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fafafa}
+td{padding:12px 16px;vertical-align:middle}
+td.td-num{font-family:'DM Mono',monospace;font-size:12px;color:#737373}
+td.td-name strong{display:block;font-weight:700;color:#0a0a0a;font-size:13px}
+td.td-name span{font-size:11.5px;color:#737373}
+td.td-sekolah strong{display:block;font-weight:600;font-size:13px}
+td.td-sekolah span{font-size:11.5px;color:#737373}
+.npsn-badge{display:inline-block;background:#f5f5f5;border-radius:6px;padding:2px 7px;font-family:'DM Mono',monospace;font-size:11px;color:#525252;font-weight:500}
+.jenjang-badge{display:inline-block;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;background:#f5f5f5;color:#404040}
+.td-date{font-size:12px;color:#525252;white-space:nowrap}
+.td-wa a{color:#16a34a;font-size:12.5px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:5px}
+.td-wa a:hover{text-decoration:underline}
+
+.empty-state{text-align:center;padding:60px 20px;color:#a3a3a3}
+.empty-state i{font-size:36px;margin-bottom:12px;display:block;opacity:.4}
+.empty-state p{font-size:14px}
+
+.loading-row td{text-align:center;padding:40px;color:#a3a3a3}
+
+/* ── Refresh spinner ── */
+.spin{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Pagination ── */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-top:1px solid #f0f0f0;font-size:12.5px;color:#737373}
+.page-btns{display:flex;gap:6px}
+.page-btn{padding:6px 12px;border:1.5px solid #e5e5e5;border-radius:7px;background:#fff;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
+.page-btn:hover{border-color:#0a0a0a;color:#0a0a0a}
+.page-btn.active{background:#0a0a0a;color:#fff;border-color:#0a0a0a}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+
+@media(max-width:700px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .search-input{width:150px}
+  .admin-body{padding:20px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN SCREEN ══════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
+      <span>Emes CBT Admin</span>
+    </div>
+    <div class="login-title">Halaman Admin</div>
+    <div class="login-sub">Masukkan password admin untuk mengakses data.</div>
+    <div class="login-error" id="loginError">Password salah. Coba lagi.</div>
+    <input type="password" class="login-input" id="adminPassword"
+      placeholder="Password admin" onkeydown="if(event.key==='Enter')checkLogin()">
+    <button class="login-btn" onclick="checkLogin()">Masuk →</button>
+  </div>
+</div>
+
+<!-- ══════════ ADMIN SCREEN ══════════ -->
+<div id="adminScreen">
+  <nav class="admin-nav">
+    <div class="admin-nav-brand">
+      <img src="https://i.imgur.com/bT70O4C.png" alt="">
+      <span>Emes CBT — Admin</span>
+    </div>
+    <div class="admin-nav-right">
+      <span class="admin-badge" id="navBadge">0 pendaftar</span>
+      <button class="logout-btn" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+    </div>
+  </nav>
+
+  <div class="admin-body">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Pendaftar</div>
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-sub">Semua waktu</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Bulan Ini</div>
+        <div class="stat-num" id="statMonth">—</div>
+        <div class="stat-sub" id="statMonthLabel">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Provinsi Terbanyak</div>
+        <div class="stat-num" id="statTopProv" style="font-size:16px;padding-top:5px">—</div>
+        <div class="stat-sub" id="statTopProvCount">—</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <h2><i class="fa-solid fa-school" style="margin-right:7px;opacity:.5"></i>Data Sekolah Pendaftar</h2>
+        <div class="tbl-actions">
+          <input type="text" class="search-input" id="searchInput" placeholder="Cari nama / sekolah / kota…" oninput="filterTable()">
+          <button class="export-btn" onclick="exportCSV()">
+            <i class="fa-solid fa-file-csv"></i> Export CSV
+          </button>
+          <button class="export-btn" style="background:#f5f5f5;color:#0a0a0a" onclick="loadData()">
+            <i class="fa-solid fa-rotate-right" id="refreshIcon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama PIC</th>
+              <th>Sekolah</th>
+              <th>NPSN</th>
+              <th>Jenjang</th>
+              <th>Kota</th>
+              <th>Provinsi</th>
+              <th>WhatsApp</th>
+              <th>Tanggal Download</th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody">
+            <tr class="loading-row"><td colspan="9"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="paginationInfo">Menampilkan 0–0 dari 0</span>
+        <div class="page-btns" id="pageButtons"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   KONFIGURASI — Ganti ADMIN_PASSWORD sesuai keinginan
+═══════════════════════════════════════════════════ */
+const ADMIN_PASSWORD = 'admin123emes'; // ← GANTI PASSWORDNYA
+
+firebase.initializeApp({
+  apiKey:            "AIzaSyAK9kA3GD-Os4eaCl7CFRnf0KMopTqdPKo",
+  authDomain:        "emescbt-29ee1.firebaseapp.com",
+  projectId:         "emescbt-29ee1",
+  storageBucket:     "emescbt-29ee1.firebasestorage.app",
+  messagingSenderId: "142290685592",
+  appId:             "1:142290685592:web:a1c2935b2877d5354c8aed"
+});
+const db = firebase.firestore();
+
+/* ── Login ───────────────────────────────────────── */
+function checkLogin() {
+  const pw = document.getElementById('adminPassword').value;
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('adminPassword').classList.remove('err');
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('emes_admin', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminScreen').style.display = '';
+    loadData();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('adminPassword').classList.add('err');
+    document.getElementById('adminPassword').value = '';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('emes_admin');
+  document.getElementById('adminScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminPassword').value = '';
+}
+
+// Auto-login jika masih ada session
+if (sessionStorage.getItem('emes_admin')) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminScreen').style.display = '';
+}
+
+/* ── Data ────────────────────────────────────────── */
+let allData = [];
+let filtered = [];
+const PAGE_SIZE = 20;
+let currentPage = 1;
+
+async function loadData() {
+  const icon = document.getElementById('refreshIcon');
+  icon.classList.add('spin');
+  try {
+    const snap = await db.collection('downloads').orderBy('downloadedAt', 'desc').get();
+    allData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    updateStats();
+    filterTable();
+  } catch(err) {
+    document.getElementById('dataTableBody').innerHTML =
+      `<tr><td colspan="9" style="text-align:center;padding:40px;color:#dc2626">
+        <i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat data: ${err.message}
+      </td></tr>`;
+  }
+  icon.classList.remove('spin');
+}
+
+function updateStats() {
+  const total = allData.length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('navBadge').textContent = total + ' pendaftar';
+
+  // Bulan ini
+  const now = new Date();
+  const thisMonth = allData.filter(d => {
+    if (!d.downloadedAt) return false;
+    const dt = d.downloadedAt.toDate ? d.downloadedAt.toDate() : new Date(d.downloadedAt);
+    return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear();
+  });
+  document.getElementById('statMonth').textContent = thisMonth.length;
+  document.getElementById('statMonthLabel').textContent =
+    now.toLocaleString('id-ID', {month:'long', year:'numeric'});
+
+  // Top provinsi
+  const provCount = {};
+  allData.forEach(d => { if (d.provinsi) provCount[d.provinsi] = (provCount[d.provinsi]||0)+1; });
+  const topProv = Object.entries(provCount).sort((a,b)=>b[1]-a[1])[0];
+  if (topProv) {
+    document.getElementById('statTopProv').textContent = topProv[0];
+    document.getElementById('statTopProvCount').textContent = topProv[1] + ' sekolah';
+  }
+}
+
+function filterTable() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  filtered = q ? allData.filter(d =>
+    (d.nama||'').toLowerCase().includes(q) ||
+    (d.sekolah||'').toLowerCase().includes(q) ||
+    (d.kota||'').toLowerCase().includes(q) ||
+    (d.provinsi||'').toLowerCase().includes(q) ||
+    (d.npsn||'').includes(q) ||
+    (d.email||'').toLowerCase().includes(q)
+  ) : [...allData];
+  currentPage = 1;
+  renderTable();
+}
+
+function renderTable() {
+  const tbody = document.getElementById('dataTableBody');
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const end   = Math.min(start + PAGE_SIZE, filtered.length);
+  const page  = filtered.slice(start, end);
+
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="9" class="empty-state">
+      <i class="fa-solid fa-inbox"></i>
+      <p>${allData.length === 0 ? 'Belum ada pendaftar.' : 'Tidak ada hasil untuk pencarian ini.'}</p>
+    </td></tr>`;
+    document.getElementById('paginationInfo').textContent = 'Tidak ada data';
+    document.getElementById('pageButtons').innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = page.map((d, i) => {
+    const dt = d.downloadedAt
+      ? (d.downloadedAt.toDate ? d.downloadedAt.toDate() : new Date(d.downloadedAt))
+      : null;
+    const dateStr = dt ? dt.toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    const waClean = (d.wa||'').replace(/\D/g,'').replace(/^0/,'62');
+    const nomor = start + i + 1;
+    return `<tr>
+      <td class="td-num">${nomor}</td>
+      <td class="td-name"><strong>${esc(d.nama||'—')}</strong><span>${esc(d.email||'')}</span></td>
+      <td class="td-sekolah"><strong>${esc(d.sekolah||'—')}</strong></td>
+      <td><span class="npsn-badge">${esc(d.npsn||'—')}</span></td>
+      <td><span class="jenjang-badge">${esc(d.jenjang||'—')}</span></td>
+      <td>${esc(d.kota||'—')}</td>
+      <td>${esc(d.provinsi||'—')}</td>
+      <td class="td-wa"><a href="https://wa.me/${waClean}" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>${esc(d.wa||'—')}
+      </a></td>
+      <td class="td-date">${dateStr}</td>
+    </tr>`;
+  }).join('');
+
+  // Pagination info
+  document.getElementById('paginationInfo').textContent =
+    `Menampilkan ${start+1}–${end} dari ${filtered.length} pendaftar`;
+
+  // Page buttons
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  let btns = '';
+  for (let p = 1; p <= totalPages; p++) {
+    if (totalPages > 8 && p > 3 && p < totalPages - 1 && Math.abs(p - currentPage) > 1) {
+      if (p === 4) btns += '<span style="padding:0 4px;color:#a3a3a3">…</span>';
+      continue;
+    }
+    btns += `<button class="page-btn${p===currentPage?' active':''}" onclick="goPage(${p})">${p}</button>`;
+  }
+  document.getElementById('pageButtons').innerHTML = btns;
+}
+
+function goPage(p) { currentPage = p; renderTable(); window.scrollTo(0,0); }
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ── Export CSV ──────────────────────────────────── */
+function exportCSV() {
+  const headers = ['No','Nama PIC','Email','Sekolah','NPSN','Jenjang','Kab/Kota','Provinsi','WhatsApp','Tanggal Download'];
+  const rows = filtered.map((d, i) => {
+    const dt = d.downloadedAt
+      ? (d.downloadedAt.toDate ? d.downloadedAt.toDate() : new Date(d.downloadedAt))
+      : null;
+    const dateStr = dt ? dt.toLocaleString('id-ID') : '';
+    return [i+1, d.nama||'', d.email||'', d.sekolah||'', d.npsn||'', d.jenjang||'',
+            d.kota||'', d.provinsi||'', d.wa||'', dateStr]
+      .map(v => `"${String(v).replace(/"/g,'""')}"`)
+      .join(',');
+  });
+  const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `emes-cbt-pendaftar-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// Load jika sudah login
+if (sessionStorage.getItem('emes_admin')) loadData();
+</script>
+</body>
+</html>

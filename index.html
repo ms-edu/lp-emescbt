@@ -36,15 +36,16 @@
 <!-- Firebase — load di head agar reseller tersedia sedini mungkin -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script>
 (function() {
   firebase.initializeApp({
-    apiKey:            "AIzaSyDmMDFiyQVr5aTM-52Z6aMcojoNsR-BAd0",
-    authDomain:        "admin-emescbt.firebaseapp.com",
-    projectId:         "admin-emescbt",
-    storageBucket:     "admin-emescbt.firebasestorage.app",
-    messagingSenderId: "557191510104",
-    appId:             "1:557191510104:web:fbe4092553ff69e2f9322d"
+    apiKey:            "AIzaSyAK9kA3GD-Os4eaCl7CFRnf0KMopTqdPKo",
+    authDomain:        "emescbt-29ee1.firebaseapp.com",
+    projectId:         "emescbt-29ee1",
+    storageBucket:     "emescbt-29ee1.firebasestorage.app",
+    messagingSenderId: "142290685592",
+    appId:             "1:142290685592:web:a1c2935b2877d5354c8aed"
   });
   var db = firebase.firestore();
 
@@ -116,10 +117,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
 :root{
-  --g0:#021a12;--g1:#032d1f;--g2:#043d2a;--g3:#059669;--g4:#10b981;--g5:#34d399;--g6:#6ee7b7;--g7:#d1fae5;--g8:#ecfdf5;
+  /* ── Clean White Palette ── */
+  --g0:#0a0a0a;--g1:#171717;--g2:#262626;--g3:#0a0a0a;--g4:#262626;--g5:#525252;--g6:#a3a3a3;--g7:#f5f5f5;--g8:#fafafa;
   --amber:#f59e0b;--red:#ef4444;--blue:#3b82f6;--violet:#8b5cf6;
-  --ink:#0c1f17;--ink2:#1e3a2d;--ink3:#2d5040;
-  --mute:#52796f;--mute2:#84a49b;--border:#c8ddd7;--bg:#f4faf7;
+  --ink:#0a0a0a;--ink2:#171717;--ink3:#262626;
+  --mute:#737373;--mute2:#a3a3a3;--border:#e5e5e5;--bg:#ffffff;
   --white:#fff;
   --r4:4px;--r8:8px;--r12:12px;--r16:16px;--r24:24px;--r32:32px;
   --shadow-sm:0 1px 4px rgba(0,0,0,.06);
@@ -127,7 +129,7 @@ html{scroll-behavior:smooth;font-size:16px}
   --shadow-lg:0 12px 40px rgba(0,0,0,.12);
   --shadow-xl:0 24px 64px rgba(0,0,0,.16);
 }
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%}
 a{text-decoration:none;color:inherit}
 
@@ -151,73 +153,73 @@ a{text-decoration:none;color:inherit}
 /* ══════════════════════════════════════
    NAVBAR
 ══════════════════════════════════════ */
-nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:64px;transition:background .3s,box-shadow .3s}
-nav.scrolled{background:rgba(2,26,18,.94);backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
-nav.solid{background:rgba(2,26,18,.97);backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:64px;transition:background .3s,box-shadow .3s;background:#fff;box-shadow:0 1px 0 #e5e5e5}
+nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(16px);box-shadow:0 1px 0 #e5e5e5}
+nav.solid{background:rgba(255,255,255,.98);backdrop-filter:blur(16px);box-shadow:0 1px 0 #e5e5e5}
 .nav-brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-.nav-brand img{width:34px;height:34px;object-fit:contain;border-radius:8px;filter:brightness(0) invert(1)}
-.nav-brand-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.nav-brand img{width:34px;height:34px;object-fit:contain;border-radius:8px;filter:none}
+.nav-brand-name{font-size:16px;font-weight:800;color:#0a0a0a;letter-spacing:-.02em}
 .nav-links{display:flex;align-items:center;gap:6px}
-.nav-links a{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);padding:6px 14px;border-radius:8px;transition:color .2s,background .2s;cursor:pointer}
-.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
-.nav-links a.active-link{color:#fff;background:rgba(255,255,255,.1)}
-.nav-cta{background:var(--g3)!important;color:#fff!important;font-weight:700!important;padding:7px 18px!important;border-radius:10px!important}
-.nav-cta:hover{background:var(--g4)!important}
+.nav-links a{font-size:13.5px;font-weight:500;color:#737373;padding:6px 14px;border-radius:8px;transition:color .2s,background .2s;cursor:pointer}
+.nav-links a:hover{color:#0a0a0a;background:#f5f5f5}
+.nav-links a.active-link{color:#0a0a0a;background:#f5f5f5}
+.nav-cta{background:#0a0a0a!important;color:#fff!important;font-weight:700!important;padding:7px 18px!important;border-radius:10px!important}
+.nav-cta:hover{background:#262626!important}
 @media(max-width:768px){.nav-links{display:none}}
 
 /* ══════════════════════════════════════
    HERO
 ══════════════════════════════════════ */
-.hero{min-height:100vh;background:linear-gradient(160deg,var(--g0) 0%,var(--g1) 40%,var(--g2) 70%,#043325 100%);display:flex;align-items:center;padding:80px 40px 60px;padding-top:calc(80px + var(--banner-h, 0px));position:relative;overflow:hidden}
-.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(16,185,129,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.hero{min-height:100vh;background:#fff;display:flex;align-items:center;padding:80px 40px 60px;padding-top:calc(80px + var(--banner-h, 0px));position:relative;overflow:hidden;border-bottom:1px solid #e5e5e5}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
 .hero-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
-.hero-blob-1{width:500px;height:500px;background:radial-gradient(circle,rgba(5,150,105,.25),transparent 70%);top:-100px;right:-100px}
-.hero-blob-2{width:400px;height:400px;background:radial-gradient(circle,rgba(16,185,129,.15),transparent 70%);bottom:-80px;left:100px}
+.hero-blob-1{width:500px;height:500px;background:radial-gradient(circle,rgba(0,0,0,.04),transparent 70%);top:-100px;right:-100px}
+.hero-blob-2{width:400px;height:400px;background:radial-gradient(circle,rgba(0,0,0,.03),transparent 70%);bottom:-80px;left:100px}
 .hero-inner{max-width:1120px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--g5);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:22px}
-.hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--g5);animation:heroPulse 2s infinite}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid #e5e5e5;color:#737373;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:22px}
+.hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:#0a0a0a;animation:heroPulse 2s infinite}
 @keyframes heroPulse{0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}50%{box-shadow:0 0 0 6px rgba(52,211,153,0)}}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(38px,4.5vw,58px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:18px}
-.hero h1 em{font-style:normal;color:var(--g5);font-family:'DM Sans',sans-serif;font-weight:800;font-size:.88em;display:block}
-.hero-desc{font-size:15.5px;color:rgba(255,255,255,.62);line-height:1.75;margin-bottom:28px;max-width:480px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(38px,4.5vw,58px);font-weight:900;color:#0a0a0a;line-height:1.1;letter-spacing:-.02em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:#0a0a0a;font-family:'DM Sans',sans-serif;font-weight:800;font-size:.88em;display:block}
+.hero-desc{font-size:15.5px;color:#737373;line-height:1.75;margin-bottom:28px;max-width:480px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
 .btn-hero{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;padding:13px 24px;border-radius:12px;cursor:pointer;transition:all .2s;border:none}
-.btn-primary{background:var(--g3);color:#fff;box-shadow:0 6px 24px rgba(5,150,105,.35)}
-.btn-primary:hover{background:var(--g4);transform:translateY(-1px);box-shadow:0 10px 32px rgba(5,150,105,.45)}
-.btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.2);backdrop-filter:blur(8px)}
-.btn-secondary:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35)}
+.btn-primary{background:#0a0a0a;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.btn-primary:hover{background:#262626;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.btn-secondary{background:#fff;color:#0a0a0a;border:1.5px solid #e5e5e5}
+.btn-secondary:hover{background:#f5f5f5;border-color:#d4d4d4}
 .hero-stats{display:flex;gap:24px;flex-wrap:wrap}
 .hero-stat{display:flex;flex-direction:column}
-.hero-stat-num{font-size:22px;font-weight:800;color:#fff;font-family:'DM Mono',monospace;line-height:1}
-.hero-stat-label{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.hero-stat-num{font-size:22px;font-weight:800;color:#0a0a0a;font-family:'DM Mono',monospace;line-height:1}
+.hero-stat-label{font-size:11px;color:#a3a3a3;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
 
 /* Hero visual */
 .hero-visual{position:relative}
-.mock-app{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 32px 80px rgba(0,0,0,.4);position:relative}
-.mock-bar{background:rgba(255,255,255,.08);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mock-app{background:#fff;border:1px solid #e5e5e5;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08);position:relative}
+.mock-bar{background:#fafafa;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e5e5e5}
 .mock-dot{width:10px;height:10px;border-radius:50%}
-.mock-url{background:rgba(255,255,255,.08);border-radius:6px;flex:1;height:24px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace}
+.mock-url{background:#f5f5f5;border-radius:6px;flex:1;height:24px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:#a3a3a3;font-family:'DM Mono',monospace}
 .mock-body{padding:20px;display:flex;gap:14px}
 .mock-sidebar{width:120px;flex-shrink:0}
 .mock-logo-area{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}
 .mock-logo-area img{width:24px;height:24px;border-radius:5px;object-fit:contain;filter:brightness(0) invert(1)}
 .mock-logo-area span{font-size:10px;font-weight:700;color:rgba(255,255,255,.8)}
 .mock-nav-item{display:flex;align-items:center;gap:7px;font-size:10px;color:rgba(255,255,255,.45);padding:6px 8px;border-radius:6px;margin-bottom:2px;cursor:default}
-.mock-nav-item.active{background:rgba(16,185,129,.2);color:var(--g5);font-weight:600}
+.mock-nav-item.active{background:#f5f5f5;color:#0a0a0a;font-weight:600}
 .mock-nav-item i{font-size:10px;width:12px}
 .mock-main{flex:1}
 .mock-stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
 .mock-stat-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px}
-.mock-stat-num{font-size:16px;font-weight:800;color:#fff;font-family:'DM Mono',monospace}
+.mock-stat-num{font-size:16px;font-weight:800;color:#0a0a0a;font-family:'DM Mono',monospace}
 .mock-stat-label{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 .mock-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px}
 .mock-card-title{font-size:10px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:8px;display:flex;align-items:center;gap:5px}
 .mock-bar-chart{display:flex;align-items:flex-end;gap:6px;height:50px}
-.mock-bar-item{flex:1;border-radius:4px 4px 0 0;background:var(--g4);opacity:.7}
+.mock-bar-item{flex:1;border-radius:4px 4px 0 0;background:#0a0a0a;opacity:.7}
 .mock-live-row{display:flex;align-items:center;justify-content:space-between;font-size:9px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .mock-live-row:last-child{border-bottom:none}
 .mock-live-name{color:rgba(255,255,255,.6);font-weight:500}
-.mock-live-badge{background:rgba(16,185,129,.2);color:var(--g5);padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700}
+.mock-live-badge{background:#f5f5f5;color:#0a0a0a;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700}
 .mock-live-badge.done{background:rgba(148,163,184,.15);color:rgba(255,255,255,.35)}
 
 @media(max-width:900px){
@@ -233,7 +235,7 @@ nav.solid{background:rgba(2,26,18,.97);backdrop-filter:blur(16px);box-shadow:0 2
 section{padding:80px 40px}
 @media(max-width:600px){section{padding:60px 20px}}
 .wrap{max-width:1120px;margin:0 auto}
-.sec-label{display:inline-flex;align-items:center;gap:7px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px}
+.sec-label{display:inline-flex;align-items:center;gap:7px;background:#f5f5f5;color:#0a0a0a;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px}
 .sec-h{font-size:clamp(24px,3.5vw,38px);font-weight:800;color:var(--ink);line-height:1.2;letter-spacing:-.02em;margin-bottom:10px}
 .sec-sub{font-size:15px;color:var(--mute);line-height:1.7;max-width:560px}
 .sec-header{margin-bottom:48px}
@@ -247,26 +249,26 @@ section{padding:80px 40px}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 @media(max-width:900px){.feature-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:580px){.feature-grid{grid-template-columns:1fr}}
-.feat-card{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:28px;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
-.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--g8),transparent 60%);opacity:0;transition:opacity .2s}
-.feat-card:hover{border-color:var(--g4);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.feat-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:28px;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#fafafa,transparent 60%);opacity:0;transition:opacity .2s}
+.feat-card:hover{border-color:#0a0a0a;box-shadow:var(--shadow-lg);transform:translateY(-3px)}
 .feat-card:hover::before{opacity:1}
-.feat-icon{width:48px;height:48px;background:var(--g7);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;position:relative;z-index:1}
+.feat-icon{width:48px;height:48px;background:#f5f5f5;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;position:relative;z-index:1}
 .feat-title{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:7px;position:relative;z-index:1}
 .feat-desc{font-size:13px;color:var(--mute);line-height:1.65;position:relative;z-index:1}
-.feat-badge{display:inline-flex;align-items:center;gap:4px;background:var(--g7);color:var(--g2);font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;margin-top:12px;position:relative;z-index:1}
+.feat-badge{display:inline-flex;align-items:center;gap:4px;background:#f5f5f5;color:#0a0a0a;font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;margin-top:12px;position:relative;z-index:1}
 .feat-badge.exclusive{background:#fef3c7;color:#92400e}
 
 /* ══════════════════════════════════════
    FAQ
 ══════════════════════════════════════ */
-#faq{background:var(--bg)}
+#faq{background:#fff}
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:700px){.faq-grid{grid-template-columns:1fr}}
 .faq-item{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
 .faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;cursor:pointer;transition:background .15s;font-size:13.5px;font-weight:700;color:var(--ink);user-select:none}
-.faq-q:hover{background:var(--g8)}
-.faq-q i{color:var(--g3);transition:transform .25s;flex-shrink:0}
+.faq-q:hover{background:#fafafa}
+.faq-q i{color:#0a0a0a;transition:transform .25s;flex-shrink:0}
 .faq-item.open .faq-q i{transform:rotate(45deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
 .faq-item.open .faq-a{max-height:300px}
@@ -279,49 +281,49 @@ section{padding:80px 40px}
 #komparasi{background:#fff}
 .comp-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
 .comp-tab{font-size:13px;font-weight:600;padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--mute);cursor:pointer;transition:all .2s}
-.comp-tab.active{background:var(--g3);border-color:var(--g3);color:#fff;font-weight:700}
-.comp-tab:hover:not(.active){border-color:var(--g3);color:var(--g3)}
+.comp-tab.active{background:#0a0a0a;border-color:#0a0a0a;color:#fff;font-weight:700}
+.comp-tab:hover:not(.active){border-color:#0a0a0a;color:#0a0a0a}
 .comp-table-wrap{overflow-x:auto;border-radius:16px;border:1.5px solid var(--border);box-shadow:var(--shadow)}
 table.ctbl{width:100%;border-collapse:collapse;min-width:700px;background:#fff;border-radius:14px;overflow:hidden}
 table.ctbl thead tr{background:var(--ink)}
 table.ctbl thead th{padding:13px 16px;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
 table.ctbl thead th:first-child{text-align:left;color:rgba(255,255,255,.3);font-size:10px;width:32%}
-table.ctbl thead th.emes-col{background:var(--g2);color:#fff;font-size:13px;letter-spacing:0;font-weight:800}
+table.ctbl thead th.emes-col{background:#0a0a0a;color:#fff;font-size:13px;letter-spacing:0;font-weight:800}
 table.ctbl thead th.emes-col img{width:18px;height:18px;object-fit:contain;border-radius:4px;vertical-align:middle;margin-right:6px;filter:brightness(0) invert(1)}
 table.ctbl tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
 table.ctbl tbody tr:last-child{border-bottom:none}
-table.ctbl tbody tr:hover{background:var(--g8)}
-table.ctbl tbody tr.cat-row td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--g2);padding:8px 16px;border-bottom:1px solid var(--g7)}
+table.ctbl tbody tr:hover{background:#fafafa}
+table.ctbl tbody tr.cat-row td{background:#f5f5f5;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#0a0a0a;padding:8px 16px;border-bottom:1px solid #e5e5e5}
 table.ctbl tbody td{padding:11px 16px;font-size:12.5px;text-align:center;vertical-align:middle}
 table.ctbl tbody td:first-child{text-align:left;font-weight:600;color:var(--ink2)}
 table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weight:400;margin-top:2px}
-.ic-y{color:#059669;font-size:16px}
+.ic-y{color:#16a34a;font-size:16px}
 .ic-n{color:#dc2626;font-size:16px}
 .ic-p{color:#d97706;font-size:16px}
 
 /* ══════════════════════════════════════
    SCORING STRIP
 ══════════════════════════════════════ */
-.score-strip{background:var(--g1);border-radius:16px;padding:24px 28px;margin-bottom:28px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;text-align:center}
+.score-strip{background:#f5f5f5;border-radius:16px;padding:24px 28px;margin-bottom:28px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;text-align:center}
 @media(max-width:700px){.score-strip{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:460px){.score-strip{grid-template-columns:repeat(2,1fr)}}
 .score-item{}
 .score-item .app-name{font-size:11px;font-weight:600;color:rgba(255,255,255,.45);margin-bottom:5px}
 .score-item .score-num{font-size:24px;font-weight:900;font-family:'DM Mono',monospace;line-height:1}
-.score-item .score-num.winner{color:var(--g5)}
+.score-item .score-num.winner{color:#0a0a0a}
 .score-item .score-num.ok{color:#94a3b8}
 .score-item .score-max{font-size:11px;color:rgba(255,255,255,.3)}
 .score-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
 .score-bar-fill{height:100%;border-radius:2px;background:rgba(255,255,255,.2)}
-.score-bar-fill.winner-bar{background:linear-gradient(90deg,var(--g4),var(--g5))}
+.score-bar-fill.winner-bar{background:linear-gradient(90deg,#0a0a0a,#525252)}
 
 /* ══════════════════════════════════════
    PRICING — NEW STANDARD vs PRO
 ══════════════════════════════════════ */
-#harga{background:var(--bg)}
+#harga{background:#fff}
 .pricing-toggle{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:40px;background:#fff;border:1.5px solid var(--border);border-radius:100px;padding:4px;max-width:320px;margin-left:auto;margin-right:auto}
 .pricing-toggle button{flex:1;padding:9px 20px;border-radius:100px;border:none;font-size:13.5px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:var(--mute)}
-.pricing-toggle button.active{background:var(--g3);color:#fff;box-shadow:0 4px 12px rgba(5,150,105,.3)}
+.pricing-toggle button.active{background:#0a0a0a;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto}
 @media(max-width:760px){.pricing-grid{grid-template-columns:1fr;max-width:420px}}
 .price-card{background:#fff;border:2px solid var(--border);border-radius:20px;padding:28px;position:relative;transition:transform .2s,box-shadow .2s}
@@ -335,22 +337,22 @@ table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weigh
 .price-note{font-size:12px;color:var(--mute);margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);margin-top:4px}
 .price-features{list-style:none;display:flex;flex-direction:column;gap:8px}
 .price-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink2);line-height:1.45}
-.price-features li i{color:var(--g3);font-size:12px;margin-top:2px;flex-shrink:0}
+.price-features li i{color:#0a0a0a;font-size:12px;margin-top:2px;flex-shrink:0}
 .price-features li.locked i{color:var(--mute2)}
 .price-features li.locked{color:var(--mute2)}
-.price-info{background:var(--g8);border:1px solid var(--g7);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink3);margin-top:28px;max-width:960px;margin-left:auto;margin-right:auto;display:flex;gap:10px;align-items:flex-start;line-height:1.6}
-.price-info i{color:var(--g3);flex-shrink:0;margin-top:1px}
+.price-info{background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:14px 16px;font-size:13px;color:#262626;margin-top:28px;max-width:960px;margin-left:auto;margin-right:auto;display:flex;gap:10px;align-items:flex-start;line-height:1.6}
+.price-info i{color:#0a0a0a;flex-shrink:0;margin-top:1px}
 /* tier badge on pricing header */
 .tier-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:6px;margin-bottom:10px}
-.tier-badge.trial{background:#ede9fe;color:#7c3aed}
-.tier-badge.std{background:var(--g7);color:var(--g2)}
+.tier-badge.trial{background:#f5f5f5;color:#525252}
+.tier-badge.std{background:#f5f5f5;color:#0a0a0a}
 .tier-badge.pro{background:#1e3a8a;color:#bfdbfe}
 
 /* ══════════════════════════════════════
    DB COMPARISON SECTION
 ══════════════════════════════════════ */
 #db-komparasi{background:#fff}
-.db-hero{background:linear-gradient(135deg,var(--g0),var(--g2));border-radius:20px;padding:32px 36px;margin-bottom:36px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.db-hero{background:#0a0a0a;border-radius:20px;padding:32px 36px;margin-bottom:36px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
 @media(max-width:700px){.db-hero{grid-template-columns:1fr;padding:24px}}
 .db-hero-text h3{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
 .db-hero-text p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.7}
@@ -360,46 +362,46 @@ table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weigh
 .db-meter-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.7)}
 .db-meter-val{font-size:12px;font-weight:800;font-family:'DM Mono',monospace}
 .db-meter-val.std-val{color:#94a3b8}
-.db-meter-val.pro-val{color:var(--g5)}
+.db-meter-val.pro-val{color:#d4d4d4}
 .db-meter-track{height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;display:flex;gap:3px}
 .db-meter-std{height:100%;border-radius:4px;background:rgba(148,163,184,.5);transition:width 1s ease}
-.db-meter-pro{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--g4),var(--g5));transition:width 1s ease}
+.db-meter-pro{height:100%;border-radius:4px;background:linear-gradient(90deg,#525252,#a3a3a3);transition:width 1s ease}
 .db-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
 @media(max-width:700px){.db-grid{grid-template-columns:1fr}}
 .db-card{border-radius:16px;padding:24px;border:2px solid}
-.db-card.std{border-color:var(--border);background:var(--bg)}
+.db-card.std{border-color:#e5e5e5;background:#fff}
 .db-card.pro{border-color:#bfdbfe;background:#eff6ff}
 .db-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .db-engine-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:.04em}
-.db-engine-badge.std{background:var(--g7);color:var(--g2)}
+.db-engine-badge.std{background:#f5f5f5;color:#0a0a0a}
 .db-engine-badge.pro{background:#1e3a8a;color:#bfdbfe}
 .db-card h4{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:2px}
 .db-card .db-subtitle{font-size:12px;color:var(--mute)}
 .db-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .db-stat{background:#fff;border-radius:10px;padding:12px 14px;border:1px solid var(--border)}
 .db-stat-num{font-size:18px;font-weight:900;font-family:'DM Mono',monospace;line-height:1;margin-bottom:3px}
-.db-stat-num.green{color:var(--g3)}
+.db-stat-num.green{color:#16a34a}
 .db-stat-num.blue{color:#3b82f6}
-.db-stat-num.amber{color:var(--amber)}
+.db-stat-num.amber{color:#f59e0b}
 .db-stat-num.red{color:var(--red)}
 .db-stat-label{font-size:10px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 .db-features{list-style:none;display:flex;flex-direction:column;gap:7px}
 .db-features li{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--ink2);line-height:1.5}
-.db-features li i.ok{color:var(--g3)}
+.db-features li i.ok{color:#0a0a0a}
 .db-features li i.no{color:#dc2626}
-.db-features li i.warn{color:var(--amber)}
+.db-features li i.warn{color:#f59e0b}
 .db-scenario{background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px}
-.db-scenario-header{background:var(--g1);padding:16px 20px;display:flex;align-items:center;gap:10px}
+.db-scenario-header{background:#0a0a0a;padding:16px 20px;display:flex;align-items:center;gap:10px}
 .db-scenario-header h4{font-size:14px;font-weight:800;color:#fff}
 .db-scenario-header p{font-size:12px;color:rgba(255,255,255,.5);margin-top:1px}
 .db-scenario-body{padding:20px}
 .db-scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:580px){.db-scenario-grid{grid-template-columns:1fr}}
 .db-scenario-item{border-radius:12px;padding:16px;border:1.5px solid}
-.db-scenario-item.std{border-color:var(--border);background:var(--bg)}
+.db-scenario-item.std{border-color:#e5e5e5;background:#fff}
 .db-scenario-item.pro{border-color:#bfdbfe;background:#eff6ff}
 .db-scenario-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-.db-scenario-label.std{color:var(--g2)}
+.db-scenario-label.std{color:#0a0a0a}
 .db-scenario-label.pro{color:#1e3a8a}
 .db-scenario-text{font-size:12.5px;color:var(--ink2);line-height:1.6}
 .db-scenario-verdict{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;margin-top:10px}
@@ -410,8 +412,8 @@ table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weigh
 /* ══════════════════════════════════════
    CTA
 ══════════════════════════════════════ */
-#cta{background:linear-gradient(135deg,var(--g0),var(--g2));padding:80px 40px;text-align:center;position:relative;overflow:hidden}
-#cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 50%,rgba(16,185,129,.12),transparent 50%),radial-gradient(circle at 70% 50%,rgba(5,150,105,.1),transparent 50%)}
+#cta{background:#0a0a0a;padding:80px 40px;text-align:center;position:relative;overflow:hidden}
+#cta::before{content:'';position:absolute;inset:0}
 #cta h2{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;margin-bottom:12px;position:relative}
 #cta p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:30px;max-width:500px;margin-left:auto;margin-right:auto;position:relative;line-height:1.7}
 .cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
@@ -419,25 +421,25 @@ table.ctbl tbody td:first-child .sub{font-size:11px;color:var(--mute);font-weigh
 /* ══════════════════════════════════════
    FOOTER
 ══════════════════════════════════════ */
-footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);font-size:13px}
+footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color:#737373;font-size:13px}
 .footer-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .footer-brand{display:flex;align-items:center;gap:9px}
-.footer-brand img{width:28px;height:28px;border-radius:7px;object-fit:contain;filter:brightness(0) invert(1)}
-.footer-brand span{font-size:13px;font-weight:700;color:rgba(255,255,255,.7)}
+.footer-brand img{width:28px;height:28px;border-radius:7px;object-fit:contain;filter:none}
+.footer-brand span{font-size:13px;font-weight:700;color:#0a0a0a}
 
 /* ══════════════════════════════════════
    PANDUAN PAGE
 ══════════════════════════════════════ */
-#page-panduan{background:var(--bg);min-height:100vh;padding-top:64px}
-.panduan-header{background:linear-gradient(160deg,var(--g0),var(--g1) 60%,var(--g2));padding:60px 40px 50px;position:relative;overflow:hidden}
-.panduan-header::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(16,185,129,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+#page-panduan{background:#fff;min-height:100vh;padding-top:64px}
+.panduan-header{background:#0a0a0a;padding:60px 40px 50px;position:relative;overflow:hidden}
+.panduan-header::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
 .panduan-header-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1}
 .panduan-header h1{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:900;color:#fff;margin-bottom:10px}
 .panduan-header p{font-size:15px;color:rgba(255,255,255,.55);max-width:560px;line-height:1.7}
 .panduan-tabs{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}
 .panduan-tab{display:flex;align-items:center;gap:7px;padding:9px 20px;border-radius:100px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
 .panduan-tab:hover{background:rgba(255,255,255,.12);color:#fff}
-.panduan-tab.active{background:var(--g3);border-color:var(--g3);color:#fff}
+.panduan-tab.active{background:#0a0a0a;border-color:#0a0a0a;color:#fff}
 .panduan-body{max-width:1120px;margin:0 auto;padding:48px 40px}
 @media(max-width:600px){.panduan-body{padding:32px 20px}}
 /* panduan admin steps */
@@ -445,27 +447,27 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 @media(max-width:860px){.steps-layout{grid-template-columns:1fr}}
 .steps-nav{position:sticky;top:80px}
 .step-nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;margin-bottom:4px}
-.step-nav-item.active{background:#fff;border-color:var(--g3);box-shadow:var(--shadow)}
-.step-nav-item:hover:not(.active){background:rgba(5,150,105,.06)}
-.step-nav-num{width:28px;height:28px;border-radius:8px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
-.step-nav-item.active .step-nav-num{background:var(--g3);color:#fff}
+.step-nav-item.active{background:#fff;border-color:#0a0a0a;box-shadow:var(--shadow)}
+.step-nav-item:hover:not(.active){background:#f5f5f5}
+.step-nav-num{width:28px;height:28px;border-radius:8px;background:#f5f5f5;color:#0a0a0a;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-nav-item.active .step-nav-num{background:#0a0a0a;color:#fff}
 .step-nav-label{font-size:13px;font-weight:600;color:var(--mute)}
 .step-nav-item.active .step-nav-label{color:var(--ink);font-weight:700}
 .steps-content{display:flex;flex-direction:column;gap:28px}
 .step-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;scroll-margin-top:90px}
-.step-card-header{background:linear-gradient(135deg,var(--g1),var(--g2));padding:20px 24px;display:flex;align-items:center;gap:14px}
+.step-card-header{background:#0a0a0a;padding:20px 24px;display:flex;align-items:center;gap:14px}
 .step-num-big{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
 .step-title{font-size:16px;font-weight:800;color:#fff}
 .step-subtitle{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
 .step-body{padding:24px}
 .step-items{display:flex;flex-direction:column;gap:14px}
 .step-item{display:flex;gap:14px;align-items:flex-start}
-.step-item-num{width:24px;height:24px;border-radius:7px;background:var(--g7);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:'DM Mono',monospace}
+.step-item-num{width:24px;height:24px;border-radius:7px;background:#f5f5f5;color:#0a0a0a;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:'DM Mono',monospace}
 .step-item-content{}
 .step-item-title{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
 .step-item-desc{font-size:12.5px;color:var(--mute);line-height:1.6}
-.step-tip{background:var(--g8);border:1px solid var(--g7);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink3);margin-top:16px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
-.step-tip i{color:var(--g3);flex-shrink:0;margin-top:1px}
+.step-tip{background:#fafafa;border:1px solid #e5e5e5;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#262626;margin-top:16px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.step-tip i{color:#0a0a0a;flex-shrink:0;margin-top:1px}
 .step-warn{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#78350f;margin-top:12px;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
 .step-warn i{color:var(--amber);flex-shrink:0;margin-top:1px}
 /* panduan siswa */
@@ -473,7 +475,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 @media(max-width:860px){.siswa-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.siswa-grid{grid-template-columns:1fr}}
 .siswa-card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:22px;position:relative}
-.siswa-card-num{width:32px;height:32px;border-radius:9px;background:var(--g3);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-family:'DM Mono',monospace}
+.siswa-card-num{width:32px;height:32px;border-radius:9px;background:#0a0a0a;color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-family:'DM Mono',monospace}
 .siswa-card-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:6px}
 .siswa-card-desc{font-size:12.5px;color:var(--mute);line-height:1.65}
 </style>
@@ -483,8 +485,8 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 <!-- NAVBAR -->
 <!-- ══ RESELLER BANNER (hanya muncul jika ada ?ref= valid) ══ -->
 <style>
-#reseller-banner{display:none;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#065f46,#047857);padding:8px 20px;font-size:12.5px;color:rgba(255,255,255,.85);position:fixed;top:0;left:0;right:0;z-index:1000;flex-wrap:wrap;text-align:center}
-#reseller-banner .rb-dot{width:7px;height:7px;border-radius:50%;background:#34d399;flex-shrink:0;animation:heroPulse 2s infinite}
+#reseller-banner{display:none;align-items:center;justify-content:center;gap:10px;background:#0a0a0a;padding:8px 20px;font-size:12.5px;color:rgba(255,255,255,.85);position:fixed;top:0;left:0;right:0;z-index:1000;flex-wrap:wrap;text-align:center}
+#reseller-banner .rb-dot{width:7px;height:7px;border-radius:50%;background:#a3a3a3;flex-shrink:0;animation:heroPulse 2s infinite}
 #reseller-banner .rb-nama{font-weight:800;color:#fff}
 #reseller-banner .rb-sep{opacity:.4;margin:0 2px}
 </style>
@@ -508,7 +510,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
     <a onclick="showPage('home');scrollToSection('#faq')">FAQ</a>
     <a onclick="showPage('home');scrollToSection('#komparasi')">Komparasi</a>
     <a onclick="showPage('home');scrollToSection('#harga')">Harga</a>
-    <a href="https://drive.google.com/uc?export=download&id=1NhR69fbsDEeSoYn_Zhsr1AwOnDAfUgOK" download class="nav-cta"><i class="fa-solid fa-download" style="margin-right:5px"></i>Download Aplikasi</a>
+    <a onclick="openDownload(event)" href="#" class="nav-cta"><i class="fa-solid fa-download" style="margin-right:5px"></i>Download Aplikasi</a>
   </div>
 </nav>
 
@@ -564,7 +566,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
               <div class="mock-stat-card"><div class="mock-stat-num">18</div><div class="mock-stat-label">Ujian Hari Ini</div></div>
             </div>
             <div class="mock-card" style="margin-bottom:10px">
-              <div class="mock-card-title"><i class="fa-solid fa-chart-bar" style="color:var(--g5)"></i> Nilai Rata-rata</div>
+              <div class="mock-card-title"><i class="fa-solid fa-chart-bar" style="color:#525252"></i> Nilai Rata-rata</div>
               <div class="mock-bar-chart">
                 <div class="mock-bar-item" style="height:65%"></div>
                 <div class="mock-bar-item" style="height:80%"></div>
@@ -687,9 +689,9 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 /* ── Cara Pakai Steps ─────────────────────────────────────── */
 .cp-steps{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto 40px}
 .cp-step{display:flex;gap:0;position:relative}
-.cp-line{position:absolute;left:27px;top:56px;bottom:-10px;width:2px;background:linear-gradient(to bottom,var(--g4),var(--g7));z-index:0}
+.cp-line{position:absolute;left:27px;top:56px;bottom:-10px;width:2px;background:linear-gradient(to bottom,#404040,#e5e5e5);z-index:0}
 .cp-step:last-child .cp-line{display:none}
-.cp-num{width:56px;height:56px;border-radius:16px;background:var(--g3);color:#fff;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;z-index:1;margin-top:0;box-shadow:0 6px 20px rgba(5,150,105,.3);align-self:flex-start}
+.cp-num{width:56px;height:56px;border-radius:16px;background:#0a0a0a;color:#fff;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;z-index:1;margin-top:0;box-shadow:0 4px 16px rgba(0,0,0,.2);align-self:flex-start}
 .cp-num.last{background:var(--ink)}
 .cp-content{flex:1;padding:0 0 48px 24px}
 .cp-icon{font-size:28px;margin-bottom:8px}
@@ -705,7 +707,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 .cp-terminal-body{padding:14px 18px;font-family:'DM Mono',monospace;font-size:12.5px;line-height:1.8}
 .cp-terminal-line{white-space:pre-wrap;word-break:break-all}
 .ct-dim{color:#6b7280}
-.ct-green{color:#34d399}
+.ct-green{color:#22c55e}
 .ct-url{color:#60a5fa}
 .ct-folder{color:#fbbf24}
 .ct-bat{color:#86efac;font-weight:700}
@@ -716,7 +718,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 .cp-badge.green{background:#dcfce7;color:#166534}
 .cp-badge.blue{background:#dbeafe;color:#1e40af}
 /* callout */
-.cp-callout{background:linear-gradient(135deg,var(--g0),var(--g2));border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;max-width:760px;margin:0 auto}
+.cp-callout{background:#0a0a0a;border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;max-width:760px;margin:0 auto}
 .cp-callout-icon{font-size:32px;flex-shrink:0;line-height:1}
 .cp-callout-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:6px}
 .cp-callout-desc{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.7}
@@ -982,24 +984,24 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
         <span class="tier-badge trial"><i class="fa-solid fa-flask"></i> Trial — Maks 30 siswa bersamaan &bull; Ujian online saja</span>
       </div>
       <div class="pricing-grid" style="grid-template-columns:1fr;max-width:380px;margin:0 auto">
-        <div class="price-card" style="border-color:#7c3aed20">
+        <div class="price-card" style="border-color:#e5e5e5">
           <div class="price-plan">Coba Gratis</div>
-          <div class="price-amount" style="color:#7c3aed">Gratis<small> (hubungi kami)</small></div>
+          <div class="price-amount" style="color:#0a0a0a">Gratis<small> (hubungi kami)</small></div>
           <div class="price-note">Cocok untuk evaluasi sebelum berkomitmen — uji coba fitur dasar tanpa biaya</div>
           <ul class="price-features">
-            <li><i class="fa-solid fa-check" style="color:#7c3aed"></i> Ujian online</li>
+            <li><i class="fa-solid fa-check" style="color:#0a0a0a"></i> Ujian online</li>
             <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak hasil ujian</span></li>
             <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Cetak soal</span></li>
             <li><i class="fa-solid fa-xmark" style="color:#d1d5db"></i> <span style="color:#9ca3af">Ekspor data</span></li>
-            <li><i class="fa-solid fa-check" style="color:#7c3aed"></i> Maks 30 siswa bersamaan</li>
-            <li><i class="fa-solid fa-check" style="color:#7c3aed"></i> Data di server sekolah (SQLite)</li>
+            <li><i class="fa-solid fa-check" style="color:#0a0a0a"></i> Maks 30 siswa bersamaan</li>
+            <li><i class="fa-solid fa-check" style="color:#0a0a0a"></i> Data di server sekolah (SQLite)</li>
           </ul>
-          <button class="btn-lisensi" style="background:#7c3aed;box-shadow:0 4px 14px rgba(124,58,237,.25)" onclick="openWAModal('TRIAL')"><i class="fa-brands fa-whatsapp"></i> Minta Lisensi Trial</button>
+          <button class="btn-lisensi" style="background:#0a0a0a;box-shadow:0 4px 14px rgba(0,0,0,.15)" onclick="openWAModal('TRIAL')"><i class="fa-brands fa-whatsapp"></i> Minta Lisensi Trial</button>
         </div>
       </div>
       <div class="price-info reveal" style="margin-top:20px">
         <i class="fa-solid fa-circle-info"></i>
-        <div>Trial cocok untuk mencoba sistem sebelum upgrade. Siap upgrade? Pilih <strong><a onclick="switchPricing('std');document.querySelectorAll('#pricingToggle button')[1].classList.add('active')" style="color:var(--g3);cursor:pointer">Standard</a></strong> atau <strong><a onclick="switchPricing('pro');document.querySelectorAll('#pricingToggle button')[2].classList.add('active')" style="color:#2563eb;cursor:pointer">Pro</a></strong> untuk fitur lengkap.</div>
+        <div>Trial cocok untuk mencoba sistem sebelum upgrade. Siap upgrade? Pilih <strong><a onclick="switchPricing('std');document.querySelectorAll('#pricingToggle button')[1].classList.add('active')" style="color:#0a0a0a;cursor:pointer">Standard</a></strong> atau <strong><a onclick="switchPricing('pro');document.querySelectorAll('#pricingToggle button')[2].classList.add('active')" style="color:#2563eb;cursor:pointer">Pro</a></strong> untuk fitur lengkap.</div>
       </div>
     </div>
 
@@ -1063,7 +1065,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
       <div class="pricing-grid">
         <div class="price-card">
           <div class="price-plan">1 Semester</div>
-          <div class="price-amount">Rp 700.000<small>/lisensi</small></div>
+          <div class="price-amount">Rp 500.000<small>/lisensi</small></div>
           <div class="price-note">Aktif ±6 bulan — database PostgreSQL dengan connection pool 20 koneksi untuk kapasitas tinggi</div>
           <ul class="price-features">
             <li><i class="fa-solid fa-check"></i> Semua fitur lengkap</li>
@@ -1108,7 +1110,7 @@ footer{background:var(--g0);padding:40px 40px 28px;color:rgba(255,255,255,.45);f
 
     <div class="price-info reveal">
       <i class="fa-solid fa-circle-info"></i>
-      <div>Semua lisensi terkunci ke <strong>NPSN sekolah</strong> dan tidak bisa dipindahtangankan. Bingung pilih Standard atau Pro? Lihat <strong><a onclick="scrollToSection('#db-komparasi')" style="color:var(--g3);cursor:pointer">perbandingan kapasitas database</a></strong> di bawah. Butuh semua fitur (cetak soal &amp; ekspor data)? Pilih <strong>Pro</strong>. Untuk info harga terkini, hubungi kami langsung.</div>
+      <div>Semua lisensi terkunci ke <strong>NPSN sekolah</strong> dan tidak bisa dipindahtangankan. Bingung pilih Standard atau Pro? Lihat <strong><a onclick="scrollToSection('#db-komparasi')" style="color:#0a0a0a;cursor:pointer">perbandingan kapasitas database</a></strong> di bawah. Butuh semua fitur (cetak soal &amp; ekspor data)? Pilih <strong>Pro</strong>. Untuk info harga terkini, hubungi kami langsung.</div>
     </div>
   </div>
 </section>
@@ -1286,7 +1288,7 @@ table.ver-table thead th{padding:14px 16px;font-size:12px;font-weight:700;text-t
 table.ver-table tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
 table.ver-table tbody tr:last-child{border-bottom:none}
 table.ver-table tbody tr:hover:not(.ver-cat){background:#fafffe}
-tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--g2);padding:8px 16px;border-bottom:1px solid var(--g7)}
+tr.ver-cat td{background:#f5f5f5;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#0a0a0a;padding:8px 16px;border-bottom:1px solid #e5e5e5}
 .ver-td-q{padding:12px 16px;font-size:13px;font-weight:600;color:var(--ink2);vertical-align:middle}
 .ver-td-std{padding:12px 16px;font-size:13px;text-align:center;vertical-align:middle;background:#f0fdf4;color:#166534;border-left:1px solid #dcfce7}
 .ver-td-pro{padding:12px 16px;font-size:13px;text-align:center;vertical-align:middle;background:#eff6ff;color:#1e40af;border-left:1px solid #dbeafe}
@@ -1301,18 +1303,77 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
 .ver-rec-desc{font-size:13px;color:var(--mute);line-height:1.6}
 
 /* ── Tombol Dapatkan Lisensi di pricing card ── */
-.btn-lisensi{width:100%;margin-top:20px;padding:11px 16px;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(37,211,102,.25)}
-.btn-lisensi:hover{background:#1ebe5d;transform:translateY(-1px)}
-.btn-lisensi-popular{background:var(--amber);box-shadow:0 4px 14px rgba(245,158,11,.25)}
+.btn-lisensi{width:100%;margin-top:20px;padding:11px 16px;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;background:#0a0a0a;color:#fff;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.btn-lisensi:hover{background:#262626;transform:translateY(-1px)}
+.btn-lisensi-popular{background:#f59e0b;box-shadow:0 4px 14px rgba(245,158,11,.25)}
 .btn-lisensi-popular:hover{background:#e8930a}
-.btn-lisensi-lifetime{background:var(--violet);box-shadow:0 4px 14px rgba(139,92,246,.25)}
+.btn-lisensi-lifetime{background:#8b5cf6;box-shadow:0 4px 14px rgba(139,92,246,.25)}
 .btn-lisensi-lifetime:hover{background:#7c3aed}
-.btn-lisensi-pro{background:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,.25)}
+.btn-lisensi-pro{background:#1e40af;box-shadow:0 4px 14px rgba(30,64,175,.25)}
 .btn-lisensi-pro:hover{background:#1d4ed8}
-.btn-lisensi-pro.btn-lisensi-popular{background:var(--amber);box-shadow:0 4px 14px rgba(245,158,11,.25)}
+.btn-lisensi-pro.btn-lisensi-popular{background:#f59e0b;box-shadow:0 4px 14px rgba(245,158,11,.25)}
 .btn-lisensi-pro.btn-lisensi-popular:hover{background:#e8930a}
-.btn-lisensi-pro.btn-lisensi-lifetime{background:var(--violet);box-shadow:0 4px 14px rgba(139,92,246,.25)}
+.btn-lisensi-pro.btn-lisensi-lifetime{background:#8b5cf6;box-shadow:0 4px 14px rgba(139,92,246,.25)}
 .btn-lisensi-pro.btn-lisensi-lifetime:hover{background:#7c3aed}
+
+/* ══════════════════════════════════════
+   DOWNLOAD GATE — GOOGLE SIGN-IN MODAL
+══════════════════════════════════════ */
+#dlModal{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+#dlModal.open{opacity:1;pointer-events:all}
+.dl-box{background:#fff;border-radius:20px;width:100%;max-width:460px;box-shadow:0 24px 64px rgba(0,0,0,.18);transform:translateY(16px);transition:transform .3s;position:relative;overflow:hidden}
+#dlModal.open .dl-box{transform:translateY(0)}
+.dl-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border:none;background:#f5f5f5;border-radius:50%;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#737373;transition:background .2s;z-index:1}
+.dl-close:hover{background:#e5e5e5}
+
+/* Step 1 – Sign In */
+.dl-step{padding:32px}
+.dl-logo{display:flex;align-items:center;gap:9px;margin-bottom:22px}
+.dl-logo img{width:30px;height:30px;border-radius:7px;object-fit:contain}
+.dl-logo span{font-size:15px;font-weight:800;color:#0a0a0a}
+.dl-title{font-size:20px;font-weight:800;color:#0a0a0a;line-height:1.25;margin-bottom:7px}
+.dl-sub{font-size:13.5px;color:#737373;line-height:1.65;margin-bottom:24px}
+.dl-benefit{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:14px 16px}
+.dl-benefit-item{display:flex;align-items:center;gap:10px;font-size:13px;color:#404040}
+.dl-benefit-item i{width:18px;text-align:center;color:#0a0a0a;flex-shrink:0}
+.google-btn{width:100%;padding:12px;border:1.5px solid #e5e5e5;border-radius:12px;background:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#0a0a0a;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .15s,border-color .15s,box-shadow .15s}
+.google-btn:hover{background:#f9f9f9;border-color:#d4d4d4;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.google-btn:disabled{opacity:.6;cursor:not-allowed}
+.google-btn svg{flex-shrink:0}
+.dl-or{text-align:center;font-size:12px;color:#a3a3a3;margin:14px 0;position:relative}
+.dl-or::before,.dl-or::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:#e5e5e5}
+.dl-or::before{left:0}.dl-or::after{right:0}
+.dl-note{font-size:11.5px;color:#a3a3a3;text-align:center;margin-top:14px;line-height:1.55}
+.dl-error{display:none;background:#fff5f5;border:1px solid #fecaca;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#dc2626;margin-bottom:14px;align-items:center;gap:7px}
+
+/* Step 2 – Data Sekolah */
+.dl-field{margin-bottom:13px}
+.dl-field label{display:block;font-size:11.5px;font-weight:700;color:#404040;margin-bottom:5px;letter-spacing:.02em;text-transform:uppercase}
+.dl-field label em{color:#ef4444;font-style:normal}
+.dl-field input,.dl-field select{width:100%;padding:9px 12px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13.5px;font-family:'DM Sans',sans-serif;color:#0a0a0a;background:#fff;transition:border-color .2s;outline:none}
+.dl-field input:focus,.dl-field select:focus{border-color:#0a0a0a}
+.dl-field input.err,.dl-field select.err{border-color:#ef4444;background:#fff8f8}
+.dl-field input[readonly]{background:#fafafa;color:#737373}
+.dl-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.dl-user-banner{display:flex;align-items:center;gap:10px;background:#fafafa;border:1px solid #e5e5e5;border-radius:10px;padding:10px 13px;margin-bottom:18px}
+.dl-user-banner img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.dl-user-banner .du-name{font-size:13px;font-weight:700;color:#0a0a0a}
+.dl-user-banner .du-email{font-size:11.5px;color:#737373}
+.dl-submit-btn{width:100%;margin-top:4px;padding:12px;background:#0a0a0a;color:#fff;border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.dl-submit-btn:hover{background:#262626;transform:translateY(-1px)}
+.dl-submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.dl-back{font-size:12px;color:#a3a3a3;text-align:center;margin-top:10px;cursor:pointer}
+.dl-back:hover{color:#0a0a0a}
+
+/* Step 3 – Success */
+.dl-success{text-align:center;padding:40px 32px}
+.dl-success-icon{font-size:52px;margin-bottom:14px;display:block;animation:popIn .4s ease}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.dl-success-title{font-size:20px;font-weight:800;color:#0a0a0a;margin-bottom:8px}
+.dl-success-sub{font-size:13.5px;color:#737373;line-height:1.65;margin-bottom:22px}
+.dl-dl-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 32px;background:#0a0a0a;color:#fff;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:background .2s,transform .15s;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.dl-dl-btn:hover{background:#262626;transform:translateY(-1px)}
+.dl-hint{font-size:11.5px;color:#a3a3a3;margin-top:10px}
 </style>
 
 <!-- ════════ CTA ════════ -->
@@ -1321,7 +1382,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
     <h2 class="reveal">Siap Mulai Ujian Digital<br>di Sekolah Anda?</h2>
     <p class="reveal d1">Bergabung bersama sekolah-sekolah yang sudah menggunakan Emes CBT. Platform CBT on-premise terlengkap untuk sekolah Indonesia.</p>
     <div class="cta-actions reveal d2">
-      <a href="https://drive.google.com/uc?export=download&id=1NhR69fbsDEeSoYn_Zhsr1AwOnDAfUgOK" download class="btn-hero btn-primary"><i class="fa-solid fa-download"></i> Download Aplikasi</a>
+      <a onclick="openDownload(event)" href="#" class="btn-hero btn-primary"><i class="fa-solid fa-download"></i> Download Aplikasi</a>
       <a onclick="openWAModal()" class="btn-hero btn-secondary" style="background:rgba(37,211,102,.15);border-color:rgba(37,211,102,.4);color:#25d366"><i class="fa-brands fa-whatsapp"></i> Dapatkan Lisensi</a>
       <a onclick="showPage('panduan')" class="btn-hero btn-secondary"><i class="fa-solid fa-book-open"></i> Baca Panduan Lengkap</a>
     </div>
@@ -1335,12 +1396,12 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
       <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
       <span>Emes CBT System</span>
     </div>
-    <div>Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
+    <div style="color:#737373">Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
     <div style="display:flex;gap:16px">
-      <a onclick="scrollToSection('#fitur')" style="color:rgba(255,255,255,.4);cursor:pointer">Fitur</a>
-      <a onclick="showPage('panduan')" style="color:rgba(255,255,255,.4);cursor:pointer">Panduan</a>
-      <a onclick="scrollToSection('#komparasi')" style="color:rgba(255,255,255,.4);cursor:pointer">Komparasi</a>
-      <a onclick="scrollToSection('#harga')" style="color:rgba(255,255,255,.4);cursor:pointer">Harga</a>
+      <a onclick="scrollToSection('#fitur')" style="color:#737373;cursor:pointer">Fitur</a>
+      <a onclick="showPage('panduan')" style="color:#737373;cursor:pointer">Panduan</a>
+      <a onclick="scrollToSection('#komparasi')" style="color:#737373;cursor:pointer">Komparasi</a>
+      <a onclick="scrollToSection('#harga')" style="color:#737373;cursor:pointer">Harga</a>
     </div>
   </div>
 </footer>
@@ -1516,7 +1577,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
       <div class="jar-intro-icon">🌐</div>
       <div>
         <div class="jar-intro-title">Panduan Setting Jaringan LAN untuk Emes CBT</div>
-        <div class="jar-intro-desc">Emes CBT berjalan sepenuhnya di jaringan lokal (LAN) — tidak perlu internet. Setiap skema mendukung dua mode perangkat siswa: <strong style="color:#6ee7b7">💻 Laptop/PC (Lab Komputer)</strong> via kabel LAN, dan <strong style="color:#6ee7b7">📱 HP Siswa (BYOD)</strong> via WiFi. Pilih skema sesuai ukuran sekolah Anda.</div>
+        <div class="jar-intro-desc">Emes CBT berjalan sepenuhnya di jaringan lokal (LAN) — tidak perlu internet. Setiap skema mendukung dua mode perangkat siswa: <strong style="color:#d4d4d4">💻 Laptop/PC (Lab Komputer)</strong> via kabel LAN, dan <strong style="color:#d4d4d4">📱 HP Siswa (BYOD)</strong> via WiFi. Pilih skema sesuai ukuran sekolah Anda.</div>
       </div>
     </div>
 
@@ -2138,7 +2199,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
      TAB JARINGAN — STYLES
   ═══════════════════════════════════════ */
   /* Intro */
-  .jar-intro{background:linear-gradient(135deg,var(--g0),var(--g2));border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;margin-bottom:32px}
+  .jar-intro{background:#0a0a0a;border-radius:20px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;margin-bottom:32px}
   .jar-intro-icon{font-size:36px;flex-shrink:0;line-height:1}
   .jar-intro-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px}
   .jar-intro-desc{font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.7}
@@ -2149,7 +2210,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
   @media(max-width:700px){.jar-skema-row{grid-template-columns:1fr}}
   .jar-skema-card{border-radius:18px;padding:24px 20px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s,outline .15s;border:2px solid transparent;outline:3px solid transparent}
   .jar-skema-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-  .jar-card-active{outline:3px solid var(--g3)!important;transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .jar-card-active{outline:3px solid #0a0a0a!important;transform:translateY(-4px);box-shadow:var(--shadow-lg)}
   .s-kecil{background:#f0fdf4;border-color:#86efac}
   .s-menengah{background:#fffbeb;border-color:#fde68a}
   .s-besar{background:#eff6ff;border-color:#93c5fd}
@@ -2162,8 +2223,8 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
   .jar-sk-ruang{font-size:13px;font-weight:700;color:var(--mute);margin-bottom:6px}
   .jar-sk-detail{font-size:12px;color:var(--mute2);margin-bottom:10px}
   .jar-sk-versi{font-size:12px;font-weight:700;margin-bottom:12px}
-  .vstd{color:#16a34a}.vpro{color:#1d4ed8}
-  .jar-sk-cta{font-size:12px;font-weight:700;color:var(--g3)}
+  .vstd{color:#404040}.vpro{color:#0a0a0a}
+  .jar-sk-cta{font-size:12px;font-weight:700;color:#0a0a0a}
 
   /* Detail panel */
   .jar-detail{background:#fff;border-radius:20px;border:1.5px solid var(--border);box-shadow:var(--shadow-lg);margin-bottom:28px;overflow:hidden}
@@ -2180,7 +2241,7 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
 
   /* Diagram */
   .jar-diagram{padding:24px 32px;background:#f8fffe;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .jar-diag-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--g2);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+  .jar-diag-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#0a0a0a;margin-bottom:20px;display:flex;align-items:center;gap:6px}
   .jar-topo{display:flex;flex-direction:column;align-items:center}
   .jar-node{border-radius:14px;padding:12px 20px;text-align:center;border:2px solid;min-width:160px;margin:0 auto}
   .nserver{background:#e0f2fe;border-color:#38bdf8}
@@ -2214,27 +2275,27 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
   table.jar-spec-tbl td{padding:7px 0;vertical-align:middle}
   table.jar-spec-tbl td:first-child{color:var(--mute);font-weight:600;width:42%;padding-right:10px}
   table.jar-spec-tbl td code{font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:4px;font-family:'DM Mono',monospace}
-  .tag-std{display:inline-block;background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
-  .tag-pro{display:inline-block;background:#dbeafe;color:#1e40af;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+  .tag-std{display:inline-block;background:#f5f5f5;color:#0a0a0a;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+  .tag-pro{display:inline-block;background:#0a0a0a;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
 
   /* Steps */
   .jar-steps{padding:24px 32px}
   @media(max-width:600px){.jar-steps{padding:16px}}
-  .jar-steps-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--g2);margin-bottom:14px}
+  .jar-steps-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#0a0a0a;margin-bottom:14px}
   .jar-st{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;font-size:13px;color:var(--ink2);line-height:1.7}
-  .jar-st-num{width:26px;height:26px;border-radius:8px;background:var(--g3);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .jar-st-num{width:26px;height:26px;border-radius:8px;background:#0a0a0a;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
   .jar-st code{font-size:11.5px;background:#f1f5f9;padding:1px 6px;border-radius:4px;font-family:'DM Mono',monospace}
 
   /* Tip & warn */
-  .jar-tip{margin:0 32px 20px;background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:14px 16px;font-size:13px;color:#166534;line-height:1.65;display:flex;gap:8px;align-items:flex-start}
-  .jar-warn{margin:0 32px 24px;background:#fff7ed;border:1px solid #fdba74;border-radius:12px;padding:14px 16px;font-size:13px;color:#9a3412;line-height:1.65;display:flex;gap:8px;align-items:flex-start}
+  .jar-tip{margin:0 32px 20px;background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:14px 16px;font-size:13px;color:#404040;line-height:1.65;display:flex;gap:8px;align-items:flex-start}
+  .jar-warn{margin:0 32px 24px;background:#fff7f0;border:1px solid #fcd9bd;border-radius:12px;padding:14px 16px;font-size:13px;color:#7c3011;line-height:1.65;display:flex;gap:8px;align-items:flex-start}
   @media(max-width:600px){.jar-tip,.jar-warn{margin:0 0 16px}}
 
   /* Mode toggle (Laptop / HP) */
   .jar-mode-toggle{display:flex;gap:8px;padding:16px 32px;background:#f8fafc;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
   .jar-mode-btn{padding:9px 20px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--mute);cursor:pointer;transition:all .15s}
-  .jar-mode-btn:hover{border-color:var(--g3);color:var(--g2)}
-  .jar-mode-btn.active{background:var(--g3);border-color:var(--g3);color:#fff}
+  .jar-mode-btn:hover{border-color:#0a0a0a;color:#0a0a0a}
+  .jar-mode-btn.active{background:#0a0a0a;border-color:#0a0a0a;color:#fff}
   @media(max-width:500px){.jar-mode-toggle{flex-direction:column}.jar-mode-btn{text-align:center}}
 
   /* Mode mode */
@@ -2262,11 +2323,11 @@ tr.ver-cat td{background:#f8fffe;font-size:10px;font-weight:800;text-transform:u
         <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
         <span>Emes CBT System</span>
       </div>
-      <div>Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
+      <div style="color:#737373">Platform Ujian Digital On-Premise untuk Sekolah Indonesia &copy; 2026 Emes EduTech</div>
       <div style="display:flex;gap:16px">
-        <a onclick="showPage('home');scrollToSection('#fitur')" style="color:rgba(255,255,255,.4);cursor:pointer">Fitur</a>
-        <a onclick="showPage('home');scrollToSection('#komparasi')" style="color:rgba(255,255,255,.4);cursor:pointer">Komparasi</a>
-        <a onclick="showPage('home');scrollToSection('#harga')" style="color:rgba(255,255,255,.4);cursor:pointer">Harga</a>
+        <a onclick="showPage('home');scrollToSection('#fitur')" style="color:#737373;cursor:pointer">Fitur</a>
+        <a onclick="showPage('home');scrollToSection('#komparasi')" style="color:#737373;cursor:pointer">Komparasi</a>
+        <a onclick="showPage('home');scrollToSection('#harga')" style="color:#737373;cursor:pointer">Harga</a>
       </div>
     </div>
   </footer>
@@ -2506,7 +2567,7 @@ document.addEventListener('click', function(e) {
 .wa-field{margin-bottom:14px}
 .wa-field label{display:block;font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:5px;letter-spacing:.02em}
 .wa-field input,.wa-field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:#fff;outline:none;transition:border-color .15s}
-.wa-field input:focus,.wa-field select:focus{border-color:var(--g3)}
+.wa-field input:focus,.wa-field select:focus{border-color:#0a0a0a}
 .wa-field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .wa-error{display:none;align-items:center;gap:8px;background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:9px 12px;font-size:12px;color:#991b1b;margin-bottom:14px}
 .wa-error i{flex-shrink:0}
@@ -2516,8 +2577,8 @@ document.addEventListener('click', function(e) {
 .wa-versi-btn input[type=radio]{display:none}
 .wa-versi-btn .vb-name{font-size:13px;font-weight:700;color:var(--mute);display:block}
 .wa-versi-btn .vb-desc{font-size:10px;color:var(--mute2);display:block;margin-top:2px}
-.wa-versi-btn.selected{border-color:var(--g3);background:var(--g8)}
-.wa-versi-btn.selected .vb-name{color:var(--g2)}
+.wa-versi-btn.selected{border-color:#0a0a0a;background:#f5f5f5}
+.wa-versi-btn.selected .vb-name{color:#0a0a0a}
 .wa-submit{width:100%;padding:13px;background:#25d366;border:none;border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .2s,transform .15s;margin-top:4px}
 .wa-submit:hover{background:#1ebe5d;transform:translateY(-1px)}
 .wa-note{text-align:center;font-size:11px;color:var(--mute2);margin-top:10px}
@@ -2582,11 +2643,11 @@ document.addEventListener('click', function(e) {
             <span class="vb-desc">Coba gratis dulu</span>
           </label>
           <label class="wa-versi-btn" onclick="selectVersi(this,'STANDAR')">
-            <span class="vb-name">🟢 Standar</span>
+            <span class="vb-name">✦ Standar</span>
             <span class="vb-desc">SQLite — s/d 200 siswa</span>
           </label>
           <label class="wa-versi-btn" onclick="selectVersi(this,'PRO')">
-            <span class="vb-name">🔵 Pro</span>
+            <span class="vb-name">★ Pro</span>
             <span class="vb-desc">PostgreSQL — 500+ siswa</span>
           </label>
         </div>
@@ -2607,6 +2668,259 @@ function selectVersi(el, val) {
   el.classList.add('selected');
   document.getElementById('wa-versi').value = val;
   document.getElementById('wa-versi').style.borderColor = '';
+}
+</script>
+
+<!-- ══════════════════════════════════════
+     DOWNLOAD GATE — GOOGLE SIGN-IN MODAL
+══════════════════════════════════════ -->
+<div id="dlModal">
+  <div class="dl-box">
+    <button class="dl-close" onclick="closeDlModal()">✕</button>
+
+    <!-- STEP 1: Sign In -->
+    <div id="dlStep1" class="dl-step">
+      <div class="dl-logo">
+        <img src="https://i.imgur.com/bT70O4C.png" alt="Emes CBT">
+        <span>Emes CBT</span>
+      </div>
+      <div class="dl-title">Masuk untuk Download Aplikasi</div>
+      <div class="dl-sub">Daftar sekali, download gratis selamanya. Data Anda membantu kami memberikan support yang lebih baik.</div>
+      <div class="dl-benefit">
+        <div class="dl-benefit-item"><i class="fa-solid fa-download"></i> Download langsung setelah daftar</div>
+        <div class="dl-benefit-item"><i class="fa-solid fa-bell"></i> Notifikasi update versi terbaru</div>
+        <div class="dl-benefit-item"><i class="fa-solid fa-headset"></i> Akses support teknis prioritas</div>
+        <div class="dl-benefit-item"><i class="fa-solid fa-shield-halved"></i> Data aman, tidak dijual ke pihak ketiga</div>
+      </div>
+      <div class="dl-error" id="dlError1">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="dlError1Msg">Gagal masuk. Coba lagi.</span>
+      </div>
+      <button class="google-btn" id="googleSignInBtn" onclick="signInWithGoogle()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908C16.658 14.013 17.64 11.706 17.64 9.2z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Lanjutkan dengan Google
+      </button>
+      <div class="dl-note">Dengan masuk, Anda menyetujui penggunaan data untuk keperluan support Emes CBT.</div>
+    </div>
+
+    <!-- STEP 2: Data Sekolah -->
+    <div id="dlStep2" class="dl-step" style="display:none">
+      <div class="dl-title" style="margin-bottom:5px">Lengkapi Data Sekolah</div>
+      <div class="dl-sub" style="margin-bottom:16px">Diisi sekali, tidak perlu diulang saat download berikutnya.</div>
+      <div class="dl-user-banner">
+        <img id="dlUserPhoto" src="" alt="" onerror="this.src='https://i.imgur.com/bT70O4C.png'">
+        <div>
+          <div class="du-name" id="dlUserName">—</div>
+          <div class="du-email" id="dlUserEmail">—</div>
+        </div>
+      </div>
+      <div class="dl-error" id="dlError2">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="dlError2Msg">Lengkapi semua field yang wajib diisi.</span>
+      </div>
+      <div class="dl-field">
+        <label>Nama Lengkap PIC <em>*</em></label>
+        <input type="text" id="dl-nama" placeholder="Nama penanggung jawab">
+      </div>
+      <div class="dl-row">
+        <div class="dl-field">
+          <label>No. WhatsApp <em>*</em></label>
+          <input type="tel" id="dl-wa" placeholder="08xxxxxxxxxx">
+        </div>
+        <div class="dl-field">
+          <label>NPSN <em>*</em></label>
+          <input type="text" id="dl-npsn" placeholder="8 digit" maxlength="8">
+        </div>
+      </div>
+      <div class="dl-field">
+        <label>Nama Sekolah <em>*</em></label>
+        <input type="text" id="dl-sekolah" placeholder="SMP Negeri 1 Contoh">
+      </div>
+      <div class="dl-row">
+        <div class="dl-field">
+          <label>Jenjang <em>*</em></label>
+          <select id="dl-jenjang">
+            <option value="">Pilih…</option>
+            <option>SD / MI</option><option>SMP / MTs</option>
+            <option>SMA / MA</option><option>SMK</option>
+            <option>Perguruan Tinggi</option><option>Lainnya</option>
+          </select>
+        </div>
+        <div class="dl-field">
+          <label>Kab/Kota <em>*</em></label>
+          <input type="text" id="dl-kota" placeholder="Kota Contoh">
+        </div>
+      </div>
+      <div class="dl-field">
+        <label>Provinsi <em>*</em></label>
+        <input type="text" id="dl-provinsi" placeholder="Jawa Tengah">
+      </div>
+      <button class="dl-submit-btn" id="dlSubmitBtn" onclick="submitSchoolData()">
+        <i class="fa-solid fa-download"></i>
+        <span>Simpan & Download Sekarang</span>
+      </button>
+      <div class="dl-back" onclick="backToStep1()">← Ganti akun Google</div>
+    </div>
+
+    <!-- STEP 3: Sukses -->
+    <div id="dlStep3" class="dl-success" style="display:none">
+      <span class="dl-success-icon">🎉</span>
+      <div class="dl-success-title">Siap! Download sedang dimulai…</div>
+      <div class="dl-success-sub">
+        Data sekolah Anda berhasil disimpan.<br>
+        <strong>Tim kami akan menghubungi Anda</strong> jika ada update versi terbaru.
+      </div>
+      <a id="dlManualLink" href="#" target="_blank" class="dl-dl-btn" onclick="closeDlModal()">
+        <i class="fa-solid fa-download"></i> Download Manual (jika tidak otomatis)
+      </a>
+      <div class="dl-hint" style="margin-top:12px;font-size:11.5px;color:#a3a3a3">
+        File ~50–200 MB. Simpan di folder yang mudah diakses.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   DOWNLOAD GATE — Google Sign-In + Firestore
+═══════════════════════════════════════════════════════ */
+const DOWNLOAD_URL = 'https://drive.google.com/uc?export=download&id=1osgKANPuc8TX35v1FF7Fs6v-NFLkoy6h';
+const auth = firebase.auth();
+const dbFS = firebase.firestore();
+let _dlUser = null;
+
+function getDlSession() {
+  try { return JSON.parse(localStorage.getItem('emescbt_dl_v2') || 'null'); } catch(e){ return null; }
+}
+function setDlSession(uid) {
+  try { localStorage.setItem('emescbt_dl_v2', JSON.stringify({uid, ts: Date.now()})); } catch(e){}
+}
+
+/* ── Entry point ──────────────────────────────────────── */
+async function openDownload(e) {
+  if (e) e.preventDefault();
+  const session = getDlSession();
+  if (session && session.uid) { window.open(DOWNLOAD_URL, '_blank'); return; }
+  showDlStep(1);
+  document.getElementById('dlModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDlModal() {
+  document.getElementById('dlModal').classList.remove('open');
+  document.body.style.overflow = '';
+  if (_dlUser && !getDlSession()) { auth.signOut(); _dlUser = null; }
+}
+
+document.getElementById('dlModal').addEventListener('click', function(e){
+  if (e.target === this) closeDlModal();
+});
+
+function showDlStep(n) {
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('dlStep' + i);
+    if (el) el.style.display = i === n ? '' : 'none';
+  });
+}
+
+function backToStep1() {
+  auth.signOut(); _dlUser = null; showDlStep(1);
+  const btn = document.getElementById('googleSignInBtn');
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908C16.658 14.013 17.64 11.706 17.64 9.2z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg> Lanjutkan dengan Google`;
+}
+
+/* ── Google Sign-In ──────────────────────────────────── */
+async function signInWithGoogle() {
+  const btn = document.getElementById('googleSignInBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Membuka Google…';
+  document.getElementById('dlError1').style.display = 'none';
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const result = await auth.signInWithPopup(provider);
+    _dlUser = result.user;
+
+    // Cek UID sudah pernah daftar?
+    const snap = await dbFS.collection('downloads').doc(_dlUser.uid).get();
+    if (snap.exists) {
+      setDlSession(_dlUser.uid);
+      closeDlModal();
+      window.open(DOWNLOAD_URL, '_blank');
+      return;
+    }
+    // Tampilkan form data sekolah
+    document.getElementById('dlUserPhoto').src = _dlUser.photoURL || '';
+    document.getElementById('dlUserName').textContent = _dlUser.displayName || '—';
+    document.getElementById('dlUserEmail').textContent = _dlUser.email || '—';
+    document.getElementById('dl-nama').value = _dlUser.displayName || '';
+    showDlStep(2);
+  } catch(err) {
+    let msg = 'Gagal masuk dengan Google. Coba lagi.';
+    if (err.code === 'auth/popup-closed-by-user') msg = 'Popup ditutup. Klik tombol Google lagi.';
+    if (err.code === 'auth/popup-blocked') msg = 'Popup diblokir browser. Izinkan popup dari situs ini, lalu coba lagi.';
+    document.getElementById('dlError1Msg').textContent = msg;
+    document.getElementById('dlError1').style.display = 'flex';
+    backToStep1();
+  }
+}
+
+/* ── Submit data sekolah ─────────────────────────────── */
+async function submitSchoolData() {
+  if (!_dlUser) { showDlStep(1); return; }
+  const fields = [
+    {id:'dl-nama',     label:'Nama PIC'},
+    {id:'dl-wa',       label:'WhatsApp'},
+    {id:'dl-npsn',     label:'NPSN'},
+    {id:'dl-sekolah',  label:'Nama Sekolah'},
+    {id:'dl-jenjang',  label:'Jenjang'},
+    {id:'dl-kota',     label:'Kab/Kota'},
+    {id:'dl-provinsi', label:'Provinsi'},
+  ];
+  fields.forEach(f => document.getElementById(f.id).classList.remove('err'));
+  document.getElementById('dlError2').style.display = 'none';
+
+  const vals = {};
+  fields.forEach(f => { vals[f.id] = document.getElementById(f.id).value.trim(); });
+  const empty = fields.filter(f => !vals[f.id]);
+  if (empty.length) {
+    empty.forEach(f => document.getElementById(f.id).classList.add('err'));
+    document.getElementById('dlError2Msg').textContent = 'Wajib diisi: ' + empty.map(f=>f.label).join(', ');
+    document.getElementById('dlError2').style.display = 'flex';
+    return;
+  }
+  if (!/^\d{8}$/.test(vals['dl-npsn'])) {
+    document.getElementById('dl-npsn').classList.add('err');
+    document.getElementById('dlError2Msg').textContent = 'NPSN harus 8 digit angka.';
+    document.getElementById('dlError2').style.display = 'flex';
+    return;
+  }
+
+  const btn = document.getElementById('dlSubmitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Menyimpan…</span>';
+
+  try {
+    await dbFS.collection('downloads').doc(_dlUser.uid).set({
+      uid: _dlUser.uid, email: _dlUser.email, foto: _dlUser.photoURL || '',
+      nama: vals['dl-nama'], wa: vals['dl-wa'], npsn: vals['dl-npsn'],
+      sekolah: vals['dl-sekolah'], jenjang: vals['dl-jenjang'],
+      kota: vals['dl-kota'], provinsi: vals['dl-provinsi'],
+      downloadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      ref: window._resellerNama || 'direct'
+    }, { merge: true });
+    setDlSession(_dlUser.uid);
+  } catch(err) {
+    console.warn('Firestore save error:', err);
+    // Tetap lanjutkan download
+  }
+
+  document.getElementById('dlManualLink').href = DOWNLOAD_URL;
+  showDlStep(3);
+  setTimeout(() => window.open(DOWNLOAD_URL, '_blank'), 600);
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-download"></i> <span>Simpan & Download Sekarang</span>';
 }
 </script>
 </body>
