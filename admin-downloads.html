@@ -267,13 +267,11 @@ td.td-sekolah span{font-size:11.5px;color:#737373}
 // Kredensial admin — ubah sesuai kebutuhan
 const ADMIN_CREDENTIALS = {
   username: 'admin',
-  password: 'emescbt2026'
+  password: 'emescbt2024'
 };
 
-// Akun Firebase khusus internal untuk akses Firestore
-// (tidak perlu diketahui pengguna)
-const FIREBASE_INTERNAL_EMAIL    = 'mr.mahfudsidik@gmail.com';
-const FIREBASE_INTERNAL_PASSWORD = 'emescbt-internal-2024!';
+// Firebase anonymous auth untuk akses Firestore
+// (tidak butuh email/password apapun)
 
 firebase.initializeApp({
   apiKey:            "AIzaSyAK9kA3GD-Os4eaCl7CFRnf0KMopTqdPKo",
@@ -304,14 +302,11 @@ const db   = firebase.firestore();
   }
 })();
 
-// Login Firebase di background agar Firestore bisa diakses
+// Login Firebase anonymous di background agar Firestore bisa diakses
 async function firebaseSignIn() {
   try {
     if (!auth.currentUser) {
-      await auth.signInWithEmailAndPassword(
-        FIREBASE_INTERNAL_EMAIL,
-        FIREBASE_INTERNAL_PASSWORD
-      );
+      await auth.signInAnonymously();
     }
   } catch(e) {
     console.warn('Firebase bg auth:', e.message);
