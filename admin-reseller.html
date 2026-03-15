@@ -88,18 +88,19 @@ td{padding:12px 16px;vertical-align:middle}
 .td-nama span{font-size:11.5px;color:#737373}
 .td-wa a{color:#16a34a;font-size:12.5px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:5px;white-space:nowrap}
 .td-wa a:hover{text-decoration:underline}
-.td-link{display:flex;align-items:center;gap:6px}
+.td-link-inner{display:flex;align-items:center;gap:6px}
 .td-link a{color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:180px;white-space:nowrap}
 .td-link a:hover{text-decoration:underline}
 .copy-btn{background:none;border:1px solid #e5e5e5;border-radius:6px;padding:3px 7px;cursor:pointer;font-size:11px;color:#737373;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
 .copy-btn:hover{background:#f5f5f5;color:#0a0a0a}
 .copy-btn.copied{border-color:#16a34a;color:#16a34a}
 
-.td-actions{display:flex;align-items:center;gap:6px}
+.td-actions{white-space:nowrap}
 .act-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;border:1.5px solid #e5e5e5;background:#fff;cursor:pointer;font-size:13px;color:#525252;transition:all .2s}
 .act-btn:hover{background:#f5f5f5}
 .act-btn.edit:hover{border-color:#2563eb;color:#2563eb}
 .act-btn.del:hover{border-color:#dc2626;color:#dc2626;background:#fff5f5}
+.act-btn.gen:hover{border-color:#7c3aed;color:#7c3aed;background:#faf5ff}
 
 .empty-state{text-align:center;padding:60px 20px;color:#a3a3a3}
 .empty-state i{font-size:36px;margin-bottom:12px;display:block;opacity:.4}
@@ -438,13 +439,18 @@ function renderTable() {
           : '<span style="color:#a3a3a3">—</span>'}
       </td>
       <td style="font-size:12.5px;color:#525252">${esc(d.label||'—')}</td>
-      <td class="td-link">
-        <a href="${esc(link)}" target="_blank" rel="noopener" title="${esc(link)}">${esc(link)}</a>
-        <button class="copy-btn" onclick="salinLink(this,'${esc(link)}')" title="Salin link">
-          <i class="fa-regular fa-copy"></i> Salin
-        </button>
+      <td>
+        <div class="td-link-inner">
+          <a href="${esc(link)}" target="_blank" rel="noopener" title="${esc(link)}" style="color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:200px;white-space:nowrap;display:inline-block">${esc(link)}</a>
+          <button class="copy-btn" onclick="salinLink(this,'${esc(link)}')" title="Salin link">
+            <i class="fa-regular fa-copy"></i> Salin
+          </button>
+        </div>
       </td>
       <td class="td-actions">
+        <button class="act-btn gen" title="Generate halaman reseller" onclick="generatePage('${esc(d.code||'')}','${esc(d.nama||'')}','${esc(d.label||'')}')">
+          <i class="fa-solid fa-file-arrow-down"></i>
+        </button>
         <button class="act-btn edit" title="Edit" onclick="openEditModal('${esc(d.docId)}')">
           <i class="fa-solid fa-pen"></i>
         </button>
@@ -537,6 +543,65 @@ function resetForm() {
     el.value = '';
     el.classList.remove('error');
   });
+}
+
+/* ════════════════════════
+   GENERATE PAGE
+════════════════════════ */
+function generatePage(code, nama, label) {
+  const baseUrl = (window._baseLandingUrl || BASE_URL).replace(/\/$/, '');
+  const refUrl  = baseUrl + '/?ref=' + encodeURIComponent(code);
+  const siteTitle = 'Emes CBT — ' + nama;
+  const siteDesc  = 'Platform CBT On-Premise untuk Sekolah Indonesia. Hubungi ' + nama + ' (' + label + ') untuk informasi lisensi.';
+  const ogImage   = 'https://i.imgur.com/bT70O4C.png';
+
+  const htmlContent = `<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${siteTitle}</title>
+
+<!-- Open Graph / WhatsApp / Telegram / Facebook -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="${refUrl}">
+<meta property="og:title"       content="${siteTitle}">
+<meta property="og:description" content="${siteDesc}">
+<meta property="og:image"       content="${ogImage}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height"content="630">
+<meta property="og:site_name"   content="Emes CBT">
+<meta property="og:locale"      content="id_ID">
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="${siteTitle}">
+<meta name="twitter:description" content="${siteDesc}">
+<meta name="twitter:image"       content="${ogImage}">
+
+<!-- Canonical & Description -->
+<meta name="description" content="${siteDesc}">
+<link rel="canonical" href="${refUrl}">
+
+<!-- Redirect ke landing page -->
+<meta http-equiv="refresh" content="0;url=${refUrl}">
+<script>window.location.replace('${refUrl}');</script>
+</head>
+<body>
+<p>Mengalihkan ke halaman Emes CBT...</p>
+</body>
+</html>`;
+
+  // Download file
+  const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showToast('File index.html untuk reseller ' + nama + ' didownload! Upload ke folder ref/' + code + '/', 'success');
 }
 
 /* ════════════════════════
