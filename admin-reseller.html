@@ -134,13 +134,18 @@ td{padding:12px 16px;vertical-align:middle}
 .spin{animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+.td-link-anchor{color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:200px;white-space:nowrap;display:inline-block}
+.td-link-anchor:hover{text-decoration:underline}
+.btn-gen-page{margin-top:6px;display:flex;align-items:center;gap:5px;padding:4px 10px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.btn-gen-page:hover{background:#6d28d9}
+
 @media(max-width:700px){
   .stats-row{grid-template-columns:1fr 1fr}
   .form-grid{grid-template-columns:1fr}
   .form-group.full{grid-column:1}
-  .admin-body{padding:28px 32px}
+  .admin-body{padding:16px 14px}
   .search-input{width:130px}
-  .td-link a{max-width:120px}
+  .td-link-anchor{max-width:120px}
 }
 </style>
 </head>
@@ -424,26 +429,28 @@ function renderTable() {
     var code    = esc(d.code || '');
     var nama    = esc(d.nama || '—');
     var label   = esc(d.label || '');
+    var docId   = esc(d.docId || '');
     var waHtml  = waClean
       ? '<a href="https://wa.me/' + waClean + '" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i>' + esc(d.wa || '') + '</a>'
       : '<span style="color:#a3a3a3">—</span>';
+    var linkEsc = esc(link);
 
     return '<tr>'
-      + '<td style="color:#a3a3a3;font-family:'DM Mono',monospace;font-size:12px">' + (i+1) + '</td>'
+      + '<td style="color:#a3a3a3;font-family:monospace;font-size:12px">' + (i+1) + '</td>'
       + '<td><span class="td-code">' + code + '</span></td>'
       + '<td class="td-nama"><strong>' + nama + '</strong><span>' + label + '</span></td>'
       + '<td class="td-wa">' + waHtml + '</td>'
       + '<td style="font-size:12.5px;color:#525252">' + label + '</td>'
       + '<td>'
         + '<div class="td-link-inner">'
-          + '<a href="' + esc(link) + '" target="_blank" rel="noopener" title="' + esc(link) + '" style="color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:200px;white-space:nowrap;display:inline-block">' + esc(link) + '</a>'
-          + '<button class="copy-btn" onclick="salinLink(this,'' + esc(link) + '')" title="Salin link"><i class="fa-regular fa-copy"></i> Salin</button>'
+          + '<a href="' + linkEsc + '" target="_blank" rel="noopener" title="' + linkEsc + '" class="td-link-anchor">' + linkEsc + '</a>'
+          + '<button class="copy-btn" onclick="salinLink(this,&quot;' + linkEsc + '&quot;)" title="Salin link"><i class="fa-regular fa-copy"></i> Salin</button>'
         + '</div>'
-        + '<button onclick="generatePage('' + esc(d.code||'') + '','' + esc(d.nama||'') + '','' + esc(d.label||'') + '')" style="margin-top:6px;display:flex;align-items:center;gap:5px;padding:4px 10px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer"><i class="fa-solid fa-file-arrow-down"></i> Generate Page</button>'
+        + '<button class="btn-gen-page" onclick="generatePage(&quot;' + esc(d.code||'') + '&quot;,&quot;' + esc(d.nama||'') + '&quot;,&quot;' + esc(d.label||'') + '&quot;)"><i class="fa-solid fa-file-arrow-down"></i> Generate Page</button>'
       + '</td>'
       + '<td class="td-actions">'
-        + '<button class="act-btn edit" title="Edit" onclick="openEditModal('' + esc(d.docId) + '')"><i class="fa-solid fa-pen"></i></button>'
-        + '<button class="act-btn del" title="Hapus" onclick="openDeleteModal('' + esc(d.docId) + '','' + esc(d.nama||'') + '','' + esc(d.code||'') + '')"><i class="fa-solid fa-trash"></i></button>'
+        + '<button class="act-btn edit" title="Edit" onclick="openEditModal(&quot;' + docId + '&quot;)"><i class="fa-solid fa-pen"></i></button>'
+        + '<button class="act-btn del" title="Hapus" onclick="openDeleteModal(&quot;' + docId + '&quot;,&quot;' + nama + '&quot;,&quot;' + code + '&quot;)"><i class="fa-solid fa-trash"></i></button>'
       + '</td>'
       + '</tr>';
   }).join('');
@@ -565,7 +572,7 @@ function generatePage(code, nama, label) {
     '<meta name="description" content="' + siteDesc + '">',
     '<link rel="canonical" href="' + refUrl + '">',
     '<meta http-equiv="refresh" content="0;url=' + refUrl + '">',
-    '\u003cscript>window.location.replace("' + refUrl + '");\u003c/script>',
+    '<scr' + 'ipt>window.location.replace("' + refUrl + '");</' + 'script>',
     '</head>',
     '<body><p>Mengalihkan ke halaman Emes CBT...</p></body>',
     '</html>'
