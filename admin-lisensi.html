@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Manajemen Lisensi Emes CBT</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f5f5;color:#0a0a0a;min-height:100vh}
+
+/* ── Shared Nav ── */
+.admin-nav{background:#fff;border-bottom:1px solid #e5e5e5;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:16px}
+.admin-nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.admin-nav-brand img{width:28px;height:28px;border-radius:7px}
+.admin-nav-brand span{font-size:14px;font-weight:800;color:#0a0a0a}
+.admin-nav-center{display:flex;align-items:center;gap:2px}
+.anav-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#737373;padding:7px 13px;border-radius:8px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.anav-link:hover{color:#0a0a0a;background:#f5f5f5}
+.anav-link.active{color:#0a0a0a;background:#f5f5f5;font-weight:700}
+.anav-link i{font-size:12px}
+.admin-nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.admin-badge{font-size:11px;background:#f5f5f5;color:#525252;padding:4px 10px;border-radius:100px;font-weight:600;border:1px solid #e5e5e5}
+@media(max-width:768px){.admin-nav-center{display:none}}
+
+/* ── Body ── */
+.admin-body{max-width:1280px;margin:0 auto;padding:32px 24px}
+
+/* ── Stats ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:20px 22px}
+.stat-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#737373;margin-bottom:6px}
+.stat-num{font-size:26px;font-weight:800;font-family:'DM Mono',monospace;color:#0a0a0a;line-height:1}
+.stat-sub{font-size:12px;color:#a3a3a3;margin-top:4px}
+
+/* ── Add Card ── */
+.add-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;margin-bottom:24px;overflow:hidden}
+.add-card-header{padding:16px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background .15s}
+.add-card-header:hover{background:#fafafa}
+.add-card-header h2{font-size:15px;font-weight:800;color:#0a0a0a;display:flex;align-items:center;gap:8px}
+.chevron{transition:transform .25s;color:#a3a3a3;font-size:13px}
+.add-card-header.open .chevron{transform:rotate(180deg)}
+.add-card-body{padding:0 22px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+.add-card-body.open{max-height:800px;padding:0 22px 24px}
+
+/* ── Form ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:11.5px;font-weight:700;color:#525252;text-transform:uppercase;letter-spacing:.05em}
+.form-group input,.form-group select{padding:9px 12px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;color:#0a0a0a;background:#fff}
+.form-group input:focus,.form-group select:focus{border-color:#0a0a0a}
+.form-group input.error,.form-group select.error{border-color:#dc2626}
+.form-hint{font-size:11px;color:#a3a3a3;margin-top:1px}
+
+/* ── Toggle buttons (versi & masa) ── */
+.toggle-group{display:flex;gap:8px}
+.toggle-btn{flex:1;padding:9px 6px;border:1.5px solid #e5e5e5;border-radius:9px;background:#fff;cursor:pointer;text-align:center;font-family:'DM Sans',sans-serif;transition:all .15s}
+.toggle-btn:hover{border-color:#0a0a0a}
+.toggle-btn.selected{border-color:#0a0a0a;background:#0a0a0a;color:#fff}
+.toggle-btn .tb-name{font-size:13px;font-weight:700;display:block}
+.toggle-btn .tb-sub{font-size:10.5px;opacity:.6;display:block;margin-top:1px}
+.toggle-btn.selected .tb-sub{opacity:.7}
+
+/* ── Preview strip ── */
+.preview-strip{grid-column:1/-1;background:#f5f5f5;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:4px}
+.preview-item{display:flex;flex-direction:column;gap:2px}
+.preview-item label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a3a3a3}
+.preview-item span{font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:#0a0a0a}
+.preview-item span.green{color:#16a34a}
+
+/* ── Form actions ── */
+.form-actions{grid-column:1/-1;display:flex;gap:10px;margin-top:6px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#0a0a0a;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:#262626}
+.btn-primary:disabled{background:#a3a3a3;cursor:not-allowed}
+.btn-secondary{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:#f5f5f5;color:#525252;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{background:#e5e5e5;color:#0a0a0a}
+
+/* ── Table ── */
+.table-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;overflow:hidden}
+.table-header{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0;gap:12px;flex-wrap:wrap}
+.table-header h2{font-size:15px;font-weight:800;color:#0a0a0a}
+.tbl-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.search-input{padding:8px 12px 8px 34px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:180px;transition:border-color .2s;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 11px center}
+.search-input:focus{border-color:#0a0a0a}
+.filter-select{padding:8px 10px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:12.5px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:#0a0a0a;cursor:pointer}
+.filter-select:focus{border-color:#0a0a0a}
+.refresh-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#f5f5f5;color:#0a0a0a;border:1.5px solid #e5e5e5;border-radius:9px;font-size:12.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+.refresh-btn:hover{background:#e5e5e5}
+.export-btn{display:flex;align-items:center;gap:7px;padding:8px 14px;background:#0a0a0a;color:#fff;border:none;border-radius:9px;font-size:12.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.export-btn:hover{background:#262626}
+
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{background:#fafafa;padding:10px 14px;text-align:left;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#737373;border-bottom:1px solid #e5e5e5;white-space:nowrap}
+tbody tr{border-bottom:1px solid #f5f5f5;transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fafafa}
+td{padding:11px 14px;vertical-align:middle}
+
+.td-sekolah strong{display:block;font-weight:700;font-size:13px}
+.td-sekolah span{font-size:11px;color:#737373;font-family:'DM Mono',monospace}
+.versi-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;white-space:nowrap}
+.versi-badge.std{background:#f0fdf4;color:#16a34a}
+.versi-badge.pro{background:#eff6ff;color:#2563eb}
+.masa-badge{display:inline-block;font-size:11px;font-weight:600;color:#525252}
+.mono{font-family:'DM Mono',monospace;font-size:12px}
+.harga-val{font-family:'DM Mono',monospace;font-size:12.5px;font-weight:700}
+.komisi-val{font-family:'DM Mono',monospace;font-size:12.5px;font-weight:700;color:#16a34a}
+.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:100px;white-space:nowrap}
+.status-badge.aktif{background:#f0fdf4;color:#16a34a}
+.status-badge.kadaluarsa{background:#fff1f2;color:#dc2626}
+.status-badge.permanen{background:#f5f3ff;color:#7c3aed}
+.td-actions{display:flex;gap:6px}
+.act-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;border:1.5px solid #e5e5e5;background:#fff;cursor:pointer;font-size:13px;color:#525252;transition:all .2s}
+.act-btn:hover{background:#f5f5f5}
+.act-btn.del:hover{border-color:#dc2626;color:#dc2626;background:#fff5f5}
+.act-btn.edit:hover{border-color:#2563eb;color:#2563eb}
+.empty-state{text-align:center;padding:60px 20px;color:#a3a3a3}
+.empty-state i{font-size:36px;margin-bottom:12px;display:block;opacity:.4}
+.loading-row td{text-align:center;padding:40px;color:#a3a3a3}
+
+/* ── Pagination ── */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-top:1px solid #f0f0f0;font-size:12.5px;color:#737373}
+.page-btns{display:flex;gap:6px}
+.page-btn{padding:6px 12px;border:1.5px solid #e5e5e5;border-radius:7px;background:#fff;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
+.page-btn:hover{border-color:#0a0a0a;color:#0a0a0a}
+.page-btn.active{background:#0a0a0a;color:#fff;border-color:#0a0a0a}
+
+/* ── Modals ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.confirm-modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.confirm-modal h3{font-size:15px;font-weight:800;margin-bottom:8px}
+.confirm-modal p{font-size:13.5px;color:#525252;line-height:1.6}
+.confirm-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.btn-danger{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#dc2626;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.btn-danger:hover{background:#b91c1c}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:24px;right:24px;background:#0a0a0a;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:1000;display:flex;align-items:center;gap:8px;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success i{color:#4ade80}
+.toast.error i{color:#f87171}
+.spin{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr)}.admin-body{padding:20px 14px}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:1}}
+</style>
+</head>
+<body>
+
+<nav class="admin-nav">
+  <div class="admin-nav-brand">
+    <img src="https://i.imgur.com/bT70O4C.png" alt="">
+    <span>Emes CBT</span>
+  </div>
+  <div class="admin-nav-center">
+    <a href="admin.html" class="anav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+    <a href="admin-lisensi.html" class="anav-link active"><i class="fa-solid fa-key"></i> Lisensi</a>
+    <a href="admin-reseller.html" class="anav-link"><i class="fa-solid fa-users"></i> Reseller</a>
+    <a href="admin-downloads.html" class="anav-link"><i class="fa-solid fa-school"></i> Pendaftar</a>
+  </div>
+  <div class="admin-nav-right">
+    <span class="admin-badge" id="navBadge">0 lisensi</span>
+  </div>
+</nav>
+
+<div class="admin-body">
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Lisensi</div>
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-sub">Semua waktu</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Lisensi Aktif</div>
+      <div class="stat-num" id="statAktif">—</div>
+      <div class="stat-sub">Belum kadaluarsa</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Komisi Bulan Ini</div>
+      <div class="stat-num" id="statKomisi" style="font-size:15px;padding-top:6px">—</div>
+      <div class="stat-sub" id="statBulanLabel">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Komisi All Time</div>
+      <div class="stat-num" id="statKomisiAll" style="font-size:15px;padding-top:6px">—</div>
+      <div class="stat-sub">Akumulasi</div>
+    </div>
+  </div>
+
+  <!-- Add Form -->
+  <div class="add-card">
+    <div class="add-card-header" id="addHeader" onclick="toggleAdd()">
+      <h2><i class="fa-solid fa-circle-plus" style="font-size:14px"></i> Tambah Lisensi Baru</h2>
+      <i class="fa-solid fa-chevron-down chevron" id="addChevron"></i>
+    </div>
+    <div class="add-card-body" id="addBody">
+      <div class="form-grid">
+
+        <!-- Reseller -->
+        <div class="form-group full">
+          <label>Reseller <span style="color:#ef4444">*</span></label>
+          <select id="fReseller">
+            <option value="">— Pilih Reseller —</option>
+          </select>
+        </div>
+
+        <!-- NPSN + Jenjang -->
+        <div class="form-group">
+          <label>NPSN <span style="color:#ef4444">*</span></label>
+          <input type="text" id="fNpsn" placeholder="Contoh: 20123456" maxlength="12">
+        </div>
+        <div class="form-group">
+          <label>Jenjang <span style="color:#ef4444">*</span></label>
+          <select id="fJenjang">
+            <option value="">— Pilih —</option>
+            <option>SD / MI</option>
+            <option>SMP / MTs</option>
+            <option>SMA / MA</option>
+            <option>SMK</option>
+            <option>SLB</option>
+            <option>Pesantren</option>
+          </select>
+        </div>
+
+        <!-- Nama Sekolah -->
+        <div class="form-group full">
+          <label>Nama Sekolah <span style="color:#ef4444">*</span></label>
+          <input type="text" id="fSekolah" placeholder="Contoh: SMA Negeri 1 Pontianak">
+        </div>
+
+        <!-- Kota + Provinsi -->
+        <div class="form-group">
+          <label>Kab / Kota <span style="color:#ef4444">*</span></label>
+          <input type="text" id="fKota" placeholder="Contoh: Kota Pontianak">
+        </div>
+        <div class="form-group">
+          <label>Provinsi <span style="color:#ef4444">*</span></label>
+          <input type="text" id="fProvinsi" placeholder="Contoh: Kalimantan Barat">
+        </div>
+
+        <!-- Versi -->
+        <div class="form-group">
+          <label>Versi <span style="color:#ef4444">*</span></label>
+          <div class="toggle-group">
+            <button type="button" class="toggle-btn" id="btnStd" onclick="pilihVersi('STANDAR')">
+              <span class="tb-name">✦ Standar</span>
+              <span class="tb-sub">SQLite / ~200 siswa</span>
+            </button>
+            <button type="button" class="toggle-btn" id="btnPro" onclick="pilihVersi('PRO')">
+              <span class="tb-name">★ Pro</span>
+              <span class="tb-sub">PostgreSQL / 500+</span>
+            </button>
+          </div>
+          <input type="hidden" id="fVersi" value="">
+        </div>
+
+        <!-- Masa -->
+        <div class="form-group">
+          <label>Masa Lisensi <span style="color:#ef4444">*</span></label>
+          <div class="toggle-group">
+            <button type="button" class="toggle-btn" id="btnSem" onclick="pilihMasa('Semester')">
+              <span class="tb-name">Semester</span>
+              <span class="tb-sub">~6 bulan</span>
+            </button>
+            <button type="button" class="toggle-btn" id="btnThn" onclick="pilihMasa('Tahunan')">
+              <span class="tb-name">Tahunan</span>
+              <span class="tb-sub">~12 bulan</span>
+            </button>
+            <button type="button" class="toggle-btn" id="btnPrm" onclick="pilihMasa('Permanen')">
+              <span class="tb-name">Permanen</span>
+              <span class="tb-sub">Selamanya</span>
+            </button>
+          </div>
+          <input type="hidden" id="fMasa" value="">
+        </div>
+
+        <!-- Tanggal Aktif -->
+        <div class="form-group">
+          <label>Tanggal Aktif <span style="color:#ef4444">*</span></label>
+          <input type="date" id="fTanggal" onchange="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Catatan (opsional)</label>
+          <input type="text" id="fCatatan" placeholder="Misal: harga promo, dll.">
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-strip" id="previewStrip" style="display:none">
+          <div class="preview-item">
+            <label>Harga</label>
+            <span id="pvHarga">—</span>
+          </div>
+          <div class="preview-item">
+            <label>Kadaluarsa</label>
+            <span id="pvKadaluarsa">—</span>
+          </div>
+          <div class="preview-item">
+            <label>Komisi (<span id="pvPct">—</span>%)</label>
+            <span id="pvKomisi" class="green">—</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button class="btn-primary" id="btnSimpan" onclick="tambahLisensi()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Lisensi
+          </button>
+          <button class="btn-secondary" onclick="resetForm()">
+            <i class="fa-solid fa-xmark"></i> Reset
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h2><i class="fa-solid fa-key" style="margin-right:6px;opacity:.5"></i>Daftar Lisensi</h2>
+      <div class="tbl-actions">
+        <input type="text" class="search-input" id="searchInput" placeholder="Cari sekolah / NPSN…" oninput="filterTable()">
+        <select class="filter-select" id="filterReseller" onchange="filterTable()">
+          <option value="">Semua Reseller</option>
+        </select>
+        <select class="filter-select" id="filterStatus" onchange="filterTable()">
+          <option value="">Semua Status</option>
+          <option value="aktif">Aktif</option>
+          <option value="permanen">Permanen</option>
+          <option value="kadaluarsa">Kadaluarsa</option>
+        </select>
+        <button class="refresh-btn" onclick="loadData()">
+          <i class="fa-solid fa-rotate-right" id="refreshIcon"></i> Refresh
+        </button>
+        <button class="export-btn" onclick="exportCSV()">
+          <i class="fa-solid fa-file-csv"></i> CSV
+        </button>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Sekolah</th>
+            <th>Jenjang</th>
+            <th>Kota / Provinsi</th>
+            <th>Reseller</th>
+            <th>Versi</th>
+            <th>Masa</th>
+            <th>Harga</th>
+            <th>Komisi</th>
+            <th>Aktif</th>
+            <th>Kadaluarsa</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="dataTableBody">
+          <tr class="loading-row">
+            <td colspan="13"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <span id="paginationInfo">—</span>
+      <div class="page-btns" id="pageButtons"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title"><i class="fa-solid fa-pen-to-square" style="color:#737373"></i> Edit Lisensi</div>
+    <input type="hidden" id="editDocId">
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Reseller</label>
+        <select id="editReseller"></select>
+      </div>
+      <div class="form-group">
+        <label>NPSN</label>
+        <input type="text" id="editNpsn" maxlength="12">
+      </div>
+      <div class="form-group">
+        <label>Jenjang</label>
+        <select id="editJenjang">
+          <option value="">— Pilih —</option>
+          <option>SD / MI</option><option>SMP / MTs</option>
+          <option>SMA / MA</option><option>SMK</option>
+          <option>SLB</option><option>Pesantren</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Nama Sekolah</label>
+        <input type="text" id="editSekolah">
+      </div>
+      <div class="form-group">
+        <label>Kab / Kota</label>
+        <input type="text" id="editKota">
+      </div>
+      <div class="form-group">
+        <label>Provinsi</label>
+        <input type="text" id="editProvinsi">
+      </div>
+      <div class="form-group">
+        <label>Versi</label>
+        <div class="toggle-group">
+          <button type="button" class="toggle-btn" id="eStd" onclick="editPilihVersi('STANDAR')"><span class="tb-name">Standar</span></button>
+          <button type="button" class="toggle-btn" id="ePro" onclick="editPilihVersi('PRO')"><span class="tb-name">Pro</span></button>
+        </div>
+        <input type="hidden" id="editVersi">
+      </div>
+      <div class="form-group">
+        <label>Masa</label>
+        <div class="toggle-group">
+          <button type="button" class="toggle-btn" id="eSem" onclick="editPilihMasa('Semester')"><span class="tb-name">Semester</span></button>
+          <button type="button" class="toggle-btn" id="eThn" onclick="editPilihMasa('Tahunan')"><span class="tb-name">Tahunan</span></button>
+          <button type="button" class="toggle-btn" id="ePrm" onclick="editPilihMasa('Permanen')"><span class="tb-name">Permanen</span></button>
+        </div>
+        <input type="hidden" id="editMasa">
+      </div>
+      <div class="form-group">
+        <label>Tanggal Aktif</label>
+        <input type="date" id="editTanggal">
+      </div>
+      <div class="form-group">
+        <label>Catatan</label>
+        <input type="text" id="editCatatan">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeEditModal()">Batal</button>
+      <button class="btn-primary" id="btnUpdate" onclick="updateLisensi()">
+        <i class="fa-solid fa-floppy-disk"></i> Update
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="confirm-modal">
+    <h3><i class="fa-solid fa-triangle-exclamation" style="color:#dc2626;margin-right:6px"></i>Hapus Lisensi?</h3>
+    <p id="deleteDesc">Anda yakin ingin menghapus lisensi ini?</p>
+    <input type="hidden" id="deleteDocId">
+    <div class="confirm-actions">
+      <button class="btn-secondary" onclick="closeDeleteModal()">Batal</button>
+      <button class="btn-danger" id="btnDelete" onclick="hapusLisensi()">
+        <i class="fa-solid fa-trash"></i> Hapus
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check" id="toastIcon"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+/* ════════════════════════
+   FIREBASE
+════════════════════════ */
+firebase.initializeApp({
+  apiKey: "AIzaSyAK9kA3GD-Os4eaCl7CFRnf0KMopTqdPKo",
+  projectId: "emescbt-29ee1",
+  storageBucket: "emescbt-29ee1.firebasestorage.app",
+  appId: "1:142290685592:web:a1c2935b2877d5354c8aed"
+});
+const db = firebase.firestore();
+
+const HARGA = {
+  STANDAR: { Semester: 350000, Tahunan: 600000, Permanen: 1200000 },
+  PRO:     { Semester: 500000, Tahunan: 1000000, Permanen: 2000000 }
+};
+
+let komisiPersen = 20;
+let allData      = [];
+let filtered     = [];
+let allResellers = [];
+const PAGE_SIZE  = 20;
+let currentPage  = 1;
+
+/* ════════════════════════
+   INIT
+════════════════════════ */
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadSettings();
+  await Promise.all([loadResellers(), loadData()]);
+});
+
+/* ════════════════════════
+   LOAD
+════════════════════════ */
+async function loadSettings() {
+  try {
+    const doc = await db.collection('settings').doc('global').get();
+    if (doc.exists && doc.data().komisi_persen !== undefined)
+      komisiPersen = doc.data().komisi_persen;
+  } catch(e) {}
+}
+
+async function loadResellers() {
+  try {
+    const snap = await db.collection('resellers').orderBy('nama').get();
+    allResellers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    // Fill dropdowns
+    const optHtml = allResellers.map(r =>
+      `<option value="${esc(r.code)}" data-nama="${esc(r.nama)}">${esc(r.nama)} (${esc(r.code)})</option>`
+    ).join('');
+    ['fReseller','editReseller'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = '<option value="">— Pilih Reseller —</option>' + optHtml;
+    });
+    // Filter dropdown
+    const fr = document.getElementById('filterReseller');
+    fr.innerHTML = '<option value="">Semua Reseller</option>' +
+      allResellers.map(r => `<option value="${esc(r.code)}">${esc(r.nama)}</option>`).join('');
+  } catch(e) {}
+}
+
+async function loadData() {
+  const icon = document.getElementById('refreshIcon');
+  icon.classList.add('spin');
+  document.getElementById('dataTableBody').innerHTML =
+    '<tr class="loading-row"><td colspan="13"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data…</td></tr>';
+  try {
+    const snap = await db.collection('licenses').orderBy('created_at','desc').get();
+    allData = snap.docs.map(d => ({ docId: d.id, ...d.data() }));
+    updateStats();
+    filterTable();
+  } catch(e) {
+    document.getElementById('dataTableBody').innerHTML =
+      `<tr><td colspan="13" style="text-align:center;padding:40px;color:#dc2626">
+        <i class="fa-solid fa-triangle-exclamation"></i> Gagal: ${esc(e.message)}
+      </td></tr>`;
+  }
+  icon.classList.remove('spin');
+}
+
+/* ════════════════════════
+   STATS
+════════════════════════ */
+function updateStats() {
+  const aktif  = allData.filter(l => getStatus(l) === 'aktif' || getStatus(l) === 'permanen').length;
+  document.getElementById('statTotal').textContent  = allData.length;
+  document.getElementById('statAktif').textContent  = aktif;
+  document.getElementById('navBadge').textContent   = allData.length + ' lisensi';
+
+  const now = new Date();
+  const bulanIni = allData.filter(l => {
+    const d = l.created_at?.toDate ? l.created_at.toDate() : new Date(l.created_at||0);
+    return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear();
+  });
+  document.getElementById('statKomisi').textContent     = formatRp(bulanIni.reduce((s,l)=>s+(l.komisi_nominal||0),0));
+  document.getElementById('statBulanLabel').textContent = now.toLocaleString('id-ID',{month:'long',year:'numeric'});
+  document.getElementById('statKomisiAll').textContent  = formatRp(allData.reduce((s,l)=>s+(l.komisi_nominal||0),0));
+}
+
+/* ════════════════════════
+   FILTER & RENDER
+════════════════════════ */
+function filterTable() {
+  const q   = (document.getElementById('searchInput').value||'').toLowerCase();
+  const res = document.getElementById('filterReseller').value;
+  const st  = document.getElementById('filterStatus').value;
+
+  filtered = allData.filter(l => {
+    const matchQ   = !q || (l.sekolah||'').toLowerCase().includes(q) || (l.npsn||'').includes(q) || (l.kota||'').toLowerCase().includes(q);
+    const matchRes = !res || (l.reseller_code||'')=== res;
+    const matchSt  = !st || getStatus(l) === st;
+    return matchQ && matchRes && matchSt;
+  });
+  currentPage = 1;
+  renderTable();
+}
+
+function renderTable() {
+  const tbody = document.getElementById('dataTableBody');
+  const start = (currentPage-1)*PAGE_SIZE;
+  const end   = Math.min(start+PAGE_SIZE, filtered.length);
+  const page  = filtered.slice(start, end);
+
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="13" class="empty-state">
+      <i class="fa-solid fa-key"></i>
+      <p>${allData.length===0 ? 'Belum ada lisensi. Tambahkan lisensi pertama!' : 'Tidak ada hasil.'}</p>
+    </td></tr>`;
+    document.getElementById('paginationInfo').textContent='';
+    document.getElementById('pageButtons').innerHTML='';
+    return;
+  }
+
+  tbody.innerHTML = page.map((l, i) => {
+    const vClass = l.versi==='PRO' ? 'pro' : 'std';
+    const vLabel = l.versi==='PRO' ? 'Pro' : 'Standar';
+    const st     = getStatus(l);
+    const stBadge = st==='aktif'
+      ? '<span class="status-badge aktif"><i class="fa-solid fa-circle" style="font-size:6px"></i> Aktif</span>'
+      : st==='permanen'
+      ? '<span class="status-badge permanen">∞ Permanen</span>'
+      : '<span class="status-badge kadaluarsa"><i class="fa-solid fa-circle" style="font-size:6px"></i> Kadaluarsa</span>';
+    const kadStr = l.tanggal_kadaluarsa
+      ? new Date(l.tanggal_kadaluarsa).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})
+      : '∞';
+    const aktifStr = l.tanggal_aktif
+      ? new Date(l.tanggal_aktif).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})
+      : '—';
+    return `<tr>
+      <td class="mono" style="color:#a3a3a3">${start+i+1}</td>
+      <td class="td-sekolah"><strong>${esc(l.sekolah||'—')}</strong><span>${esc(l.npsn||'—')}</span></td>
+      <td style="font-size:12px;color:#525252">${esc(l.jenjang||'—')}</td>
+      <td style="font-size:12px;color:#525252">${esc(l.kota||'—')}<br><span style="color:#a3a3a3;font-size:11px">${esc(l.provinsi||'')}</span></td>
+      <td style="font-size:12.5px;font-weight:600">${esc(l.reseller_nama||'—')}</td>
+      <td><span class="versi-badge ${vClass}">${vLabel}</span></td>
+      <td><span class="masa-badge">${esc(l.masa||'—')}</span></td>
+      <td class="harga-val">${formatRp(l.harga||0)}</td>
+      <td class="komisi-val">${formatRp(l.komisi_nominal||0)}</td>
+      <td style="font-size:12px;white-space:nowrap">${aktifStr}</td>
+      <td style="font-size:12px;white-space:nowrap">${kadStr}</td>
+      <td>${stBadge}</td>
+      <td class="td-actions">
+        <button class="act-btn edit" title="Edit" onclick="openEditModal('${esc(l.docId)}')">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="act-btn del" title="Hapus" onclick="openDeleteModal('${esc(l.docId)}','${esc(l.sekolah||'')}')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('paginationInfo').textContent =
+    `Menampilkan ${start+1}–${end} dari ${filtered.length} lisensi`;
+
+  const totalPages = Math.ceil(filtered.length/PAGE_SIZE);
+  let btns = '';
+  for (let p=1;p<=totalPages;p++) {
+    if (totalPages>8 && p>3 && p<totalPages-1 && Math.abs(p-currentPage)>1) {
+      if (p===4) btns+='<span style="padding:0 4px;color:#a3a3a3">…</span>';
+      continue;
+    }
+    btns+=`<button class="page-btn${p===currentPage?' active':''}" onclick="goPage(${p})">${p}</button>`;
+  }
+  document.getElementById('pageButtons').innerHTML = btns;
+}
+
+function goPage(p) { currentPage=p; renderTable(); window.scrollTo(0,0); }
+
+/* ════════════════════════
+   ADD FORM
+════════════════════════ */
+function toggleAdd() {
+  const body   = document.getElementById('addBody');
+  const header = document.getElementById('addHeader');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+  // Set today as default date
+  if (!isOpen && !document.getElementById('fTanggal').value) {
+    document.getElementById('fTanggal').value = new Date().toISOString().split('T')[0];
+    updatePreview();
+  }
+}
+
+function pilihVersi(v) {
+  document.getElementById('fVersi').value = v;
+  document.getElementById('btnStd').classList.toggle('selected', v==='STANDAR');
+  document.getElementById('btnPro').classList.toggle('selected', v==='PRO');
+  updatePreview();
+}
+
+function pilihMasa(m) {
+  document.getElementById('fMasa').value = m;
+  ['btnSem','btnThn','btnPrm'].forEach(id => document.getElementById(id).classList.remove('selected'));
+  const map={Semester:'btnSem',Tahunan:'btnThn',Permanen:'btnPrm'};
+  if (map[m]) document.getElementById(map[m]).classList.add('selected');
+  updatePreview();
+}
+
+function updatePreview() {
+  const versi   = document.getElementById('fVersi').value;
+  const masa    = document.getElementById('fMasa').value;
+  const tanggal = document.getElementById('fTanggal').value;
+  if (!versi || !masa) { document.getElementById('previewStrip').style.display='none'; return; }
+
+  const harga    = HARGA[versi]?.[masa] || 0;
+  const komisi   = Math.round(harga * komisiPersen / 100);
+  const kadaluarsa = hitungKadaluarsa(tanggal, masa);
+
+  document.getElementById('previewStrip').style.display='flex';
+  document.getElementById('pvHarga').textContent      = formatRp(harga);
+  document.getElementById('pvKadaluarsa').textContent = kadaluarsa
+    ? new Date(kadaluarsa).toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'})
+    : '∞ Permanen';
+  document.getElementById('pvKomisi').textContent     = formatRp(komisi);
+  document.getElementById('pvPct').textContent        = komisiPersen;
+}
+
+async function tambahLisensi() {
+  const resellerCode = document.getElementById('fReseller').value;
+  const npsn         = document.getElementById('fNpsn').value.trim();
+  const jenjang      = document.getElementById('fJenjang').value;
+  const sekolah      = document.getElementById('fSekolah').value.trim();
+  const kota         = document.getElementById('fKota').value.trim();
+  const provinsi     = document.getElementById('fProvinsi').value.trim();
+  const versi        = document.getElementById('fVersi').value;
+  const masa         = document.getElementById('fMasa').value;
+  const tanggal      = document.getElementById('fTanggal').value;
+  const catatan      = document.getElementById('fCatatan').value.trim();
+
+  const required = [
+    [document.getElementById('fReseller'), resellerCode],
+    [document.getElementById('fNpsn'), npsn],
+    [document.getElementById('fJenjang'), jenjang],
+    [document.getElementById('fSekolah'), sekolah],
+    [document.getElementById('fKota'), kota],
+    [document.getElementById('fProvinsi'), provinsi],
+    [document.getElementById('fVersi'), versi],
+    [document.getElementById('fMasa'), masa],
+    [document.getElementById('fTanggal'), tanggal],
+  ];
+  let valid = true;
+  required.forEach(([el, val]) => {
+    el.classList.remove('error');
+    if (!val) { el.classList.add('error'); valid=false; }
+  });
+  if (!valid) { showToast('Semua field wajib diisi.','error'); return; }
+
+  const reseller = allResellers.find(r => r.code === resellerCode);
+  const harga    = HARGA[versi]?.[masa] || 0;
+  const komisi   = Math.round(harga * komisiPersen / 100);
+  const kadaluarsa = hitungKadaluarsa(tanggal, masa);
+
+  const btn = document.getElementById('btnSimpan');
+  btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan…';
+
+  try {
+    await db.collection('licenses').add({
+      reseller_code:  resellerCode,
+      reseller_nama:  reseller?.nama || resellerCode,
+      npsn, sekolah, jenjang, kota, provinsi,
+      versi, masa,
+      harga, komisi_persen: komisiPersen, komisi_nominal: komisi,
+      tanggal_aktif: tanggal,
+      tanggal_kadaluarsa: kadaluarsa || null,
+      catatan: catatan || null,
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    showToast(`Lisensi ${sekolah} berhasil ditambahkan!`, 'success');
+    resetForm();
+    document.getElementById('addBody').classList.remove('open');
+    document.getElementById('addHeader').classList.remove('open');
+    loadData();
+  } catch(e) { showToast('Gagal: '+e.message,'error'); }
+
+  btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-floppy-disk"></i> Simpan Lisensi';
+}
+
+function resetForm() {
+  ['fReseller','fNpsn','fJenjang','fSekolah','fKota','fProvinsi','fCatatan'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value=''; el.classList.remove('error'); }
+  });
+  document.getElementById('fVersi').value='';
+  document.getElementById('fMasa').value='';
+  document.getElementById('fTanggal').value='';
+  ['btnStd','btnPro','btnSem','btnThn','btnPrm'].forEach(id =>
+    document.getElementById(id).classList.remove('selected'));
+  document.getElementById('previewStrip').style.display='none';
+}
+
+/* ════════════════════════
+   EDIT
+════════════════════════ */
+function openEditModal(docId) {
+  const l = allData.find(x => x.docId===docId);
+  if (!l) return;
+  document.getElementById('editDocId').value     = docId;
+  document.getElementById('editReseller').value  = l.reseller_code||'';
+  document.getElementById('editNpsn').value      = l.npsn||'';
+  document.getElementById('editJenjang').value   = l.jenjang||'';
+  document.getElementById('editSekolah').value   = l.sekolah||'';
+  document.getElementById('editKota').value      = l.kota||'';
+  document.getElementById('editProvinsi').value  = l.provinsi||'';
+  document.getElementById('editVersi').value     = l.versi||'';
+  document.getElementById('editMasa').value      = l.masa||'';
+  document.getElementById('editTanggal').value   = l.tanggal_aktif||'';
+  document.getElementById('editCatatan').value   = l.catatan||'';
+  // Set toggle states
+  ['eStd','ePro'].forEach(id => document.getElementById(id).classList.remove('selected'));
+  if (l.versi==='STANDAR') document.getElementById('eStd').classList.add('selected');
+  if (l.versi==='PRO')     document.getElementById('ePro').classList.add('selected');
+  ['eSem','eThn','ePrm'].forEach(id => document.getElementById(id).classList.remove('selected'));
+  if (l.masa==='Semester') document.getElementById('eSem').classList.add('selected');
+  if (l.masa==='Tahunan')  document.getElementById('eThn').classList.add('selected');
+  if (l.masa==='Permanen') document.getElementById('ePrm').classList.add('selected');
+  document.getElementById('editModal').classList.add('open');
+}
+function closeEditModal() { document.getElementById('editModal').classList.remove('open'); }
+function editPilihVersi(v) {
+  document.getElementById('editVersi').value=v;
+  document.getElementById('eStd').classList.toggle('selected',v==='STANDAR');
+  document.getElementById('ePro').classList.toggle('selected',v==='PRO');
+}
+function editPilihMasa(m) {
+  document.getElementById('editMasa').value=m;
+  ['eSem','eThn','ePrm'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  const map={Semester:'eSem',Tahunan:'eThn',Permanen:'ePrm'};
+  if(map[m]) document.getElementById(map[m]).classList.add('selected');
+}
+
+async function updateLisensi() {
+  const docId        = document.getElementById('editDocId').value;
+  const resellerCode = document.getElementById('editReseller').value;
+  const npsn         = document.getElementById('editNpsn').value.trim();
+  const jenjang      = document.getElementById('editJenjang').value;
+  const sekolah      = document.getElementById('editSekolah').value.trim();
+  const kota         = document.getElementById('editKota').value.trim();
+  const provinsi     = document.getElementById('editProvinsi').value.trim();
+  const versi        = document.getElementById('editVersi').value;
+  const masa         = document.getElementById('editMasa').value;
+  const tanggal      = document.getElementById('editTanggal').value;
+  const catatan      = document.getElementById('editCatatan').value.trim();
+
+  if (!resellerCode||!npsn||!jenjang||!sekolah||!kota||!provinsi||!versi||!masa||!tanggal) {
+    showToast('Semua field wajib diisi.','error'); return;
+  }
+  const reseller   = allResellers.find(r=>r.code===resellerCode);
+  const harga      = HARGA[versi]?.[masa]||0;
+  const komisi     = Math.round(harga*komisiPersen/100);
+  const kadaluarsa = hitungKadaluarsa(tanggal,masa);
+
+  const btn=document.getElementById('btnUpdate');
+  btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan…';
+
+  try {
+    await db.collection('licenses').doc(docId).update({
+      reseller_code: resellerCode,
+      reseller_nama: reseller?.nama||resellerCode,
+      npsn,sekolah,jenjang,kota,provinsi,versi,masa,
+      harga,komisi_persen:komisiPersen,komisi_nominal:komisi,
+      tanggal_aktif:tanggal,
+      tanggal_kadaluarsa:kadaluarsa||null,
+      catatan:catatan||null
+    });
+    showToast('Lisensi berhasil diupdate!','success');
+    closeEditModal();
+    loadData();
+  } catch(e) { showToast('Gagal: '+e.message,'error'); }
+  btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-floppy-disk"></i> Update';
+}
+
+/* ════════════════════════
+   DELETE
+════════════════════════ */
+function openDeleteModal(docId, sekolah) {
+  document.getElementById('deleteDocId').value=docId;
+  document.getElementById('deleteDesc').innerHTML=
+    `Yakin hapus lisensi <strong>${esc(sekolah)}</strong>? Data ini tidak bisa dikembalikan.`;
+  document.getElementById('deleteModal').classList.add('open');
+}
+function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); }
+
+async function hapusLisensi() {
+  const docId=document.getElementById('deleteDocId').value;
+  const btn=document.getElementById('btnDelete');
+  btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>';
+  try {
+    await db.collection('licenses').doc(docId).delete();
+    showToast('Lisensi berhasil dihapus.','success');
+    closeDeleteModal();
+    loadData();
+  } catch(e) { showToast('Gagal: '+e.message,'error'); }
+  btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-trash"></i> Hapus';
+}
+
+/* ════════════════════════
+   EXPORT CSV
+════════════════════════ */
+function exportCSV() {
+  const headers = ['No','Sekolah','NPSN','Jenjang','Kab/Kota','Provinsi','Reseller','Versi','Masa','Harga','Komisi','Tgl Aktif','Tgl Kadaluarsa','Status'];
+  const rows = filtered.map((l,i) => [
+    i+1, l.sekolah||'', l.npsn||'', l.jenjang||'', l.kota||'', l.provinsi||'',
+    l.reseller_nama||'', l.versi||'', l.masa||'',
+    l.harga||0, l.komisi_nominal||0,
+    l.tanggal_aktif||'', l.tanggal_kadaluarsa||'∞', getStatus(l)
+  ].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv='\uFEFF'+[headers.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download=`emes-lisensi-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+/* ════════════════════════
+   HELPERS
+════════════════════════ */
+function hitungKadaluarsa(tanggal, masa) {
+  if (!tanggal || masa==='Permanen') return null;
+  const d = new Date(tanggal);
+  if (masa==='Semester') d.setMonth(d.getMonth()+6);
+  if (masa==='Tahunan')  d.setFullYear(d.getFullYear()+1);
+  return d.toISOString().split('T')[0];
+}
+
+function getStatus(l) {
+  if (l.masa==='Permanen') return 'permanen';
+  if (!l.tanggal_kadaluarsa) return 'aktif';
+  return new Date(l.tanggal_kadaluarsa) >= new Date() ? 'aktif' : 'kadaluarsa';
+}
+
+function formatRp(n) {
+  return 'Rp '+(n||0).toLocaleString('id-ID');
+}
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let toastTimer;
+function showToast(msg, type='success') {
+  const t=document.getElementById('toast');
+  t.className='toast '+type;
+  document.getElementById('toastIcon').className=type==='error'?'fa-solid fa-circle-xmark':'fa-solid fa-circle-check';
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// Close modals on overlay click
+document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeEditModal();});
+document.getElementById('deleteModal').addEventListener('click',function(e){if(e.target===this)closeDeleteModal();});
+</script>
+</body>
+</html>

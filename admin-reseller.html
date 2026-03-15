@@ -17,14 +17,18 @@
 body{font-family:'DM Sans',sans-serif;background:#f5f5f5;color:#0a0a0a;min-height:100vh}
 
 /* ── Nav ── */
-.admin-nav{background:#fff;border-bottom:1px solid #e5e5e5;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.admin-nav-brand{display:flex;align-items:center;gap:10px}
+.admin-nav{background:#fff;border-bottom:1px solid #e5e5e5;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:16px}
+.admin-nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .admin-nav-brand img{width:28px;height:28px;border-radius:7px}
 .admin-nav-brand span{font-size:14px;font-weight:800;color:#0a0a0a}
-.admin-nav-right{display:flex;align-items:center;gap:10px}
+.admin-nav-center{display:flex;align-items:center;gap:2px}
+.anav-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#737373;padding:7px 13px;border-radius:8px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.anav-link:hover{color:#0a0a0a;background:#f5f5f5}
+.anav-link.active{color:#0a0a0a;background:#f5f5f5;font-weight:700}
+.anav-link i{font-size:12px}
+.admin-nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .admin-badge{font-size:11px;background:#f5f5f5;color:#525252;padding:4px 10px;border-radius:100px;font-weight:600;border:1px solid #e5e5e5}
-.nav-link{font-size:12.5px;color:#737373;background:none;border:1px solid #e5e5e5;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s}
-.nav-link:hover{color:#0a0a0a;border-color:#0a0a0a}
+@media(max-width:768px){.admin-nav-center{display:none}}
 
 /* ── Body ── */
 .admin-body{max-width:1000px;margin:0 auto;padding:32px 24px}
@@ -145,13 +149,16 @@ td{padding:12px 16px;vertical-align:middle}
 <nav class="admin-nav">
   <div class="admin-nav-brand">
     <img src="https://i.imgur.com/bT70O4C.png" alt="">
-    <span>Emes CBT — Reseller</span>
+    <span>Emes CBT</span>
+  </div>
+  <div class="admin-nav-center">
+    <a href="admin.html" class="anav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+    <a href="admin-lisensi.html" class="anav-link"><i class="fa-solid fa-key"></i> Lisensi</a>
+    <a href="admin-reseller.html" class="anav-link active"><i class="fa-solid fa-users"></i> Reseller</a>
+    <a href="admin-downloads.html" class="anav-link"><i class="fa-solid fa-school"></i> Pendaftar</a>
   </div>
   <div class="admin-nav-right">
     <span class="admin-badge" id="navBadge">0 reseller</span>
-    <a href="admin-downloads.html" class="nav-link">
-      <i class="fa-solid fa-school" style="margin-right:5px;font-size:11px"></i>Data Pendaftar
-    </a>
   </div>
 </nav>
 
