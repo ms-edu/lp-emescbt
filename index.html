@@ -489,6 +489,15 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
 #reseller-banner .rb-dot{width:7px;height:7px;border-radius:50%;background:#a3a3a3;flex-shrink:0;animation:heroPulse 2s infinite}
 #reseller-banner .rb-nama{font-weight:800;color:#fff}
 #reseller-banner .rb-sep{opacity:.4;margin:0 2px}
+
+/* ── WhatsApp CTA Buttons ── */
+.btn-wa-hero{background:#16a34a!important;color:#fff!important;border:none!important}
+.btn-wa-hero:hover{background:#15803d!important}
+.nav-cta-wa{background:#16a34a!important;color:#fff!important;margin-right:4px}
+.nav-cta-wa:hover{background:#15803d!important}
+.price-btn-wa{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 16px;margin-top:18px;background:#16a34a;color:#fff;border:none;border-radius:11px;font-size:13.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.price-btn-wa:hover{background:#15803d}
+.price-btn-wa i{font-size:16px}
 </style>
 <div id="reseller-banner">
   <span class="rb-dot"></span>
@@ -510,6 +519,7 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
     <a onclick="showPage('home');scrollToSection('#harga')">Harga</a>
     <a onclick="showPage('home');scrollToSection('#faq')">FAQ</a>
     <a onclick="showPage('panduan')" id="nav-panduan">Panduan</a>
+    <a onclick="openWAModal()" class="nav-cta nav-cta-wa"><i class="fa-brands fa-whatsapp" style="margin-right:5px"></i>Hubungi Kami</a>
     <a onclick="openDownload(event)" href="#" class="nav-cta"><i class="fa-solid fa-download" style="margin-right:5px"></i>Download Aplikasi</a>
   </div>
 </nav>
@@ -532,6 +542,7 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
       <div class="hero-actions">
         <a onclick="showPage('panduan')" class="btn-hero btn-primary"><i class="fa-solid fa-rocket"></i> Mulai Panduan</a>
         <a onclick="scrollToSection('#komparasi')" class="btn-hero btn-secondary"><i class="fa-solid fa-scale-balanced"></i> Bandingkan Platform</a>
+        <a onclick="openWAModal()" class="btn-hero btn-wa-hero"><i class="fa-brands fa-whatsapp"></i> Hubungi via WhatsApp</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">Offline Ready</span></div>
@@ -950,7 +961,9 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
             <li><i class="fa-solid fa-check" style="color:#0a0a0a"></i> Maks 7× buka aplikasi</li>
             <li><i class="fa-solid fa-check" style="color:#0a0a0a"></i> Data di server sekolah (SQLite)</li>
           </ul>
-          
+          <button class="price-btn-wa" onclick="openWAModal('TRIAL')">
+            <i class="fa-brands fa-whatsapp"></i> Minta Lisensi Trial
+          </button>
         </div>
       </div>
       <div class="price-info reveal" style="margin-top:20px">
@@ -992,7 +1005,9 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
             <li><i class="fa-solid fa-check"></i> Support prioritas</li>
             <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
           </ul>
-          
+          <button class="price-btn-wa" onclick="openWAModal('STANDAR')">
+            <i class="fa-brands fa-whatsapp"></i> Pesan Sekarang
+          </button>
         </div>
         <div class="price-card lifetime">
           <div class="price-plan">Selamanya</div>
@@ -1006,7 +1021,9 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
             <li><i class="fa-solid fa-check"></i> Tidak ada masa kadaluarsa</li>
             <li><i class="fa-solid fa-check"></i> ROI terbaik jangka panjang</li>
           </ul>
-          
+          <button class="price-btn-wa" onclick="openWAModal('STANDAR')">
+            <i class="fa-brands fa-whatsapp"></i> Pesan Sekarang
+          </button>
         </div>
       </div>
     </div>
@@ -1029,7 +1046,9 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
             <li><i class="fa-solid fa-check"></i> Support teknis prioritas</li>
             <li><i class="fa-solid fa-check"></i> Update selama aktif</li>
           </ul>
-          
+          <button class="price-btn-wa" onclick="openWAModal('PRO')">
+            <i class="fa-brands fa-whatsapp"></i> Pesan Sekarang
+          </button>
         </div>
         <div class="price-card popular">
           <div class="popular-badge">⭐ TERPOPULER</div>
@@ -1044,7 +1063,9 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
             <li><i class="fa-solid fa-check"></i> Support prioritas 24/7</li>
             <li><i class="fa-solid fa-check"></i> Lebih hemat dari 2× Semester</li>
           </ul>
-          
+          <button class="price-btn-wa" onclick="openWAModal('PRO')">
+            <i class="fa-brands fa-whatsapp"></i> Pesan Sekarang
+          </button>
         </div>
         <div class="price-card lifetime">
           <div class="price-plan">Selamanya</div>
@@ -1057,7 +1078,9 @@ footer{background:#fff;border-top:1px solid #e5e5e5;padding:40px 40px 28px;color
             <li><i class="fa-solid fa-check"></i> Update & support seumur hidup</li>
             <li><i class="fa-solid fa-check"></i> ROI terbaik untuk sekolah besar</li>
           </ul>
-          
+          <button class="price-btn-wa" onclick="openWAModal('PRO')">
+            <i class="fa-brands fa-whatsapp"></i> Pesan Sekarang
+          </button>
         </div>
       </div>
     </div>
