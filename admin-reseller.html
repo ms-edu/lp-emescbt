@@ -446,11 +446,13 @@ function renderTable() {
             <i class="fa-regular fa-copy"></i> Salin
           </button>
         </div>
+        <button onclick="generatePage('${esc(d.code||'')}','${esc(d.nama||'')}','${esc(d.label||'')}')"
+          style="margin-top:6px;display:flex;align-items:center;gap:5px;padding:4px 10px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s"
+          onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">
+          <i class="fa-solid fa-file-arrow-down"></i> Generate Page
+        </button>
       </td>
       <td class="td-actions">
-        <button class="act-btn gen" title="Generate halaman reseller" onclick="generatePage('${esc(d.code||'')}','${esc(d.nama||'')}','${esc(d.label||'')}')">
-          <i class="fa-solid fa-file-arrow-down"></i>
-        </button>
         <button class="act-btn edit" title="Edit" onclick="openEditModal('${esc(d.docId)}')">
           <i class="fa-solid fa-pen"></i>
         </button>
