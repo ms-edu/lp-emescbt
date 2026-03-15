@@ -562,7 +562,7 @@ function generatePage(code, nama, label) {
     '<head>',
     '<meta charset="UTF-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
-    '<title>' + siteTitle + '<\/title>',
+    '<title>' + siteTitle + '</' + 'title>',
     '<meta property="og:type" content="website">',
     '<meta property="og:url" content="' + refUrl + '">',
     '<meta property="og:title" content="' + siteTitle + '">',
@@ -579,10 +579,10 @@ function generatePage(code, nama, label) {
     '<meta name="description" content="' + siteDesc + '">',
     '<link rel="canonical" href="' + refUrl + '">',
     '<meta http-equiv="refresh" content="0;url=' + refUrl + '">',
-    '<scr' + 'ipt>window.location.replace("' + refUrl + '");<\/' + 'script>',
-    '<\/head>',
-    '<body><p>Mengalihkan ke halaman Emes CBT...<\/p><\/body>',
-    '<\/html>'
+    '<scr' + 'ipt>window.location.replace("' + refUrl + '");</' + 'script>',
+    '</' + 'head>',
+    '<body><p>Mengalihkan ke halaman Emes CBT...</' + 'p></' + 'body>',
+    '</' + 'html>'
   ];
 
   var htmlContent = lines.join('\n');
