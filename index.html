@@ -64,20 +64,10 @@
     document.querySelectorAll('[data-reseller-nama]').forEach(function(el){ el.textContent = data.nama; });
     document.querySelectorAll('[data-reseller-label]').forEach(function(el){ el.textContent = data.label; });
     if (isReseller) {
-      var banner = document.getElementById('reseller-banner');
-      if (banner) {
-        banner.querySelector('.rb-nama').textContent = data.nama;
-        banner.style.display = 'flex';
-        requestAnimationFrame(function() {
-          var bh = banner.offsetHeight;
-          var nav = document.getElementById('mainNav');
-          if (nav) nav.style.top = bh + 'px';
-          document.querySelectorAll('.page').forEach(function(p){ p.setAttribute('data-banner-offset', bh); });
-          var pp = document.getElementById('page-panduan');
-          if (pp) pp.style.paddingTop = (64 + bh) + 'px';
-          document.documentElement.style.setProperty('--banner-h', bh + 'px');
-        });
-      }
+      var btn    = document.getElementById('reseller-btn');
+      var rdNama = document.getElementById('rd-nama');
+      if (btn)    btn.style.display = 'flex';
+      if (rdNama) rdNama.textContent = data.nama;
     }
   }
 
