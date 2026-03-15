@@ -551,59 +551,50 @@ function resetForm() {
    GENERATE PAGE
 ════════════════════════ */
 function generatePage(code, nama, label) {
-  const baseUrl = (window._baseLandingUrl || BASE_URL).replace(/\/$/, '');
-  const refUrl  = baseUrl + '/?ref=' + encodeURIComponent(code);
-  const siteTitle = 'Emes CBT — ' + nama;
-  const siteDesc  = 'Platform CBT On-Premise untuk Sekolah Indonesia. Hubungi ' + nama + ' (' + label + ') untuk informasi lisensi.';
-  const ogImage   = 'https://i.imgur.com/bT70O4C.png';
+  var baseUrl   = (window._baseLandingUrl || BASE_URL).replace(/\/$/, '');
+  var refUrl    = baseUrl + '/?ref=' + encodeURIComponent(code);
+  var siteTitle = 'Emes CBT - ' + nama;
+  var siteDesc  = 'Platform CBT On-Premise untuk Sekolah Indonesia. Hubungi ' + nama + ' (' + label + ') untuk informasi lisensi.';
+  var ogImage   = 'https://i.imgur.com/bT70O4C.png';
 
-  const htmlContent = `<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${siteTitle}</title>
+  var lines = [
+    '<!DOCTYPE html>',
+    '<html lang="id">',
+    '<head>',
+    '<meta charset="UTF-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+    '<title>' + siteTitle + '</title>',
+    '<meta property="og:type" content="website">',
+    '<meta property="og:url" content="' + refUrl + '">',
+    '<meta property="og:title" content="' + siteTitle + '">',
+    '<meta property="og:description" content="' + siteDesc + '">',
+    '<meta property="og:image" content="' + ogImage + '">',
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    '<meta property="og:site_name" content="Emes CBT">',
+    '<meta property="og:locale" content="id_ID">',
+    '<meta name="twitter:card" content="summary_large_image">',
+    '<meta name="twitter:title" content="' + siteTitle + '">',
+    '<meta name="twitter:description" content="' + siteDesc + '">',
+    '<meta name="twitter:image" content="' + ogImage + '">',
+    '<meta name="description" content="' + siteDesc + '">',
+    '<link rel="canonical" href="' + refUrl + '">',
+    '<meta http-equiv="refresh" content="0;url=' + refUrl + '">',
+    '<scr' + 'ipt>window.location.replace("' + refUrl + '");</' + 'script>',
+    '</head>',
+    '<body><p>Mengalihkan ke halaman Emes CBT...</p></body>',
+    '</html>'
+  ];
 
-<!-- Open Graph / WhatsApp / Telegram / Facebook -->
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="${refUrl}">
-<meta property="og:title"       content="${siteTitle}">
-<meta property="og:description" content="${siteDesc}">
-<meta property="og:image"       content="${ogImage}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height"content="630">
-<meta property="og:site_name"   content="Emes CBT">
-<meta property="og:locale"      content="id_ID">
-
-<!-- Twitter Card -->
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="${siteTitle}">
-<meta name="twitter:description" content="${siteDesc}">
-<meta name="twitter:image"       content="${ogImage}">
-
-<!-- Canonical & Description -->
-<meta name="description" content="${siteDesc}">
-<link rel="canonical" href="${refUrl}">
-
-<!-- Redirect ke landing page -->
-<meta http-equiv="refresh" content="0;url=${refUrl}">
-<script>window.location.replace('${refUrl}');</script>
-</head>
-<body>
-<p>Mengalihkan ke halaman Emes CBT...</p>
-</body>
-</html>`;
-
-  // Download file
-  const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
+  var htmlContent = lines.join('\n');
+  var blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
   a.href     = url;
   a.download = 'index.html';
   a.click();
   URL.revokeObjectURL(url);
-
-  showToast('File index.html untuk reseller ' + nama + ' didownload! Upload ke folder ref/' + code + '/', 'success');
+  showToast('File index.html untuk ' + nama + ' didownload! Upload ke folder ref/' + code + '/', 'success');
 }
 
 /* ════════════════════════
