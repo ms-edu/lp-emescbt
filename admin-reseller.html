@@ -412,51 +412,43 @@ function filterTable() {
 }
 
 function renderTable() {
-  const tbody = document.getElementById('dataTableBody');
+  var tbody = document.getElementById('dataTableBody');
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">
-      <i class="fa-solid fa-user-group"></i>
-      <p>${allData.length === 0 ? 'Belum ada reseller. Tambahkan reseller pertama Anda!' : 'Tidak ada hasil pencarian.'}</p>
-    </td></tr>`;
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">'
+      + '<i class="fa-solid fa-user-group"></i>'
+      + '<p>' + (allData.length === 0 ? 'Belum ada reseller. Tambahkan reseller pertama Anda!' : 'Tidak ada hasil pencarian.') + '</p>'
+      + '</td></tr>';
     return;
   }
 
-  tbody.innerHTML = filtered.map((d, i) => {
-    const waClean = (d.wa||'').replace(/\D/g,'');
-    const link    = (window._baseLandingUrl || BASE_URL) + '?ref=' + encodeURIComponent(d.code||'');
-    return `<tr>
-      <td style="color:#a3a3a3;font-family:'DM Mono',monospace;font-size:12px">${i+1}</td>
-      <td><span class="td-code">${esc(d.code||'—')}</span></td>
-      <td class="td-nama">
-        <strong>${esc(d.nama||'—')}</strong>
-        <span>${esc(d.label||'')}</span>
-      </td>
-      <td class="td-wa">
-        ${waClean
-          ? `<a href="https://wa.me/${waClean}" target="_blank" rel="noopener">
-               <i class="fa-brands fa-whatsapp"></i>${esc(d.wa||'')}
-             </a>`
-          : '<span style="color:#a3a3a3">—</span>'}
-      </td>
-      <td style="font-size:12.5px;color:#525252">${esc(d.label||'—')}</td>
-      <td>
-        <div class="td-link-inner">
-          <a href="${esc(link)}" target="_blank" rel="noopener" title="${esc(link)}" style="color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:200px;white-space:nowrap;display:inline-block">${esc(link)}</a>
-          <button class="copy-btn" onclick="salinLink(this,'${esc(link)}')" title="Salin link">
-            <i class="fa-regular fa-copy"></i> Salin
-          </button>
-        </div>
-        <button onclick="generatePage('${esc(d.code||'')}','${esc(d.nama||'')}','${esc(d.label||'')}') " style="margin-top:6px;display:flex;align-items:center;gap:5px;padding:4px 10px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s"><i class="fa-solid fa-file-arrow-down"></i> Generate Page</button>
-      </td>
-      <td class="td-actions">
-        <button class="act-btn edit" title="Edit" onclick="openEditModal('${esc(d.docId)}')">
-          <i class="fa-solid fa-pen"></i>
-        </button>
-        <button class="act-btn del" title="Hapus" onclick="openDeleteModal('${esc(d.docId)}','${esc(d.nama||'')}','${esc(d.code||'')}')">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </td>
-    </tr>`;
+  tbody.innerHTML = filtered.map(function(d, i) {
+    var waClean = (d.wa || '').replace(/\D/g, '');
+    var link    = (window._baseLandingUrl || BASE_URL) + '?ref=' + encodeURIComponent(d.code || '');
+    var code    = esc(d.code || '');
+    var nama    = esc(d.nama || '—');
+    var label   = esc(d.label || '');
+    var waHtml  = waClean
+      ? '<a href="https://wa.me/' + waClean + '" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i>' + esc(d.wa || '') + '</a>'
+      : '<span style="color:#a3a3a3">—</span>';
+
+    return '<tr>'
+      + '<td style="color:#a3a3a3;font-family:'DM Mono',monospace;font-size:12px">' + (i+1) + '</td>'
+      + '<td><span class="td-code">' + code + '</span></td>'
+      + '<td class="td-nama"><strong>' + nama + '</strong><span>' + label + '</span></td>'
+      + '<td class="td-wa">' + waHtml + '</td>'
+      + '<td style="font-size:12.5px;color:#525252">' + label + '</td>'
+      + '<td>'
+        + '<div class="td-link-inner">'
+          + '<a href="' + esc(link) + '" target="_blank" rel="noopener" title="' + esc(link) + '" style="color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:200px;white-space:nowrap;display:inline-block">' + esc(link) + '</a>'
+          + '<button class="copy-btn" onclick="salinLink(this,'' + esc(link) + '')" title="Salin link"><i class="fa-regular fa-copy"></i> Salin</button>'
+        + '</div>'
+        + '<button onclick="generatePage('' + esc(d.code||'') + '','' + esc(d.nama||'') + '','' + esc(d.label||'') + '')" style="margin-top:6px;display:flex;align-items:center;gap:5px;padding:4px 10px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer"><i class="fa-solid fa-file-arrow-down"></i> Generate Page</button>'
+      + '</td>'
+      + '<td class="td-actions">'
+        + '<button class="act-btn edit" title="Edit" onclick="openEditModal('' + esc(d.docId) + '')"><i class="fa-solid fa-pen"></i></button>'
+        + '<button class="act-btn del" title="Hapus" onclick="openDeleteModal('' + esc(d.docId) + '','' + esc(d.nama||'') + '','' + esc(d.code||'') + '')"><i class="fa-solid fa-trash"></i></button>'
+      + '</td>'
+      + '</tr>';
   }).join('');
 }
 
