@@ -435,6 +435,13 @@ function renderTable() {
       : '<span style="color:#a3a3a3">—</span>';
     var linkEsc = esc(link);
 
+    // Argumen onclick pakai escJs (JSON.stringify) agar aman
+    var jsLink  = escJs(link);
+    var jsCode  = escJs(d.code  || '');
+    var jsNama  = escJs(d.nama  || '');
+    var jsLabel = escJs(d.label || '');
+    var jsDocId = escJs(d.docId || '');
+
     return '<tr>'
       + '<td style="color:#a3a3a3;font-family:monospace;font-size:12px">' + (i+1) + '</td>'
       + '<td><span class="td-code">' + code + '</span></td>'
@@ -444,13 +451,13 @@ function renderTable() {
       + '<td>'
         + '<div class="td-link-inner">'
           + '<a href="' + linkEsc + '" target="_blank" rel="noopener" title="' + linkEsc + '" class="td-link-anchor">' + linkEsc + '</a>'
-          + '<button class="copy-btn" onclick="salinLink(this,&quot;' + linkEsc + '&quot;)" title="Salin link"><i class="fa-regular fa-copy"></i> Salin</button>'
+          + '<button class="copy-btn" onclick="salinLink(this,' + jsLink + ')" title="Salin link"><i class="fa-regular fa-copy"></i> Salin</button>'
         + '</div>'
-        + '<button class="btn-gen-page" onclick="generatePage(&quot;' + esc(d.code||'') + '&quot;,&quot;' + esc(d.nama||'') + '&quot;,&quot;' + esc(d.label||'') + '&quot;)"><i class="fa-solid fa-file-arrow-down"></i> Generate Page</button>'
+        + '<button class="btn-gen-page" onclick="generatePage(' + jsCode + ',' + jsNama + ',' + jsLabel + ')"><i class="fa-solid fa-file-arrow-down"></i> Generate Page</button>'
       + '</td>'
       + '<td class="td-actions">'
-        + '<button class="act-btn edit" title="Edit" onclick="openEditModal(&quot;' + docId + '&quot;)"><i class="fa-solid fa-pen"></i></button>'
-        + '<button class="act-btn del" title="Hapus" onclick="openDeleteModal(&quot;' + docId + '&quot;,&quot;' + nama + '&quot;,&quot;' + code + '&quot;)"><i class="fa-solid fa-trash"></i></button>'
+        + '<button class="act-btn edit" title="Edit" onclick="openEditModal(' + jsDocId + ')"><i class="fa-solid fa-pen"></i></button>'
+        + '<button class="act-btn del" title="Hapus" onclick="openDeleteModal(' + jsDocId + ',' + jsNama + ',' + jsCode + ')"><i class="fa-solid fa-trash"></i></button>'
       + '</td>'
       + '</tr>';
   }).join('');
@@ -703,6 +710,7 @@ function showToast(msg, type='success') {
 /* ════════════════════════
    ESCAPE HTML
 ════════════════════════ */
+// Untuk konten yang ditampilkan sebagai teks HTML
 function esc(s) {
   return String(s||'')
     .replace(/&/g,'&amp;')
@@ -710,6 +718,11 @@ function esc(s) {
     .replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;')
     .replace(/'/g,'&#39;');
+}
+// Untuk nilai yang dimasukkan ke dalam atribut onclick sebagai argumen string JS
+// Menggunakan JSON.stringify agar aman dari semua karakter spesial
+function escJs(s) {
+  return JSON.stringify(String(s||''));
 }
 </script>
 </body>
