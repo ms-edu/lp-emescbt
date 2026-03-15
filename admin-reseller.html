@@ -383,10 +383,7 @@ async function loadData() {
     updateStats();
     filterTable();
   } catch (err) {
-    document.getElementById('dataTableBody').innerHTML =
-      `<tr><td colspan="7" style="text-align:center;padding:40px;color:#dc2626">
-        <i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat: ${esc(err.message)}
-      </td></tr>`;
+    document.getElementById('dataTableBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#dc2626"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat: ' + esc(err.message) + '</td></tr>';
   }
   icon.classList.remove('spin');
 }
@@ -459,7 +456,7 @@ function salinLink(btn, url) {
   navigator.clipboard.writeText(url).then(() => {
     btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin';
     btn.classList.add('copied');
-    setTimeout(() => {
+    setTimeout(function() {
       btn.innerHTML = '<i class="fa-regular fa-copy"></i> Salin';
       btn.classList.remove('copied');
     }, 2000);
@@ -472,7 +469,7 @@ function salinLink(btn, url) {
     document.body.removeChild(ta);
     btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin';
     btn.classList.add('copied');
-    setTimeout(() => {
+    setTimeout(function() {
       btn.innerHTML = '<i class="fa-regular fa-copy"></i> Salin';
       btn.classList.remove('copied');
     }, 2000);
@@ -503,7 +500,7 @@ async function tambahReseller() {
   const dup = allData.find(d => (d.code||'').toLowerCase() === code.toLowerCase());
   if (dup) { 
     document.getElementById('fCode').classList.add('error');
-    showToast(`Kode "${code}" sudah digunakan reseller lain.`, 'error'); 
+    showToast('Kode "' + code + '" sudah digunakan reseller lain.', 'error'); 
     return; 
   }
 
@@ -513,7 +510,7 @@ async function tambahReseller() {
 
   try {
     await db.collection('resellers').add({ code, nama, wa, label });
-    showToast(`Reseller "${nama}" berhasil ditambahkan!`, 'success');
+    showToast('Reseller "' + nama + '" berhasil ditambahkan!', 'success');
     resetForm();
     // Tutup form add
     document.getElementById('addBody').classList.remove('open');
@@ -569,6 +566,7 @@ function generatePage(code, nama, label) {
     '<link rel="canonical" href="' + refUrl + '">',
     '<meta http-equiv="refresh" content="0;url=' + refUrl + '">',
     '<scr' + 'ipt>window.location.replace("' + refUrl + '");</' + 'script>',
+    '</' + 'script>',
     '</head>',
     '<body><p>Mengalihkan ke halaman Emes CBT...</p></body>',
     '</html>'
@@ -614,7 +612,7 @@ async function updateReseller() {
 
   // Cek duplikat kode (kecuali diri sendiri)
   const dup = allData.find(d => (d.code||'').toLowerCase() === code.toLowerCase() && d.docId !== docId);
-  if (dup) { showToast(`Kode "${code}" sudah digunakan reseller lain.`, 'error'); return; }
+  if (dup) { showToast('Kode "' + code + '" sudah digunakan reseller lain.', 'error'); return; }
 
   const btn = document.getElementById('btnUpdate');
   btn.disabled = true;
@@ -639,9 +637,9 @@ async function updateReseller() {
 function openDeleteModal(docId, nama, code) {
   document.getElementById('deleteDocId').value = docId;
   document.getElementById('deleteDesc').innerHTML =
-    `Anda yakin ingin menghapus reseller <strong>${esc(nama)}</strong>? Link 
-     <code style="background:#f5f5f5;padding:1px 6px;border-radius:4px;font-size:12px">?ref=${esc(code)}</code> 
-     tidak akan berfungsi lagi.`;
+    'Anda yakin ingin menghapus reseller <strong>' + esc(nama) + '</strong>? Link '
+    + '<code style="background:#f5f5f5;padding:1px 6px;border-radius:4px;font-size:12px">?ref=' + esc(code) + '</code> '
+    + 'tidak akan berfungsi lagi.';
   document.getElementById('deleteModal').classList.add('open');
 }
 
@@ -657,7 +655,7 @@ async function hapusReseller() {
 
   try {
     await db.collection('resellers').doc(docId).delete();
-    showToast('Reseller berhasil dihapus.', 'info');
+    showToast('Reseller berhasil dihapus.', 'success');
     closeDeleteModal();
     loadData();
   } catch (err) {
