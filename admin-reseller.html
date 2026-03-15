@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Manajemen Reseller Emes CBT</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f5f5;color:#0a0a0a;min-height:100vh}
+
+/* ── Nav ── */
+.admin-nav{background:#fff;border-bottom:1px solid #e5e5e5;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.admin-nav-brand{display:flex;align-items:center;gap:10px}
+.admin-nav-brand img{width:28px;height:28px;border-radius:7px}
+.admin-nav-brand span{font-size:14px;font-weight:800;color:#0a0a0a}
+.admin-nav-right{display:flex;align-items:center;gap:10px}
+.admin-badge{font-size:11px;background:#f5f5f5;color:#525252;padding:4px 10px;border-radius:100px;font-weight:600;border:1px solid #e5e5e5}
+.nav-link{font-size:12.5px;color:#737373;background:none;border:1px solid #e5e5e5;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s}
+.nav-link:hover{color:#0a0a0a;border-color:#0a0a0a}
+
+/* ── Body ── */
+.admin-body{max-width:1000px;margin:0 auto;padding:32px 24px}
+
+/* ── Stats ── */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:20px 22px}
+.stat-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#737373;margin-bottom:6px}
+.stat-num{font-size:30px;font-weight:800;font-family:'DM Mono',monospace;color:#0a0a0a;line-height:1}
+.stat-sub{font-size:12px;color:#a3a3a3;margin-top:4px}
+
+/* ── Add Card ── */
+.add-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;margin-bottom:24px;overflow:hidden}
+.add-card-header{padding:16px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background .15s}
+.add-card-header:hover{background:#fafafa}
+.add-card-header h2{font-size:15px;font-weight:800;color:#0a0a0a;display:flex;align-items:center;gap:8px}
+.add-card-header .chevron{transition:transform .25s;color:#a3a3a3;font-size:13px}
+.add-card-header.open .chevron{transform:rotate(180deg)}
+.add-card-body{padding:0 22px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+.add-card-body.open{max-height:500px;padding:0 22px 22px}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;font-weight:700;color:#525252;text-transform:uppercase;letter-spacing:.05em}
+.form-group input{padding:9px 12px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;color:#0a0a0a;background:#fff}
+.form-group input:focus{border-color:#0a0a0a}
+.form-group input.error{border-color:#dc2626}
+.form-hint{font-size:11px;color:#a3a3a3;margin-top:2px}
+.form-actions{grid-column:1/-1;display:flex;gap:10px;margin-top:4px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#0a0a0a;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:#262626}
+.btn-primary:disabled{background:#a3a3a3;cursor:not-allowed}
+.btn-secondary{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:#f5f5f5;color:#525252;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{background:#e5e5e5;color:#0a0a0a}
+
+/* ── Table Card ── */
+.table-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;overflow:hidden}
+.table-header{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0;gap:12px;flex-wrap:wrap}
+.table-header h2{font-size:15px;font-weight:800;color:#0a0a0a}
+.tbl-actions{display:flex;align-items:center;gap:10px}
+.search-input{padding:8px 12px 8px 34px;border:1.5px solid #e5e5e5;border-radius:9px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:200px;transition:border-color .2s;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 11px center}
+.search-input:focus{border-color:#0a0a0a}
+.refresh-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#f5f5f5;color:#0a0a0a;border:1.5px solid #e5e5e5;border-radius:9px;font-size:12.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+.refresh-btn:hover{background:#e5e5e5}
+
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#fafafa;padding:11px 16px;text-align:left;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#737373;border-bottom:1px solid #e5e5e5;white-space:nowrap}
+tbody tr{border-bottom:1px solid #f5f5f5;transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#fafafa}
+td{padding:12px 16px;vertical-align:middle}
+
+.td-code{font-family:'DM Mono',monospace;font-size:12px;background:#f5f5f5;padding:3px 8px;border-radius:6px;color:#0a0a0a;font-weight:500;white-space:nowrap}
+.td-nama strong{display:block;font-weight:700;font-size:13px}
+.td-nama span{font-size:11.5px;color:#737373}
+.td-wa a{color:#16a34a;font-size:12.5px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.td-wa a:hover{text-decoration:underline}
+.td-link{display:flex;align-items:center;gap:6px}
+.td-link a{color:#2563eb;font-size:11.5px;font-family:'DM Mono',monospace;text-decoration:none;overflow:hidden;text-overflow:ellipsis;max-width:180px;white-space:nowrap}
+.td-link a:hover{text-decoration:underline}
+.copy-btn{background:none;border:1px solid #e5e5e5;border-radius:6px;padding:3px 7px;cursor:pointer;font-size:11px;color:#737373;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.copy-btn:hover{background:#f5f5f5;color:#0a0a0a}
+.copy-btn.copied{border-color:#16a34a;color:#16a34a}
+
+.td-actions{display:flex;align-items:center;gap:6px}
+.act-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;border:1.5px solid #e5e5e5;background:#fff;cursor:pointer;font-size:13px;color:#525252;transition:all .2s}
+.act-btn:hover{background:#f5f5f5}
+.act-btn.edit:hover{border-color:#2563eb;color:#2563eb}
+.act-btn.del:hover{border-color:#dc2626;color:#dc2626;background:#fff5f5}
+
+.empty-state{text-align:center;padding:60px 20px;color:#a3a3a3}
+.empty-state i{font-size:36px;margin-bottom:12px;display:block;opacity:.4}
+.empty-state p{font-size:14px}
+.loading-row td{text-align:center;padding:40px;color:#a3a3a3}
+
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-title{font-size:16px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.modal-title i{color:#737373}
+.modal-form-grid{display:flex;flex-direction:column;gap:14px}
+.modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:24px;right:24px;background:#0a0a0a;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:1000;display:flex;align-items:center;gap:8px;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success i{color:#4ade80}
+.toast.error i{color:#f87171}
+.toast.info i{color:#60a5fa}
+
+/* ── Confirm Modal ── */
+.confirm-modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.confirm-modal h3{font-size:15px;font-weight:800;margin-bottom:8px}
+.confirm-modal p{font-size:13.5px;color:#525252;line-height:1.6}
+.confirm-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.btn-danger{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#dc2626;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.btn-danger:hover{background:#b91c1c}
+
+.spin{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:700px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
+  .admin-body{padding:20px 14px}
+  .search-input{width:130px}
+  .td-link a{max-width:120px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="admin-nav">
+  <div class="admin-nav-brand">
+    <img src="https://i.imgur.com/bT70O4C.png" alt="">
+    <span>Emes CBT — Reseller</span>
+  </div>
+  <div class="admin-nav-right">
+    <span class="admin-badge" id="navBadge">0 reseller</span>
+    <a href="admin-downloads.html" class="nav-link">
+      <i class="fa-solid fa-school" style="margin-right:5px;font-size:11px"></i>Data Pendaftar
+    </a>
+  </div>
+</nav>
+
+<!-- ══ BODY ══ -->
+<div class="admin-body">
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Reseller</div>
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-sub">Terdaftar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Reseller Aktif</div>
+      <div class="stat-num" id="statAktif">—</div>
+      <div class="stat-sub">Memiliki kode unik</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Base Domain</div>
+      <div class="stat-num" id="statDomain" style="font-size:13px;padding-top:8px;word-break:break-all">emescbt.id</div>
+      <div class="stat-sub">URL landing page</div>
+    </div>
+  </div>
+
+  <!-- Add Reseller Card (collapsible) -->
+  <div class="add-card">
+    <div class="add-card-header" id="addHeader" onclick="toggleAdd()">
+      <h2><i class="fa-solid fa-circle-plus" style="color:#0a0a0a;font-size:14px"></i> Tambah Reseller Baru</h2>
+      <i class="fa-solid fa-chevron-down chevron" id="addChevron"></i>
+    </div>
+    <div class="add-card-body" id="addBody">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Kode Unik (ref)</label>
+          <input type="text" id="fCode" placeholder="contoh: agus" autocomplete="off"
+            oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_-]/g,'')">
+          <span class="form-hint">Huruf kecil, angka, tanpa spasi. Contoh URL: ?ref=agus</span>
+        </div>
+        <div class="form-group">
+          <label>Nama Reseller</label>
+          <input type="text" id="fNama" placeholder="contoh: Agus Santoso" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Nomor WhatsApp</label>
+          <input type="text" id="fWa" placeholder="628xxxxxxxxxx" autocomplete="off"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          <span class="form-hint">Format internasional tanpa +. Contoh: 6281234567890</span>
+        </div>
+        <div class="form-group">
+          <label>Label (tampil di form order)</label>
+          <input type="text" id="fLabel" placeholder="contoh: Tim Agus CBT" autocomplete="off">
+          <span class="form-hint">Muncul di: "dibalas oleh [label]"</span>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" id="btnSimpan" onclick="tambahReseller()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Reseller
+          </button>
+          <button class="btn-secondary" onclick="resetForm()">
+            <i class="fa-solid fa-xmark"></i> Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h2><i class="fa-solid fa-users" style="margin-right:7px;opacity:.5"></i>Daftar Reseller</h2>
+      <div class="tbl-actions">
+        <input type="text" class="search-input" id="searchInput"
+          placeholder="Cari nama / kode…" oninput="filterTable()">
+        <button class="refresh-btn" onclick="loadData()">
+          <i class="fa-solid fa-rotate-right" id="refreshIcon"></i> Refresh
+        </button>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kode (ref)</th>
+            <th>Nama Reseller</th>
+            <th>WhatsApp</th>
+            <th>Label Order</th>
+            <th>Link Reseller</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="dataTableBody">
+          <tr class="loading-row">
+            <td colspan="7"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /admin-body -->
+
+<!-- ══ EDIT MODAL ══ -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title"><i class="fa-solid fa-pen-to-square"></i> Edit Reseller</div>
+    <input type="hidden" id="editDocId">
+    <div class="modal-form-grid">
+      <div class="form-group">
+        <label>Kode Unik (ref)</label>
+        <input type="text" id="editCode" autocomplete="off"
+          oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_-]/g,'')">
+        <span class="form-hint">Huruf kecil, angka, tanpa spasi</span>
+      </div>
+      <div class="form-group">
+        <label>Nama Reseller</label>
+        <input type="text" id="editNama" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Nomor WhatsApp</label>
+        <input type="text" id="editWa" autocomplete="off"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+      </div>
+      <div class="form-group">
+        <label>Label (tampil di form order)</label>
+        <input type="text" id="editLabel" autocomplete="off">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeEditModal()">Batal</button>
+      <button class="btn-primary" id="btnUpdate" onclick="updateReseller()">
+        <i class="fa-solid fa-floppy-disk"></i> Update
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DELETE CONFIRM MODAL ══ -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="confirm-modal">
+    <h3><i class="fa-solid fa-triangle-exclamation" style="color:#dc2626;margin-right:6px"></i>Hapus Reseller?</h3>
+    <p id="deleteDesc">Anda yakin ingin menghapus reseller ini? Link <code style="background:#f5f5f5;padding:1px 5px;border-radius:4px;font-size:12px"></code> tidak akan berfungsi lagi.</p>
+    <input type="hidden" id="deleteDocId">
+    <div class="confirm-actions">
+      <button class="btn-secondary" onclick="closeDeleteModal()">Batal</button>
+      <button class="btn-danger" id="btnDelete" onclick="hapusReseller()">
+        <i class="fa-solid fa-trash"></i> Hapus
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check" id="toastIcon"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+/* ════════════════════════
+   FIREBASE INIT
+════════════════════════ */
+firebase.initializeApp({
+  apiKey:            "AIzaSyAK9kA3GD-Os4eaCl7CFRnf0KMopTqdPKo",
+  projectId:         "emescbt-29ee1",
+  storageBucket:     "emescbt-29ee1.firebasestorage.app",
+  appId:             "1:142290685592:web:a1c2935b2877d5354c8aed"
+});
+const db = firebase.firestore();
+
+const BASE_URL = 'https://emescbt.id/';
+
+/* ════════════════════════
+   STATE
+════════════════════════ */
+let allData   = [];
+let filtered  = [];
+
+/* ════════════════════════
+   INIT
+════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  loadData();
+  autoDetectDomain();
+});
+
+function autoDetectDomain() {
+  const host = window.location.hostname;
+  if (host && host !== 'localhost' && host !== '127.0.0.1') {
+    const proto = window.location.protocol;
+    document.getElementById('statDomain').textContent = host;
+    window._baseLandingUrl = proto + '//' + host + '/';
+  } else {
+    window._baseLandingUrl = BASE_URL;
+  }
+}
+
+/* ════════════════════════
+   TOGGLE ADD FORM
+════════════════════════ */
+function toggleAdd() {
+  const body    = document.getElementById('addBody');
+  const header  = document.getElementById('addHeader');
+  const chevron = document.getElementById('addChevron');
+  const isOpen  = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+}
+
+/* ════════════════════════
+   LOAD DATA
+════════════════════════ */
+async function loadData() {
+  const icon = document.getElementById('refreshIcon');
+  icon.classList.add('spin');
+  document.getElementById('dataTableBody').innerHTML =
+    '<tr class="loading-row"><td colspan="7"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data…</td></tr>';
+  try {
+    const snap = await db.collection('resellers').orderBy('nama').get();
+    allData = snap.docs.map(doc => ({ docId: doc.id, ...doc.data() }));
+    updateStats();
+    filterTable();
+  } catch (err) {
+    document.getElementById('dataTableBody').innerHTML =
+      `<tr><td colspan="7" style="text-align:center;padding:40px;color:#dc2626">
+        <i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat: ${esc(err.message)}
+      </td></tr>`;
+  }
+  icon.classList.remove('spin');
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = allData.length;
+  document.getElementById('statAktif').textContent = allData.filter(d => d.code).length;
+  document.getElementById('navBadge').textContent   = allData.length + ' reseller';
+}
+
+/* ════════════════════════
+   FILTER & RENDER
+════════════════════════ */
+function filterTable() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  filtered = q
+    ? allData.filter(d =>
+        (d.nama||'').toLowerCase().includes(q) ||
+        (d.code||'').toLowerCase().includes(q) ||
+        (d.label||'').toLowerCase().includes(q))
+    : [...allData];
+  renderTable();
+}
+
+function renderTable() {
+  const tbody = document.getElementById('dataTableBody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">
+      <i class="fa-solid fa-user-group"></i>
+      <p>${allData.length === 0 ? 'Belum ada reseller. Tambahkan reseller pertama Anda!' : 'Tidak ada hasil pencarian.'}</p>
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((d, i) => {
+    const waClean = (d.wa||'').replace(/\D/g,'');
+    const link    = (window._baseLandingUrl || BASE_URL) + '?ref=' + encodeURIComponent(d.code||'');
+    return `<tr>
+      <td style="color:#a3a3a3;font-family:'DM Mono',monospace;font-size:12px">${i+1}</td>
+      <td><span class="td-code">${esc(d.code||'—')}</span></td>
+      <td class="td-nama">
+        <strong>${esc(d.nama||'—')}</strong>
+        <span>${esc(d.label||'')}</span>
+      </td>
+      <td class="td-wa">
+        ${waClean
+          ? `<a href="https://wa.me/${waClean}" target="_blank" rel="noopener">
+               <i class="fa-brands fa-whatsapp"></i>${esc(d.wa||'')}
+             </a>`
+          : '<span style="color:#a3a3a3">—</span>'}
+      </td>
+      <td style="font-size:12.5px;color:#525252">${esc(d.label||'—')}</td>
+      <td class="td-link">
+        <a href="${esc(link)}" target="_blank" rel="noopener" title="${esc(link)}">${esc(link)}</a>
+        <button class="copy-btn" onclick="salinLink(this,'${esc(link)}')" title="Salin link">
+          <i class="fa-regular fa-copy"></i> Salin
+        </button>
+      </td>
+      <td class="td-actions">
+        <button class="act-btn edit" title="Edit" onclick="openEditModal('${esc(d.docId)}')">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="act-btn del" title="Hapus" onclick="openDeleteModal('${esc(d.docId)}','${esc(d.nama||'')}','${esc(d.code||'')}')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+/* ════════════════════════
+   COPY LINK
+════════════════════════ */
+function salinLink(btn, url) {
+  navigator.clipboard.writeText(url).then(() => {
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '<i class="fa-regular fa-copy"></i> Salin';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = url; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '<i class="fa-regular fa-copy"></i> Salin';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+/* ════════════════════════
+   TAMBAH RESELLER
+════════════════════════ */
+async function tambahReseller() {
+  const code  = document.getElementById('fCode').value.trim();
+  const nama  = document.getElementById('fNama').value.trim();
+  const wa    = document.getElementById('fWa').value.trim();
+  const label = document.getElementById('fLabel').value.trim();
+
+  // Validasi
+  let valid = true;
+  ['fCode','fNama','fWa','fLabel'].forEach(id => {
+    document.getElementById(id).classList.remove('error');
+  });
+  if (!code)  { document.getElementById('fCode').classList.add('error');  valid=false; }
+  if (!nama)  { document.getElementById('fNama').classList.add('error');  valid=false; }
+  if (!wa)    { document.getElementById('fWa').classList.add('error');    valid=false; }
+  if (!label) { document.getElementById('fLabel').classList.add('error'); valid=false; }
+  if (!valid) { showToast('Semua field wajib diisi.','error'); return; }
+
+  // Cek duplikat kode
+  const dup = allData.find(d => (d.code||'').toLowerCase() === code.toLowerCase());
+  if (dup) { 
+    document.getElementById('fCode').classList.add('error');
+    showToast(`Kode "${code}" sudah digunakan reseller lain.`, 'error'); 
+    return; 
+  }
+
+  const btn = document.getElementById('btnSimpan');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan…';
+
+  try {
+    await db.collection('resellers').add({ code, nama, wa, label });
+    showToast(`Reseller "${nama}" berhasil ditambahkan!`, 'success');
+    resetForm();
+    // Tutup form add
+    document.getElementById('addBody').classList.remove('open');
+    document.getElementById('addHeader').classList.remove('open');
+    loadData();
+  } catch (err) {
+    showToast('Gagal menyimpan: ' + err.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Reseller';
+}
+
+function resetForm() {
+  ['fCode','fNama','fWa','fLabel'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = '';
+    el.classList.remove('error');
+  });
+}
+
+/* ════════════════════════
+   EDIT RESELLER
+════════════════════════ */
+function openEditModal(docId) {
+  const d = allData.find(x => x.docId === docId);
+  if (!d) return;
+  document.getElementById('editDocId').value   = docId;
+  document.getElementById('editCode').value    = d.code  || '';
+  document.getElementById('editNama').value    = d.nama  || '';
+  document.getElementById('editWa').value      = d.wa    || '';
+  document.getElementById('editLabel').value   = d.label || '';
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('open');
+}
+
+async function updateReseller() {
+  const docId = document.getElementById('editDocId').value;
+  const code  = document.getElementById('editCode').value.trim();
+  const nama  = document.getElementById('editNama').value.trim();
+  const wa    = document.getElementById('editWa').value.trim();
+  const label = document.getElementById('editLabel').value.trim();
+
+  if (!code || !nama || !wa || !label) { showToast('Semua field wajib diisi.','error'); return; }
+
+  // Cek duplikat kode (kecuali diri sendiri)
+  const dup = allData.find(d => (d.code||'').toLowerCase() === code.toLowerCase() && d.docId !== docId);
+  if (dup) { showToast(`Kode "${code}" sudah digunakan reseller lain.`, 'error'); return; }
+
+  const btn = document.getElementById('btnUpdate');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan…';
+
+  try {
+    await db.collection('resellers').doc(docId).update({ code, nama, wa, label });
+    showToast('Reseller berhasil diupdate!', 'success');
+    closeEditModal();
+    loadData();
+  } catch (err) {
+    showToast('Gagal update: ' + err.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Update';
+}
+
+/* ════════════════════════
+   HAPUS RESELLER
+════════════════════════ */
+function openDeleteModal(docId, nama, code) {
+  document.getElementById('deleteDocId').value = docId;
+  document.getElementById('deleteDesc').innerHTML =
+    `Anda yakin ingin menghapus reseller <strong>${esc(nama)}</strong>? Link 
+     <code style="background:#f5f5f5;padding:1px 6px;border-radius:4px;font-size:12px">?ref=${esc(code)}</code> 
+     tidak akan berfungsi lagi.`;
+  document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('open');
+}
+
+async function hapusReseller() {
+  const docId = document.getElementById('deleteDocId').value;
+  const btn   = document.getElementById('btnDelete');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menghapus…';
+
+  try {
+    await db.collection('resellers').doc(docId).delete();
+    showToast('Reseller berhasil dihapus.', 'info');
+    closeDeleteModal();
+    loadData();
+  } catch (err) {
+    showToast('Gagal menghapus: ' + err.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-trash"></i> Hapus';
+}
+
+/* ════════════════════════
+   CLOSE MODALS ON OVERLAY
+════════════════════════ */
+document.getElementById('editModal').addEventListener('click', function(e){
+  if (e.target === this) closeEditModal();
+});
+document.getElementById('deleteModal').addEventListener('click', function(e){
+  if (e.target === this) closeDeleteModal();
+});
+
+/* ════════════════════════
+   TOAST
+════════════════════════ */
+let toastTimer;
+function showToast(msg, type='success') {
+  const t    = document.getElementById('toast');
+  const icon = document.getElementById('toastIcon');
+  const msgEl= document.getElementById('toastMsg');
+  t.className = 'toast ' + type;
+  icon.className = type === 'success' ? 'fa-solid fa-circle-check'
+                 : type === 'error'   ? 'fa-solid fa-circle-xmark'
+                 : 'fa-solid fa-circle-info';
+  msgEl.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ════════════════════════
+   ESCAPE HTML
+════════════════════════ */
+function esc(s) {
+  return String(s||'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+</script>
+</body>
+</html>
